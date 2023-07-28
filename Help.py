@@ -8,7 +8,7 @@ async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if UserDatabase.get_user_type(update) == 1:
         if UserDatabase.get_user_lang(update) == "fi":
             await update.message.reply_text("Hei! Autan löytämään sinua kiinnostavat skinnarilalaiset opiskelijatapahtumat helposti!\n\n"
-                                            "Tulen lähettämään sinulle tapahtumia, aina kun niitä julkaistaan. Voit valita mitä tapahtumia sinulle lähetän komennolla /tags."
+                                            "Lähetän sinulle tapahtumia, aina kun niitä julkaistaan. Voit valita mitä tapahtumia sinulle lähetän komennolla /tags."
                                             "Voit muuttaa näitä tägejä aina kun haluat!\n\n"
                                             "Kirjottamalla minulle /list lähetän sinulle kaikki tulevat tapahtumat aikajärjestyksessä!\n\n"
                                             "Voit myös kirjoittaa /list-komennon perään ohjeita, jonka mukaan listaan tapahtumat\n\n"
@@ -18,3 +18,6 @@ async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):
                                             "")
         else:
             await update.message.reply_text("This bot helps you to find events")
+
+    else:
+        await update.message.reply_text("Pitäs osata käyttää jo ilman apua!")

@@ -18,7 +18,8 @@
         "accepted": true,
         "tags": [
             "#sits"
-        ]
+        ],
+        "stage": 99
     },
     {
         "id": 5,
@@ -39,7 +40,8 @@
         "accepted": true,
         "tags": [
             "#sits"
-        ]
+        ],
+        "stage": 99
     },
     {
         "id": 6,
@@ -60,7 +62,8 @@
         "accepted": true,
         "tags": [
             "#alcohol-free"
-        ]
+        ],
+        "stage": 99
     },
     {
         "id": 7,
@@ -81,7 +84,8 @@
         "accepted": true,
         "tags": [
             "#all"
-        ]
+        ],
+        "stage": 99
     },
     {
         "id": 11,
@@ -102,7 +106,8 @@
         "accepted": true,
         "tags": [
             "#all"
-        ]
+        ],
+        "stage": 99
     },
     {
         "id": 12,
@@ -121,7 +126,8 @@
         "price": 0.0,
         "dc": "haalarit",
         "accepted": false,
-        "tags": null
+        "tags": null,
+        "stage": 99
     },
     {
         "id": 13,
@@ -140,7 +146,8 @@
         "price": 0.0,
         "dc": "Haalarit",
         "accepted": true,
-        "tags": null
+        "tags": null,
+        "stage": 99
     },
     {
         "id": 14,
@@ -159,7 +166,8 @@
         "price": 15.0,
         "dc": "Haalarit",
         "accepted": true,
-        "tags": null
+        "tags": null,
+        "stage": 99
     },
     {
         "id": 15,
@@ -178,7 +186,8 @@
         "price": 0.0,
         "dc": "Haalarit",
         "accepted": false,
-        "tags": null
+        "tags": null,
+        "stage": 99
     },
     {
         "id": 16,
@@ -197,6 +206,73 @@
         "price": 0.0,
         "dc": "haalarit",
         "accepted": true,
-        "tags": null
+        "tags": null,
+        "stage": 99
+    },
+    {
+        "id": 17,
+        "name": "Lytkyn kes\u00e4p\u00e4iv\u00e4t",
+        "creator": "ansu187",
+        "start_time": "2023-07-28 18:00:00",
+        "end_time": "2023-07-30 18:00:00",
+        "ticket_sell_time": null,
+        "location": "Vierula / kampus",
+        "description_fi": "Lytkyn hallitus, alumnit ja henkil\u00f6kunta virkist\u00e4ytyy!",
+        "description_en": "Ltky\u2019s board, employees and alumnis have a refreshing evening!",
+        "ticket_link": null,
+        "other_link": "Face",
+        "accessibility_fi": "Tapahtuma on esteet\u00f6n!",
+        "accessibility_en": "Event is accessible",
+        "price": 0.0,
+        "dc": "Normaalit vaatteet // normal clothing",
+        "accepted": true,
+        "tags": [
+            "#all"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 18,
+        "name": "Shotgun-tapahtuma",
+        "creator": "ansu187",
+        "start_time": "2023-07-28 20:00:00",
+        "end_time": "2023-07-28 20:10:00",
+        "ticket_sell_time": null,
+        "location": "Vierulan takapiha",
+        "description_fi": "Otetaan shotgunit!",
+        "description_en": "Let\u2019s shotgun!",
+        "ticket_link": null,
+        "other_link": "@shotguntapahtuma",
+        "accessibility_fi": "Pit\u00e4\u00e4 pysty\u00e4 polvistumaan ja nielem\u00e4\u00e4n juoma nopeasti.",
+        "accessibility_en": "You\u2019ll have to be able to take a knee and suck the drink fast!",
+        "price": 0.0,
+        "dc": "Normivaatteet",
+        "accepted": true,
+        "tags": [
+            "#shotgun"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 19,
+        "name": "Hallituksen Ruusu",
+        "creator": "Eki3ki",
+        "start_time": "2023-07-28 20:20:00",
+        "end_time": "2023-07-28 20:50:00",
+        "ticket_sell_time": null,
+        "location": "Vierula Lounge",
+        "description_fi": "LTKYH '23 kes\u00e4p\u00e4ivien virallinen Ruusupeli",
+        "description_en": "LTKY Board '23 Summer Gettogether Official R\u00f3se Game",
+        "ticket_link": null,
+        "other_link": "-",
+        "accessibility_fi": "Nielent\u00e4-elimist\u00f6 jolla voi juoda noin 2-3 cl boolia kerralla, el\u00e4m\u00e4n sattuessa hieman enemm\u00e4n",
+        "accessibility_en": "Ability to drink booze",
+        "price": 0.0,
+        "dc": "Come as you are",
+        "accepted": true,
+        "tags": [
+            "#all"
+        ],
+        "stage": 99
     }
 ]

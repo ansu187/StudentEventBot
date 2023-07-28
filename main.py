@@ -4,7 +4,7 @@ from telegram.ext import Application, CommandHandler, ConversationHandler, Messa
 
 import EventSaver, Feedback
 import EventSaver
-import Start, Tags, List, Accept, Help
+import Start, Tags, List, Accept, Help, Edit
 
 TOKEN: Final = "6068485992:AAFMLQ08pgVsizJhheAcKCfi5LJm9pFbozI"
 USERNAME: Final = "biletestibot"
@@ -42,6 +42,29 @@ def main() -> None:
         fallbacks=[CommandHandler("cancel", EventSaver.cancel)],
     )
 
+    edit_handler = ConversationHandler(
+        entry_points=[CommandHandler("edit", Edit.edit_command)],
+        states={
+            Edit.MENU: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.menu)],
+            Edit.NAME: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.name)],
+            Edit.START_TIME: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.start_time)],
+            Edit.END_TIME: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.end_time)],
+            Edit.TICKET_SELL_TIME: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.ticket_sell_time)],
+            Edit.LOCATION: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.location)],
+            Edit.DESCRIPTION_FI: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.description_fi)],
+            Edit.DESCRIPTION_EN: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.description_en)],
+            Edit.PRICE: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.price)],
+            Edit.TICKET_LINK: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.ticket_link)],
+            Edit.OTHER_LINK: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.other_link)],
+            Edit.ACCESSIBILITY_FI: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.accessibility_fi)],
+            Edit.ACCESSIBILITY_EN: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.accessibility_en)],
+            Edit.DC: [MessageHandler(filters.TEXT & ~filters.COMMAND,Edit.dc)],
+            Edit.TAGS: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.tags)],
+            Edit.SUBMIT: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.submit)],
+        },
+        fallbacks=[CommandHandler("cancel", EventSaver.cancel)],
+    )
+
     tag_handler = ConversationHandler(
         entry_points=[CommandHandler("tags", Tags.start_tags)],
         states={
@@ -73,6 +96,7 @@ def main() -> None:
     application.add_handler(CommandHandler("accept", Accept.accept))
     application.add_handler(CommandHandler("help", Help.help))
     application.add_handler(event_handler)
+    application.add_handler(edit_handler)
     application.add_handler(tag_handler)
     application.add_handler(feedback_handler)
 

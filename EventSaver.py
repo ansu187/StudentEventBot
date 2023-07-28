@@ -100,17 +100,6 @@ async def close_keyboard(update, context):
 
 
 
-async def edit_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    reply_keyboard = ["NAME", "START_TIME", "END_TIME", "LOCATION", "DESCRIPTION_FI", "DESCRIPTION_EN", "PRICE", "TICKET_LINK", \
-    "TICKET_SELL_TIME", "OTHER_LINK", "ACCESSIBILITY_FI", "ACCESSIBILITY_EN", "DC"]
-
-    await update.message.reply_text(
-        f"Do you want to continue editing the event?",
-        reply_markup=ReplyKeyboardMarkup(
-            reply_keyboard, one_time_keyboard=True, input_field_placeholder="Edit events?"
-        ),
-    )
-
 
 async def create_event_object(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Makes the event object and ads creator and puts 0 as id
@@ -129,6 +118,8 @@ async def get_events_list(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def event_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     # checks if its regular user
+
+    print("Event command toimii")
     if UserDatabase.get_user_type(update) == 1:
         await update.message.reply_text("You have no authorization to create an event.")
         return ConversationHandler.END
@@ -463,16 +454,16 @@ async def other_link(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user_input = user_input.lower()
     if user_input == "back":
         if context.user_data["free_event"]:
-            await update.message.reply_text("Price of the event, write 0, if the event is free.")
+            await update.message.reply_text(user_prompts[PRICE])
             await run_before_every_return(update, context)
             return PRICE
         else:
-            await update.message.reply_text("At which time the ticket sale starts? (day.month.year hours.minutes)")
+            await update.message.reply_text(user_prompts[TICKET_SELL_TIME])
             await run_before_every_return(update, context)
             return TICKET_SELL_TIME
 
     if user_input == "skip":
-        await update.message.reply_text("Accessibility instructions in Finnish, if you need help for what to write here, type help.")
+        await update.message.reply_text(user_prompts[ACCESSIBILITY_FI])
         await run_before_every_return(update, context)
         return ACCESSIBILITY_FI
 
@@ -483,7 +474,7 @@ async def other_link(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     event.stage = ACCESSIBILITY_FI
     EventDatabase.event_backup_save(event, update)
 
-    await update.message.reply_text("Accessibility instructions in Finnish, if you need help for what to write here, type help.")
+    await update.message.reply_text(user_prompts[ACCESSIBILITY_FI])
     await run_before_every_return(update, context)
     return ACCESSIBILITY_FI
 
@@ -517,7 +508,7 @@ async def accessibility_en(update: Update, context: ContextTypes.DEFAULT_TYPE) -
     user_input = update.message.text
     user_input = user_input.lower()
     if user_input == "back":
-        await update.message.reply_text("Accessibility instructions in Finnish, if you need help for what to write here, type help.")
+        await update.message.reply_text(user_prompts[ACCESSIBILITY_FI])
         await run_before_every_return(update, context)
         return ACCESSIBILITY_FI
 
@@ -528,7 +519,7 @@ async def accessibility_en(update: Update, context: ContextTypes.DEFAULT_TYPE) -
     event.stage = DC
     EventDatabase.event_backup_save(event, update)
 
-    await update.message.reply_text("Dresscode:")
+    await update.message.reply_text(user_prompts[DC])
     await run_before_every_return(update, context)
     return DC
 
@@ -537,7 +528,7 @@ async def dc(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user_input = update.message.text
     user_input = user_input.lower()
     if user_input == "back":
-        await update.message.reply_text("Accessibility instructions in English.")
+        await update.message.reply_text(user_prompts[ACCESSIBILITY_EN])
         await run_before_every_return(update, context)
         return ACCESSIBILITY_EN
 
@@ -638,6 +629,8 @@ async def save(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
             event.id = event_list[-1].id + 1
         except IndexError:
             event.id = 1
+
+        event.stage = 99
         event_list.append(event)
         EventDatabase.events_writer(event_list)
         event = context.user_data['event']
@@ -649,8 +642,10 @@ async def save(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         return ConversationHandler.END
 
     if choice == "save":
-
+        event = context.user_data['event']
+        event.stage = 99
         await update.message.reply_text("Event saved. Type /edit to edit the event. To submit the event, type /event")
+
         await run_before_every_return(update, context)
         return ConversationHandler.END
 

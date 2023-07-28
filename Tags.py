@@ -55,10 +55,10 @@ async def add_remove(update: Update, context: ContextTypes.DEFAULT_TYPE):
     choice = update.message.text
     await list_tags(update, context)
     if choice == "Add":
-        await keyboard(update, context, "add")
+        await keyboard(update, context, "add", "remove")
         return ADD
     if choice == "Remove":
-        await keyboard(update, context, "remove")
+        await keyboard(update, context, "remove", "add")
         return REMOVE
 
     else:

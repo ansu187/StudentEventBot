@@ -24,7 +24,7 @@ async def accept(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 
-    if UserDatabase.get_user_type(update) != 3:
+    if UserDatabase.get_user_type(update) < 3:
         await update.message.reply_text("You have no authorization to accept events!")
         return
 

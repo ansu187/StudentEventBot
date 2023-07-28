@@ -38,29 +38,5 @@
         "accepted": false,
         "tags": null,
         "stage": 14
-    },
-    {
-        "id": 0,
-        "name": "Jee",
-        "creator": "ansu187",
-        "start_time": "2023-09-18 12:00:00",
-        "end_time": null,
-        "ticket_sell_time": null,
-        "location": "Kellari",
-        "description_fi": "Kaljaa",
-        "description_en": "On",
-        "ticket_link": null,
-        "other_link": "Face",
-        "accessibility_fi": "On",
-        "accessibility_en": "Yes",
-        "price": 0.0,
-        "dc": "Haalarit",
-        "accepted": false,
-        "tags": [
-            "#alcohol-free",
-            "#bar",
-            "#sits"
-        ],
-        "stage": 15
     }
 ]
