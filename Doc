@@ -52,6 +52,18 @@ Sends help text that is tailored based on the user type.
 
 
 
+UserDatabase
+
+user_reader() -> user_list[]
+
+user_writer(user_list) -> none
+
+get_user_lang(update) -> user_lang: str
+
+
+get_user_type(update) -> int
+
+
 
 
 
