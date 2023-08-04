@@ -87,6 +87,7 @@ get_user_lang(update) -> user_lang: str
 get_user_type(update) -> int
 
 
+
 EventDatabase.py handles I/O with the events.json and events_backup.json files. events.json is used to store events
 that are ready to be checked by LTKY and events that are already approved.
 

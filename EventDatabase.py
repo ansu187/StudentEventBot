@@ -103,8 +103,6 @@ def events_reader(file_name: str) -> List[Event]:
     except json.JSONDecodeError:
         print("Invalid JSON data in the file!")
 
-
-
     return event_list
 
 
@@ -203,89 +201,6 @@ def event_parser_normal(event: Event, user_lang) -> str:
 
     return event_text
 
-
-
-    """
-    if user_lang == "fi":
-
-        start_time_full = event.start_time
-
-        start_date = start_time_full.strftime("%d.%m.%Y")
-        start_time = start_time_full.strftime("%H:%M")
-
-        try:
-            end_time_full = event.end_time
-            end_date = end_time_full.strftime("%d.%m.%Y")
-            end_time = end_time_full.strftime("%H:%M")
-
-            if start_date == end_date:
-                text_head = (
-                    f"{event.name.upper()} - {start_date}\n"
-                    f"Klo: {start_time} - {end_time}\n")
-
-            if end_date != start_date:
-                text_head = (f"**{event.name.upper()}**\n" \
-                             f"Alkaa\t{start_date} klo {start_time}\n"
-                             f"Päättyy\t{end_date} klo {end_time}\n\n")
-
-
-        except AttributeError:
-            text_head = (
-                f"**{event.name.upper()}**\n"
-                f"{start_date} Klo: {start_time}->\n")
-
-        text_body = (f"@{event.location}\nDresscode: {event.dc}\n\n"
-                     f"{event.description_fi}\n\n{event.accessibility_fi}\n\n")
-
-        text_tail = (
-            f"Hinta: {event.price}\n\nLiput: {event.ticket_link}\n\nLipunmyyntipäivä: {event.ticket_sell_time}\n\n")
-
-
-        event_text = f"{text_head}...\n{text_body}{text_tail}"
-
-
-        return event_text
-
-    else:
-
-
-        start_time_full = event.start_time
-
-        start_date = start_time_full.strftime("%d.%m.%Y")
-        start_time = start_time_full.strftime("%H:%M")
-
-        try:
-            end_time_full = event.end_time
-            end_date = end_time_full.strftime("%d.%m.%Y")
-            end_time = end_time_full.strftime("%H:%M")
-
-            if start_date == end_date:
-                text_head = (
-                    f"{event.name.upper()} - {start_date}\n"
-                    f"from {start_time} to {end_time}\n")
-
-            if end_date != start_date:
-                text_head = (f"**{event.name.upper()}**\n" \
-                             f"Starts\t{start_date} at {start_time}\n"
-                             f"Ends\t{end_date} at {end_time}\n\n")
-
-
-        except AttributeError:
-            text_head = (
-                f"**{event.name.upper()}**\n"
-                f"{start_date} at {start_time}->\n")
-
-        text_body = (f"@{event.location}\nDresscode: {event.dc}\n\n"
-                     f"{event.description_fi}\n\n{event.accessibility_fi}\n\n")
-
-        text_tail = (
-            f"Price: {event.price}\n\nTickets: {event.ticket_link}\n\nTicket sale: {event.ticket_sell_time}\n\n")
-
-        event_text = f"{text_head}...\n{text_body}{text_tail}"
-
-
-        return event_text
-        """
 
 
 def event_parser_all(event: Event) -> str:

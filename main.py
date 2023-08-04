@@ -4,7 +4,7 @@ from telegram.ext import Application, CommandHandler, ConversationHandler, Messa
 
 import EventSaver, Feedback
 import EventSaver
-import Start, Tags, List, Accept, Help, Edit
+import Start, Tags, List, Accept, Help, Edit, Dev
 
 TOKEN: Final = "6068485992:AAFMLQ08pgVsizJhheAcKCfi5LJm9pFbozI"
 USERNAME: Final = "biletestibot"
@@ -103,6 +103,7 @@ def main() -> None:
     application.add_handler(CommandHandler("list", List.list))
     application.add_handler(CommandHandler("accept", Accept.accept))
     application.add_handler(CommandHandler("help", Help.help))
+    application.add_handler(CommandHandler("users", Dev.dev))
     application.add_handler(start_handler)
     application.add_handler(event_handler)
     application.add_handler(edit_handler)

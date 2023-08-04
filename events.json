@@ -291,7 +291,7 @@
         "accessibility_en": "Use elevator",
         "price": 0.0,
         "dc": "Haalarit",
-        "accepted": false,
+        "accepted": true,
         "tags": [
             "#kellari",
             "#sits"

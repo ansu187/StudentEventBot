@@ -96,14 +96,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     return LANG
 
 
-
-
-
-
-
-
-
-
 async def lang(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     input = update.message.text.lower()
     new_user = context.user_data['user']
