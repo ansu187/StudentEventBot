@@ -1,0 +1,70 @@
+Main()
+Main handles all the handlers. Every command corresponds to a handler, that triggers the respective function(s) in their own files.
+
+ConversationHandlers:
+
+event_handler handles the creating of events. The file for all the functionality is EventSaver.py
+Command: /event
+
+edit_handler handles editing the event. The file is Edit.py
+Command: /edit
+
+tag_handler handles adding tags to user preferences. It's in Tags.py folder.
+Command: /tags
+
+feedback_handler handles giving feedback to bot. Folder is the Feedback.py and the feedbacks end up in the feedback.txt -file
+
+
+CommandHandlers:
+
+Command:
+/start
+Creates the accound.
+TODO: Asks user their languange preference
+TODO: Asks user their guilds/hobby group
+
+Command:
+/list
+Lists all the events
+
+Accepts parametres:
+  /list (int)
+  sends as many events as the integer says
+
+  /list next week
+  Sends events of the next week
+
+  /list #
+  Ought to open a keyboard with valid tags and when the tag is selected, will list all the events of     that tag. Reguires reformatting of the list into ConversationHandler.
+
+
+Command:
+/accept
+lists all the events that are not yet accepted. Only works if the user_type >= 3
+
+Parametres:
+  /accept (id)
+  Changes the Event.accepted into True. Sends the event to all users of the bot.
+
+Command:
+/help
+Sends help text that is tailored based on the user type.
+
+
+
+UserDatabase
+
+user_reader() -> user_list[]
+
+user_writer(user_list) -> none
+
+get_user_lang(update) -> user_lang: str
+
+
+get_user_type(update) -> int
+
+
+
+
+
+
