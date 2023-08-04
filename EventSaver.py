@@ -119,7 +119,7 @@ async def get_events_list(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def event_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     # checks if its regular user
 
-    print("Event command toimii")
+
     if UserDatabase.get_user_type(update) == 1:
         await update.message.reply_text("You have no authorization to create an event.")
         return ConversationHandler.END

@@ -16,7 +16,6 @@ async def list(update: Update, context: ContextTypes.DEFAULT_TYPE):
         arguments = ""
 
 
-
     event_list = EventDatabase.get_accepted_events()
     user_lang = UserDatabase.get_user_lang(update)
     if arguments == "id":

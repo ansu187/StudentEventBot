@@ -3,6 +3,7 @@ import os
 from typing import Any
 
 import User
+import List
 from telegram import Update
 
 def user_reader(): #Reads the user list from the JSON-file!
