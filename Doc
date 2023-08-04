@@ -43,8 +43,8 @@ feedback_handler handles giving feedback to bot. Folder is the Feedback.py and t
 CommandHandlers:
 
 Command:
-/start
-Creates the accound.
+/start /lang
+Creates the account and asks their language. Both commands work the same.
 TODO: Asks user their guilds/hobby group
 
 Command:
