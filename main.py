@@ -89,12 +89,21 @@ def main() -> None:
         fallbacks=[CommandHandler("cancel", EventSaver.cancel)]
     )
 
+    start_handler = ConversationHandler(
+        entry_points=[CommandHandler("start", Start.start), CommandHandler("lang", Start.start)],
+        states={
+            Start.LANG: [MessageHandler(filters.TEXT & ~filters.COMMAND, Start.lang)]
+        },
+        fallbacks=[CommandHandler("cancel", EventSaver.cancel)]
+    )
 
 
-    application.add_handler(CommandHandler("start", Start.start))
+
+
     application.add_handler(CommandHandler("list", List.list))
     application.add_handler(CommandHandler("accept", Accept.accept))
     application.add_handler(CommandHandler("help", Help.help))
+    application.add_handler(start_handler)
     application.add_handler(event_handler)
     application.add_handler(edit_handler)
     application.add_handler(tag_handler)

@@ -1,3 +1,28 @@
+EVENT-BOT
+
+The main idea of the bot is to make information about events easily accessible. The bot should be as easy to use as possible, especially
+for regular users.
+
+There are currently 4 user types. Higher "tiers" have more commands, and therefore functionality available to them.
+
+USER TYPES:
+1 - Basic user
+Commands available: /start /list /help /feedback /tags
+
+2 - Organizer
+Commands available: /event /edit
+These users have access to greate events. Represent guilds and hobby associations
+
+3 - Admin
+Commands available: /accept
+These users can accept the events, after that they are send to all.
+
+4 - Developer:
+Currently used for testing shenanigans.
+
+
+
+
 Main()
 Main handles all the handlers. Every command corresponds to a handler, that triggers the respective function(s) in their own files.
 
@@ -20,7 +45,6 @@ CommandHandlers:
 Command:
 /start
 Creates the accound.
-TODO: Asks user their languange preference
 TODO: Asks user their guilds/hobby group
 
 Command:
@@ -52,7 +76,7 @@ Sends help text that is tailored based on the user type.
 
 
 
-UserDatabase
+UserDatabase.py handles I/O with the users.json -file
 
 user_reader() -> user_list[]
 
@@ -60,10 +84,50 @@ user_writer(user_list) -> none
 
 get_user_lang(update) -> user_lang: str
 
-
 get_user_type(update) -> int
 
 
+EventDatabase.py handles I/O with the events.json and events_backup.json files. events.json is used to store events
+that are ready to be checked by LTKY and events that are already approved.
+
+get_only_upcoming()-> List[Event]
+Returns a list of events that are upcoming. If an event doesn't have a end time, it will still contain the event
+on the same day. For example, if there is a sitsparty that is set to start today at 6pm, it will be in this list
+until the 12am.
+
+If the event has a end time, it the event_list will have the event until it ends. For example, event like marathon monday
+will be in the list, in the morning as well. Also, events that last for multiple days, will public for the whole duration.
+
+
+events_reader(file_name: str) -> List[Event]
+Reads a json-file containing events. Doesn't do any screening about them, just reads and puts them into a event_list.
+
+events_writer(event_list):
+Writes events to events.json -file
+
+event_finder_by_id(id, file_name) -> Event
+Finds an event from all the events of the file based on the id.
+
+get_unaccepted_events() -> List[Event]
+Returns a list of events from events.json that have the event.accepted as false
+
+get_accepted_events() -> List[Events]
+Returns a list of events from events.json that have the event.accepted as true
+
+event_parser_normal(Event, user_lang) -> str
+Takes an event and turns it into a message, that can be send to regular user. Will send messages in the languange that user
+has chosen. Will send only relevant information.
+
+event_parser_all(Event) -> str
+Will parse the event to have all the information in one string. This is used for organizer, admin and developer accounts.
+For example, when organizer has created an event, this will be used to send the event for them, so they can see all the information
+that their event has.
+
+event_backup_save(Event, Update)
+Will write the event into events_backup.json file. This is used to save the event after every addition and alteration done by organizer.
+
+event_backup_delete(Update, Context)
+Deletes an event form events_backup.json based on the username of the user.
 
 
 
