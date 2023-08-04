@@ -1,7 +1,7 @@
 import json
 
 class User:
-    def __init__(self, id, nick, tags, user_type, user_lang):
+    def __init__(self, id, nick, tags, user_type, user_lang=None):
         self.id = id
         self.nick = nick
         self.tags = tags

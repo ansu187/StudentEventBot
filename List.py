@@ -7,9 +7,13 @@ from datetime import datetime, timedelta
 
 
 async def list(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    arguments = context.args
-    arguments = " ".join(arguments)
-    arguments = arguments.lower()
+
+    try:
+        arguments = context.args
+        arguments = " ".join(arguments)
+        arguments = arguments.lower()
+    except TypeError:
+        arguments = ""
 
 
 

@@ -1,5 +1,7 @@
 import json
 import os
+from typing import Any
+
 import User
 from telegram import Update
 
@@ -27,8 +29,6 @@ def user_reader(): #Reads the user list from the JSON-file!
 
 def user_writer(user_list): #Writes user data back to the users.json -file
 
-
-
     try:
         with open("Users.json", "w") as f:
             json.dump(user_list, f, cls=User.CustomerEncoder)
@@ -39,14 +39,14 @@ def user_writer(user_list): #Writes user data back to the users.json -file
         print("Something went wrong")
 
 
-def get_user_lang(update: Update) -> str:
+def get_user_lang(update: Update) -> str | None:
     current_user_id = update.message.from_user.id
     user_list = user_reader()
     for user in user_list:
         if current_user_id == user.id:
             return user.user_lang
 
-    return None
+    return
 
 
 def get_user_type(update: Update) -> int:

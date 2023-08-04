@@ -8,6 +8,22 @@ import os
 import UserDatabase
 
 
+LANG = 0
+
+
+async def keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    reply_keyboard = [["finnish", "english"]]
+
+    await update.message.reply_text(
+        f"What language do you want to use?",
+        reply_markup=ReplyKeyboardMarkup(
+            reply_keyboard, one_time_keyboard=True, input_field_placeholder="Language:"
+        ),
+    )
+
+    ReplyKeyboardRemove()
+    return
+
 
 async def tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
     #Handle the tags :D
@@ -50,45 +66,79 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         UserDatabase.user_writer(user_list)
 
-        return
+        return ConversationHandler.END
 
 
 
     #Handles the new user
     else:
-        await update.message.reply_text("Welcome to use the Skinnarila Student Events bot! This bot is going to save your Telegram ID, and will send you messages about the new events.")
+
         user_id = update.message.from_user.id
 
         #Sets the basic values
-        new_user = User.User(user_id, update.message.from_user.username, ["#all"], 1, update.message.from_user.language_code)
+        user = User.User(user_id, update.message.from_user.username, ["#all"], 1)
 
         #Checks if the user is allready in the database
-        found = False
+        context.user_data['old_user'] = False
         for user in user_list:
             if user.id == user_id:
-                found = True
-                break
+                context.user_data['old_user'] = True
 
-        #If not, adds it to the list
-        if not found:
-
-            user_list.append(new_user)
-            print(f"New user added {update.message.from_user.username}!")
+        if not context.user_data['old_user']:
+            await update.message.reply_text(
+                "Welcome to use the Skinnarila Student Events bot! This bot is going to save your Telegram ID, and will send you messages about the new events.")
 
 
+        context.user_data['user'] = user
 
 
-        #Writes the userlist into the database
-        UserDatabase.user_writer(user_list)
-
-        #Sends confirmation message
-        if found:
-            await update.message.reply_text("You already have an account!")
-
-        else:
-            await update.message.reply_text("Your account is now saved!")
-            await List.list(update, context)
+    await keyboard(update,context)
+    return LANG
 
 
 
+
+
+
+
+
+
+
+async def lang(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    input = update.message.text.lower()
+    new_user = context.user_data['user']
+    user_list = UserDatabase.user_reader()
+
+    if context.user_data['old_user']:
+        user_id = update.message.from_user.id
+        for user in user_list:
+            if user_id == user.id:
+                if input == "finnish":
+                    user.user_lang = "fi"
+                elif input == "english":
+                    user.user_lang = "en"
+                UserDatabase.user_writer(user_list)
+
+        if UserDatabase.get_user_lang(update) == "en":
+            await update.message.reply_text("Your language has been changed!")
+        elif UserDatabase.get_user_lang(update) == "fi":
+            await update.message.reply_text("Kieli vaihdettu!")
+        return ConversationHandler.END
+
+    if input == "finnish":
+        new_user.user_lang = "fi"
+
+    elif input == "english":
+        new_user.user_lang = "en"
+
+
+    user_list.append(new_user)
+
+    UserDatabase.user_writer(user_list)
+
+
+    await update.message.reply_text("Your account is now saved!\nHere are the upcoming events!")
+    await List.list(update, context)
+
+    return ConversationHandler.END
 

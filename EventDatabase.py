@@ -42,7 +42,7 @@ def get_only_upcoming() -> List[Event]:
     return event_list_only_upcoming
 
 
-def events_reader(file_name: str):
+def events_reader(file_name: str) -> List[Event]:
     event_list = []
 
     try:
@@ -150,6 +150,14 @@ def get_accepted_events() -> List[Event]:
 
 def event_parser_normal(event: Event, user_lang) -> str:
     # contains name and time
+    prompts = [["from", "to", "Starts", "at", "Ends", "at", "at", "Price","Tickets: ", "Ticket sale time"],
+               ["Klo: ", "-", "Alkaa", "klo", "Päättyy", "klo", "klo: ","Hinta: ", "Liput", "Lipunmyyntipäivä"]]
+
+    if user_lang == "fi":
+        lang_code = 1
+    else:
+        lang_code = 0
+
     text_head = ""
 
     # Contains location, drescode, description and accesibility information
@@ -158,6 +166,46 @@ def event_parser_normal(event: Event, user_lang) -> str:
     # contains ticket information
     text_tail = ""
 
+    start_time_full = event.start_time
+
+    start_date = start_time_full.strftime("%d.%m.%Y")
+    start_time = start_time_full.strftime("%H:%M")
+
+    try:
+        end_time_full = event.end_time
+        end_date = end_time_full.strftime("%d.%m.%Y")
+        end_time = end_time_full.strftime("%H:%M")
+
+        if start_date == end_date:
+            text_head = (
+                f"{event.name.upper()} - {start_date}\n"
+                f"{prompts[lang_code][0]} {start_time} {prompts[lang_code][1]} {end_time}\n")
+
+        if end_date != start_date:
+            text_head = (f"**{event.name.upper()}**\n" \
+                         f"{prompts[lang_code][2]}\t{start_date} {prompts[lang_code][3]} {start_time}\n"
+                         f"{prompts[lang_code][4]}\t{end_date} {prompts[lang_code][5]} {end_time}\n\n")
+
+
+    except AttributeError:
+        text_head = (
+            f"**{event.name.upper()}**\n"
+            f"{start_date} {prompts[lang_code][6]} {start_time}->\n")
+
+    text_body = (f"{event.location}\nDresscode: {event.dc}\n\n"
+                 f"{event.description_fi}\n\n{event.accessibility_fi}\n\n")
+
+    if event.price != 0:
+        text_tail = (
+            f"{prompts[lang_code][7]} {event.price}\n\n{prompts[lang_code][8]} {event.ticket_link}\n\n{prompts[lang_code][9]} {event.ticket_sell_time}\n\n")
+
+    event_text = f"{text_head}...\n{text_body}{text_tail}"
+
+    return event_text
+
+
+
+    """
     if user_lang == "fi":
 
         start_time_full = event.start_time
@@ -193,17 +241,51 @@ def event_parser_normal(event: Event, user_lang) -> str:
             f"Hinta: {event.price}\n\nLiput: {event.ticket_link}\n\nLipunmyyntipäivä: {event.ticket_sell_time}\n\n")
 
 
-        event_text = f"{text_head}...{text_body}{text_tail}"
+        event_text = f"{text_head}...\n{text_body}{text_tail}"
 
 
         return event_text
 
     else:
-        event_text = (
-            f"{event.name}\n\nstarts at: {event.start_time}\nends at: {event.end_time}\n\nLocation: {event.location}\n"
-            f"English description: {event.description_en}\n\nEnglish accessibility:{event.accessibility_en}\n\n"
-            f"Price: {event.price}\n\nTickets: {event.ticket_link}\n\nTicket sale date: {event.ticket_sell_time}\n\nDresscode: {event.dc}")
+
+
+        start_time_full = event.start_time
+
+        start_date = start_time_full.strftime("%d.%m.%Y")
+        start_time = start_time_full.strftime("%H:%M")
+
+        try:
+            end_time_full = event.end_time
+            end_date = end_time_full.strftime("%d.%m.%Y")
+            end_time = end_time_full.strftime("%H:%M")
+
+            if start_date == end_date:
+                text_head = (
+                    f"{event.name.upper()} - {start_date}\n"
+                    f"from {start_time} to {end_time}\n")
+
+            if end_date != start_date:
+                text_head = (f"**{event.name.upper()}**\n" \
+                             f"Starts\t{start_date} at {start_time}\n"
+                             f"Ends\t{end_date} at {end_time}\n\n")
+
+
+        except AttributeError:
+            text_head = (
+                f"**{event.name.upper()}**\n"
+                f"{start_date} at {start_time}->\n")
+
+        text_body = (f"@{event.location}\nDresscode: {event.dc}\n\n"
+                     f"{event.description_fi}\n\n{event.accessibility_fi}\n\n")
+
+        text_tail = (
+            f"Price: {event.price}\n\nTickets: {event.ticket_link}\n\nTicket sale: {event.ticket_sell_time}\n\n")
+
+        event_text = f"{text_head}...\n{text_body}{text_tail}"
+
+
         return event_text
+        """
 
 
 def event_parser_all(event: Event) -> str:

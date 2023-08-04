@@ -274,5 +274,28 @@
             "#all"
         ],
         "stage": 99
+    },
+    {
+        "id": 20,
+        "name": "Jee",
+        "creator": "ansu187",
+        "start_time": "2023-09-29 12:00:00",
+        "end_time": null,
+        "ticket_sell_time": null,
+        "location": "Kellari",
+        "description_fi": "Bileet",
+        "description_en": "Partyy",
+        "ticket_link": null,
+        "other_link": "Www.ltky.fi",
+        "accessibility_fi": "Hissill\u00e4 pit\u00e4\u00e4 menn\u00e4",
+        "accessibility_en": "Use elevator",
+        "price": 0.0,
+        "dc": "Haalarit",
+        "accepted": false,
+        "tags": [
+            "#kellari",
+            "#sits"
+        ],
+        "stage": 99
     }
 ]
