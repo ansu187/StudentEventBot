@@ -76,7 +76,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         user_id = update.message.from_user.id
 
         #Sets the basic values
-        user = User.User(user_id, update.message.from_user.username, ["#all"], 1)
+        new_user = User.User(user_id, update.message.from_user.username, ["#all"], 1)
 
         #Checks if the user is allready in the database
         context.user_data['old_user'] = False
@@ -89,7 +89,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 "Welcome to use the Skinnarila Student Events bot! This bot is going to save your Telegram ID, and will send you messages about the new events.")
 
 
-        context.user_data['user'] = user
+        context.user_data['user'] = new_user
 
 
     await keyboard(update,context)
