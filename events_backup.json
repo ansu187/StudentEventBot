@@ -47,16 +47,20 @@
         "end_time": "2023-09-12 12:00:00",
         "ticket_sell_time": null,
         "location": "kellari",
-        "description_fi": null,
-        "description_en": null,
-        "ticket_link": null,
-        "other_link": null,
-        "accessibility_fi": null,
-        "accessibility_en": null,
-        "price": null,
-        "dc": null,
+        "description_fi": "hyv\u00e4 meno",
+        "description_en": "yeah",
+        "ticket_link": "www.ltky.fi",
+        "other_link": "www.ltky.fi",
+        "accessibility_fi": "ei oo",
+        "accessibility_en": "nope",
+        "price": 0.0,
+        "dc": "dc",
         "accepted": false,
-        "tags": [],
-        "stage": 5
+        "tags": [
+            "#sits",
+            "#bar",
+            "#kellari"
+        ],
+        "stage": 9
     }
 ]

@@ -1,6 +1,6 @@
 from typing import Final
 from telegram import Update
-from telegram.ext import Application, CommandHandler, ConversationHandler, MessageHandler, filters, ContextTypes
+from telegram.ext import Application, CommandHandler, ConversationHandler, MessageHandler, filters, ContextTypes, CallbackQueryHandler
 
 import EventSaver, Feedback
 import EventSaver
@@ -31,7 +31,7 @@ def main() -> None:
             EventSaver.DESCRIPTION_FI: [MessageHandler(filters.TEXT & ~filters.COMMAND, EventSaver.description_fi)],
             EventSaver.DESCRIPTION_EN: [MessageHandler(filters.TEXT & ~filters.COMMAND, EventSaver.description_en)],
             EventSaver.PRICE: [MessageHandler(filters.TEXT & ~filters.COMMAND, EventSaver.price)],
-            EventSaver.TICKET_LINK: [MessageHandler(filters.TEXT & ~filters.COMMAND, EventSaver.ticket_link)],
+            EventSaver.TICKET_LINK_OR_INFO: [MessageHandler(filters.TEXT & ~filters.COMMAND, EventSaver.ticket_link)],
             EventSaver.OTHER_LINK: [MessageHandler(filters.TEXT & ~filters.COMMAND, EventSaver.other_link)],
             EventSaver.ACCESSIBILITY_FI: [MessageHandler(filters.TEXT & ~filters.COMMAND, EventSaver.accessibility_fi)],
             EventSaver.ACCESSIBILITY_EN: [MessageHandler(filters.TEXT & ~filters.COMMAND, EventSaver.accessibility_en)],
@@ -54,7 +54,7 @@ def main() -> None:
             Edit.DESCRIPTION_FI: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.description_fi)],
             Edit.DESCRIPTION_EN: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.description_en)],
             Edit.PRICE: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.price)],
-            Edit.TICKET_LINK: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.ticket_link)],
+            Edit.TICKET_LINK_OR_INFO: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.ticket_link)],
             Edit.OTHER_LINK: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.other_link)],
             Edit.ACCESSIBILITY_FI: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.accessibility_fi)],
             Edit.ACCESSIBILITY_EN: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.accessibility_en)],
@@ -103,7 +103,8 @@ def main() -> None:
     application.add_handler(CommandHandler("list", List.list))
     application.add_handler(CommandHandler("accept", Accept.accept))
     application.add_handler(CommandHandler("help", Help.help))
-    application.add_handler(CommandHandler("users", Dev.dev))
+    application.add_handler(CommandHandler("dev", Dev.dev))
+    application.add_handler(CallbackQueryHandler(Dev.button))
     application.add_handler(start_handler)
     application.add_handler(event_handler)
     application.add_handler(edit_handler)

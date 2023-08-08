@@ -145,6 +145,51 @@ def get_accepted_events() -> List[Event]:
 
     return accepted_events
 
+def get_head(id: int, user_lang) -> str:
+    prompts = [["from", "to", "Starts", "at", "Ends", "at", "at", "Price", "Tickets: ", "Ticket sale time"],
+               ["Klo: ", "-", "Alkaa", "klo", "Päättyy", "klo", "klo: ", "Hinta: ", "Liput", "Lipunmyyntipäivä"]]
+
+    if user_lang == "fi":
+        lang_code = 1
+    else:
+        lang_code = 0
+
+
+    event_list = get_accepted_events()
+    for event in event_list:
+        if id == event.id:
+            text_head = ""
+            start_time_full = event.start_time
+
+            start_date = start_time_full.strftime("%d.%m.%Y")
+            start_time = start_time_full.strftime("%H:%M")
+
+            try:
+                end_time_full = event.end_time
+                end_date = end_time_full.strftime("%d.%m.%Y")
+                end_time = end_time_full.strftime("%H:%M")
+
+                if start_date == end_date:
+                    text_head = (
+                        f"{event.name.upper()} - {start_date}\n"
+                        f"{prompts[lang_code][0]} {start_time} {prompts[lang_code][1]} {end_time}\n")
+
+                if end_date != start_date:
+                    text_head = (f"**{event.name.upper()}**\n" \
+                                 f"{prompts[lang_code][2]}\t{start_date} {prompts[lang_code][3]} {start_time}\n"
+                                 f"{prompts[lang_code][4]}\t{end_date} {prompts[lang_code][5]} {end_time}\n\n")
+
+
+            except AttributeError:
+                text_head = (
+                    f"**{event.name.upper()}**\n"
+                    f"{start_date} {prompts[lang_code][6]} {start_time}->\n")
+
+            return text_head
+
+
+
+
 
 def event_parser_normal(event: Event, user_lang) -> str:
     # contains name and time

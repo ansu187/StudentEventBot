@@ -15,7 +15,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-MENU, NAME, START_TIME, END_TIME, LOCATION, DESCRIPTION_FI, DESCRIPTION_EN, PRICE, TICKET_LINK, \
+MENU, NAME, START_TIME, END_TIME, LOCATION, DESCRIPTION_FI, DESCRIPTION_EN, PRICE, TICKET_LINK_OR_INFO, \
     TICKET_SELL_TIME, OTHER_LINK, ACCESSIBILITY_FI, ACCESSIBILITY_EN, DC, TAGS, SUBMIT = range(16)
 
 async def edit_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -39,7 +39,7 @@ async def edit_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
 
 async def keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE):
     reply_keyboard = [["NAME", "START TIME", "END TIME"], ["LOCATION", "DESCRIPTION FI", "DESCRIPTION EN"], ["PRICE",
-                      "TICKET LINK", "TICKET SELL TIME"], ["OTHER LINK",
+                      "TICKET LINK OR INFO", "TICKET SELL TIME"], ["OTHER LINK",
                       "ACCESSIBILITY FI", "ACCESSIBILITY EN"], ["DC", "TAGS", "END", "SUBMIT"]]
 
     await update.message.reply_text(
@@ -77,8 +77,8 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         await update.message.reply_text(EventSaver.user_prompts[EventSaver.PRICE])
         return EventSaver.PRICE
     elif choice == "TICKET LINK":
-        await update.message.reply_text(EventSaver.user_prompts[EventSaver.TICKET_LINK])
-        return EventSaver.TICKET_LINK
+        await update.message.reply_text(EventSaver.user_prompts[EventSaver.TICKET_LINK_OR_INFO])
+        return EventSaver.TICKET_LINK_OR_INFO
     elif choice == "TICKET SELL TIME":
         await update.message.reply_text(EventSaver.user_prompts[EventSaver.TICKET_SELL_TIME])
         return EventSaver.TICKET_SELL_TIME
@@ -315,7 +315,7 @@ async def price(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         return MENU
 
     else:
-        event.stage = TICKET_LINK
+        event.stage = TICKET_LINK_OR_INFO
 
         await keyboard(update, context)
         return MENU

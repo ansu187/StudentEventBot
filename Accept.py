@@ -2,6 +2,7 @@ import UserDatabase
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ConversationHandler, MessageHandler, filters, ContextTypes
 import EventDatabase
+import asyncio
 
 
 async def send_message_to_all_users(update: Update, context: ContextTypes.DEFAULT_TYPE, id):
@@ -9,20 +10,21 @@ async def send_message_to_all_users(update: Update, context: ContextTypes.DEFAUL
 
     event_fi = EventDatabase.event_parser_normal(EventDatabase.event_finder_by_id(id, "events.json"), "fi")
 
+    messages_per_second = 20
+    interval = 1/messages_per_second
+
     for user in user_list:
         try:
             await context.bot.send_message(chat_id=user.id, text=event_fi)
             print(f"Message sent to user {user.id}")
+
+            await asyncio.sleep(interval)
         except Exception as e:
             print(f"Failed to send message to user {user.id}: {str(e)}")
 
 
 async def accept(update: Update, context: ContextTypes.DEFAULT_TYPE):
     arguments = context.args
-    """arguments = " ".join(arguments)
-    arguments = arguments.lower()"""
-
-
 
     if UserDatabase.get_user_type(update) < 3:
         await update.message.reply_text("You have no authorization to accept events!")
