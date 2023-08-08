@@ -26,11 +26,11 @@ from telegram.ext import Application, CommandHandler, ConversationHandler, Messa
 import Event, UserDatabase, EventDatabase
 import Tags
 
-OLD_EVENT, NAME, START_TIME, END_TIME, LOCATION, DESCRIPTION_FI, DESCRIPTION_EN, PRICE, TICKET_LINK, \
+OLD_EVENT, NAME, START_TIME, END_TIME, LOCATION, DESCRIPTION_FI, DESCRIPTION_EN, PRICE, TICKET_LINK_OR_INFO, \
     TICKET_SELL_TIME, OTHER_LINK, ACCESSIBILITY_FI, ACCESSIBILITY_EN, DC, TAGS, SAVE_EVENT = range(16)
 
 stages = ["OLD_EVENT", "NAME", "START_TIME", "END_TIME", "LOCATION", "DESCRIPTION_FI", "DESCRIPTION_EN", "PRICE",
-          "TICKET_LINK", "TICKET_SELL_TIME", "OTHER_LINK",
+          "TICKET_LINK_OR_INFO", "TICKET_SELL_TIME", "OTHER_LINK",
           "ACCESSIBILITY_FI", "ACCESSIBILITY_EN", "DC", "TAGS", "SAVE_EVENT"]
 
 user_prompts = ["", "Name of the event:", "When does the event start: (day.month.year hours.minutes):",
@@ -403,10 +403,10 @@ async def price(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         return OTHER_LINK
     else:
         context.user_data['free_event'] = False #in order to handle back command right!
-        event.stage = TICKET_LINK
-        await update.message.reply_text(f"{user_prompts[TICKET_LINK]}")
+        event.stage = TICKET_LINK_OR_INFO
+        await update.message.reply_text(f"{user_prompts[TICKET_LINK_OR_INFO]}")
         await run_before_every_return(update, context)
-        return TICKET_LINK
+        return TICKET_LINK_OR_INFO
 
 
 async def ticket_link(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -433,9 +433,9 @@ async def ticket_sell_time(update: Update, context: ContextTypes.DEFAULT_TYPE) -
     user_input = update.message.text
     user_input = user_input.lower()
     if user_input == "back":
-        await update.message.reply_text(f"{user_prompts[TICKET_LINK]}")
+        await update.message.reply_text(f"{user_prompts[TICKET_LINK_OR_INFO]}")
         await run_before_every_return(update, context)
-        return TICKET_LINK
+        return TICKET_LINK_OR_INFO
 
     event = context.user_data['event']
     event.ticket_sell_time = update.message.text
