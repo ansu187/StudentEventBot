@@ -23,6 +23,8 @@ from datetime import datetime
 from telegram import Update, ReplyKeyboardMarkup, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import Application, CommandHandler, ConversationHandler, MessageHandler, filters, ContextTypes, \
     CallbackQueryHandler
+
+import Accept
 import Event, UserDatabase, EventDatabase
 import Tags
 
@@ -637,7 +639,8 @@ async def save(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         await update.message.reply_text(
             f"Event saved and submitted for LTKY to check it!")
         await update.message.reply_text(EventDatabase.event_parser_all(event))
-        await EventDatabase.event_backup_delete(update, context)
+        EventDatabase.event_backup_delete(update, context)
+        await Accept.message_to_admins(context)
         await run_before_every_return(update, context)
         return ConversationHandler.END
 

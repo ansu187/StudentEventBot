@@ -5,6 +5,7 @@ from typing import Any
 import User
 import List
 from telegram import Update
+from typing import List
 
 def user_reader(): #Reads the user list from the JSON-file!
     user_list = []
@@ -56,3 +57,13 @@ def get_user_type(update: Update) -> int:
     for user in user_list:
         if current_user_id == user.id:
             return user.user_type
+
+
+
+def get_admins()->List[User]:
+    user_list = user_reader()
+    admin_list = []
+    for user in user_list:
+        if user.user_type >= 3:
+            admin_list.append(user)
+    return admin_list

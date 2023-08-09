@@ -2,13 +2,20 @@ from telegram.ext import CommandHandler, ContextTypes, ConversationHandler
 from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove
 
 import UserDatabase
+import json
 
 ADD_REMOVE, ADD, REMOVE, SAVE = range(4)
 
 
 async def keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE, button: str, prompt: str):
-    reply_keyboard = [["all"], ["#alcohol-free", "#sits", "#appro"], ["#bar", "#kellari"],
-                      ["Save", "/cancel", f"{button}"]]
+    try:
+        with open('tags.json', 'r') as file:
+            tags_data = json.load(file)
+            reply_keyboard = tags_data.get('tags', [])
+    except (FileNotFoundError, json.JSONDecodeError, KeyError):
+        reply_keyboard = [["all"], ["#alcohol-free", "#sits", "#appro"], ["#bar", "#kellari"]]
+
+    reply_keyboard.append(["Save", "/cancel", f"{button}"])
 
     await update.message.reply_text(
         f"What tags do you want to {prompt}?",
@@ -55,10 +62,10 @@ async def add_remove(update: Update, context: ContextTypes.DEFAULT_TYPE):
     choice = update.message.text
     await list_tags(update, context)
     if choice == "Add":
-        await keyboard(update, context, "add", "remove")
+        await keyboard(update, context, "remove", "add")
         return ADD
     if choice == "Remove":
-        await keyboard(update, context, "remove", "add")
+        await keyboard(update, context, "add", "remove")
         return REMOVE
 
     else:
@@ -85,34 +92,43 @@ async def tags_all(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # adds a new tag
 async def add_tag(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    text = update.message.text.lower()
+    if text == "remove":
+        await keyboard(update, context, "add", "remove")
+        return REMOVE
+
     user_list = context.user_data["user_list"]
     for user in user_list:
         if user.id == update.message.from_user.id:
-            if update.message.text not in user.tags:
-                user.tags.append(update.message.text)
+            if text not in user.tags:
+                user.tags.append(text)
                 if "#all" in user.tags:
                     user.tags.remove("#all")
                 context.user_data["user_list"] = user_list
 
     await list_tags(update, context)
 
-    await keyboard(update, context, "add")
+    await keyboard(update, context, "remove", "add")
 
     return ADD
 
 
 # removes a tag
 async def remove_tag(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    text = update.message.text.lower()
+    if text == "add":
+        await keyboard(update, context, "remove", "add")
+        return REMOVE
+
     user_list = context.user_data["user_list"]
     for user in user_list:
         if user.id == update.message.from_user.id:
-            user.tags.remove(update.message.text)
+            user.tags.remove(text)
             context.user_data["user_list"] = user_list
 
     await list_tags(update, context)
 
-    await keyboard(update, context, "remove")
-    await close_keyboard(update, context)
+    await keyboard(update, context, "add", "remove")
     return REMOVE
 
 

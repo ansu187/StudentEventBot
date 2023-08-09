@@ -55,3 +55,24 @@ async def accept(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 
+async def message_to_admins(context: ContextTypes.DEFAULT_TYPE):
+    #Sends message to every admin when a new event is created
+    admin_list = UserDatabase.get_admins()
+
+    messages_per_second = 20
+    interval = 1 / messages_per_second
+
+    unaccepted_events = EventDatabase.get_unaccepted_events()
+    count = 0
+    for event in unaccepted_events:
+        count += 1
+
+    for user in admin_list:
+        try:
+
+            await context.bot.send_message(chat_id=user.id, text=f"There is {count} events that haven't been accepted.")
+            print(f"Message sent to user {user.id}")
+
+            await asyncio.sleep(interval)
+        except Exception as e:
+            print(f"Failed to send message to user {user.id}: {str(e)}")

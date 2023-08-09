@@ -297,5 +297,27 @@
             "#sits"
         ],
         "stage": 99
+    },
+    {
+        "id": 21,
+        "name": "Kaljaa",
+        "creator": "ansu187",
+        "start_time": "2023-08-12 18:00:00",
+        "end_time": null,
+        "ticket_sell_time": null,
+        "location": "Kellari",
+        "description_fi": "Jee",
+        "description_en": "Yeah",
+        "ticket_link": null,
+        "other_link": "Ltky.fi",
+        "accessibility_fi": "Yeah",
+        "accessibility_en": "Jes",
+        "price": 0.0,
+        "dc": "Haalarit",
+        "accepted": false,
+        "tags": [
+            "#appro"
+        ],
+        "stage": 99
     }
 ]
