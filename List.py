@@ -2,7 +2,7 @@ import Event, EventDatabase, User, UserDatabase
 from telegram.ext import Application, CommandHandler, ConversationHandler, MessageHandler, filters, ContextTypes
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from datetime import datetime, timedelta
-
+import asyncio
 
 
 
@@ -86,6 +86,8 @@ async def send_events(update: Update, context: ContextTypes.DEFAULT_TYPE, event_
 
     user_lang = UserDatabase.get_user_lang(update)
     context.user_data["user_lang"] = user_lang
+    messages_per_second = 2
+    interval = 1 / messages_per_second
 
     for event in event_list:
         keyboard = [
@@ -93,8 +95,11 @@ async def send_events(update: Update, context: ContextTypes.DEFAULT_TYPE, event_
                 InlineKeyboardButton("Show:", callback_data=f"{event.id}")]
         ]
 
+
         reply_markup = InlineKeyboardMarkup(keyboard)
+        await asyncio.sleep(interval)
         await update.message.reply_text(f"{EventDatabase.get_head(event.id, UserDatabase.get_user_lang(update))}", reply_markup=reply_markup)
+
 
 
 
@@ -105,7 +110,6 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = update.callback_query
     await query.answer()
 
-    print(query.data)
     try:
         message_id = int(query.data)
         event = EventDatabase.event_finder_by_id(message_id, "events.json")

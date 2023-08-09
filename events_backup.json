@@ -38,29 +38,5 @@
         "accepted": false,
         "tags": null,
         "stage": 14
-    },
-    {
-        "id": 0,
-        "name": "kaljaa",
-        "creator": "ansu187",
-        "start_time": "2023-09-12 12:00:00",
-        "end_time": "2023-09-12 12:00:00",
-        "ticket_sell_time": null,
-        "location": "kellari",
-        "description_fi": "hyv\u00e4 meno",
-        "description_en": "yeah",
-        "ticket_link": "www.ltky.fi",
-        "other_link": "www.ltky.fi",
-        "accessibility_fi": "ei oo",
-        "accessibility_en": "nope",
-        "price": 0.0,
-        "dc": "dc",
-        "accepted": false,
-        "tags": [
-            "#sits",
-            "#bar",
-            "#kellari"
-        ],
-        "stage": 9
     }
 ]

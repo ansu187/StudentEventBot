@@ -69,10 +69,10 @@ def main() -> None:
         entry_points=[CommandHandler("tags", Tags.start_tags)],
         states={
             ADD_REMOVE: [MessageHandler(filters.Regex("^(Add|Remove)$"), Tags.add_remove)],
-            ADD: [MessageHandler(filters.Regex("^(#alcohol-free|#sits|#appro|#bar|#kellari)$"), Tags.add_tag),
+            ADD: [MessageHandler(filters.Regex(r"^(?!all$|Save$)(#\w+)$"), Tags.add_tag),
                   MessageHandler(filters.Regex("^(all)$"), Tags.tags_all),
                   MessageHandler(filters.Regex("^(Save)$"), Tags.save_tag)],
-            REMOVE: [MessageHandler(filters.Regex("^(#alcohol-free|#sits|#appro|#bar|#kellari)$"), Tags.remove_tag),
+            REMOVE: [MessageHandler(filters.Regex(r"^(?!all$|Save$)(#\w+)$"), Tags.remove_tag),
                      MessageHandler(filters.Regex("^(all)$"), Tags.tags_all),
                      MessageHandler(filters.Regex("^(Save)$"), Tags.save_tag)],
 
@@ -104,7 +104,7 @@ def main() -> None:
     application.add_handler(CommandHandler("accept", Accept.accept))
     application.add_handler(CommandHandler("help", Help.help))
     application.add_handler(CommandHandler("dev", Dev.dev))
-    application.add_handler(CallbackQueryHandler(Dev.button))
+    application.add_handler(CallbackQueryHandler(List.button))
     application.add_handler(start_handler)
     application.add_handler(event_handler)
     application.add_handler(edit_handler)
