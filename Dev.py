@@ -10,6 +10,11 @@ USER_TYPE = ["normal", "organizer", "admin", "super_admin"]
 
 
 async def dev(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if UserDatabase.get_user_type(update) < 3:
+        return ConversationHandler.END
+
+
+
     reply_keyboard = [["add_tags", "remove_tags"], ["user_count", "change_user_type"]]
     await update.message.reply_text(
         f"What do you want to do?",
