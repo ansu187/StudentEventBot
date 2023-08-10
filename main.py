@@ -5,8 +5,8 @@ from telegram.ext import Application, CommandHandler, ConversationHandler, Messa
 import EventSaver, Feedback
 import EventSaver
 import Start, Tags, List, Accept, Help, Edit, Dev
+import Secrets
 
-TOKEN: Final = "6068485992:AAFMLQ08pgVsizJhheAcKCfi5LJm9pFbozI"
 USERNAME: Final = "biletestibot"
 
 # Event states
@@ -14,7 +14,7 @@ ADD_REMOVE, ADD, REMOVE = range(3)
 
 
 def main() -> None:
-    application = Application.builder().token(TOKEN).build()
+    application = Application.builder().token(Secrets.TOKEN).build()
 
 
 
@@ -97,18 +97,31 @@ def main() -> None:
         fallbacks=[CommandHandler("cancel", EventSaver.cancel)]
     )
 
+    dev_handler = ConversationHandler(
+        entry_points=[CommandHandler("dev", Dev.dev)],
+        states={
+            Dev.MENU: [MessageHandler(filters.TEXT & ~filters.COMMAND, Dev.menu)],
+            Dev.ADD_TAGS: [MessageHandler(filters.TEXT & ~filters.COMMAND, Dev.add_tag)],
+            Dev.REMOVE_TAGS: [MessageHandler(filters.TEXT & ~filters.COMMAND, Dev.remove_tag)],
+            Dev.CHANGE_USER_TYPE_1: [MessageHandler(filters.TEXT & ~filters.COMMAND, Dev.check_for_user)],
+            Dev.CHANGE_USER_TYPE_2: [MessageHandler(filters.TEXT & ~filters.COMMAND, Dev.set_user_type)],
+        },
+        fallbacks=[CommandHandler("cancel", EventSaver.cancel)]
+    )
+
 
 
 
     application.add_handler(CommandHandler("list", List.list))
     application.add_handler(CommandHandler("accept", Accept.accept))
     application.add_handler(CommandHandler("help", Help.help))
-    application.add_handler(CommandHandler("dev", Dev.dev))
+
     application.add_handler(CallbackQueryHandler(List.button))
     application.add_handler(start_handler)
     application.add_handler(event_handler)
     application.add_handler(edit_handler)
     application.add_handler(tag_handler)
+    application.add_handler(dev_handler)
     application.add_handler(feedback_handler)
 
 
