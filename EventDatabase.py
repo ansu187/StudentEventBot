@@ -149,6 +149,8 @@ def get_head(id: int, user_lang) -> str:
     prompts = [["from", "to", "Starts", "at", "Ends", "at", "at", "Price", "Tickets: ", "Ticket sale time"],
                ["Klo: ", "-", "Alkaa", "klo", "Päättyy", "klo", "klo: ", "Hinta: ", "Liput", "Lipunmyyntipäivä"]]
 
+
+    #set lang_code so we can point to correct lang version in prompt
     if user_lang == "fi":
         lang_code = 1
     else:
@@ -158,6 +160,19 @@ def get_head(id: int, user_lang) -> str:
     event_list = get_accepted_events()
     for event in event_list:
         if id == event.id:
+            event_name_fi = ""
+            event_name_eng = ""
+
+            if "//" in event.name:
+                event_name_fi, event_name_eng = event.name.split("//", 1)
+                event_name_fi = event_name_fi.strip()
+                event_name_eng = event_name_eng.strip()
+            else:
+                event_name_fi = event.name
+                event_name_eng = event.name
+
+            event_name = [event_name_eng, event_name_fi]
+
             text_head = ""
             start_time_full = event.start_time
 
@@ -171,18 +186,18 @@ def get_head(id: int, user_lang) -> str:
 
                 if start_date == end_date:
                     text_head = (
-                        f"{event.name.upper()} - {start_date}\n"
+                        f"{event_name[lang_code].upper()} - {start_date}\n"
                         f"{prompts[lang_code][0]} {start_time} {prompts[lang_code][1]} {end_time}\n")
 
                 if end_date != start_date:
-                    text_head = (f"**{event.name.upper()}**\n" \
+                    text_head = (f"**{event_name[lang_code].upper()}**\n" \
                                  f"{prompts[lang_code][2]}\t{start_date} {prompts[lang_code][3]} {start_time}\n"
                                  f"{prompts[lang_code][4]}\t{end_date} {prompts[lang_code][5]} {end_time}\n\n")
 
 
             except AttributeError:
                 text_head = (
-                    f"**{event.name.upper()}**\n"
+                    f"**{event_name[lang_code].upper()}**\n"
                     f"{start_date} {prompts[lang_code][6]} {start_time}->\n")
 
             return text_head
@@ -209,6 +224,19 @@ def event_parser_normal(event: Event, user_lang) -> str:
     # contains ticket information
     text_tail = ""
 
+
+
+    if "//" in event.name:
+        event_name_fi, event_name_en = event.name.split("//", 1)
+        event_name_fi = event_name_fi.strip()
+        event_name_en = event_name_en.strip()
+    else:
+        event_name_fi = event.name
+        event_name_en = event.name
+
+    event_name = [event_name_en, event_name_fi]
+
+
     start_time_full = event.start_time
 
     start_date = start_time_full.strftime("%d.%m.%Y")
@@ -221,26 +249,73 @@ def event_parser_normal(event: Event, user_lang) -> str:
 
         if start_date == end_date:
             text_head = (
-                f"{event.name.upper()} - {start_date}\n"
+                f"{event_name[lang_code].upper()} - {start_date}\n"
                 f"{prompts[lang_code][0]} {start_time} {prompts[lang_code][1]} {end_time}\n")
 
         if end_date != start_date:
-            text_head = (f"**{event.name.upper()}**\n" \
+            text_head = (f"**{event_name[lang_code].upper()}**\n" \
                          f"{prompts[lang_code][2]}\t{start_date} {prompts[lang_code][3]} {start_time}\n"
                          f"{prompts[lang_code][4]}\t{end_date} {prompts[lang_code][5]} {end_time}\n\n")
 
 
     except AttributeError:
         text_head = (
-            f"**{event.name.upper()}**\n"
+            f"**{event_name[lang_code].upper()}**\n"
             f"{start_date} {prompts[lang_code][6]} {start_time}->\n")
 
-    text_body = (f"{event.location}\nDresscode: {event.dc}\n\n"
-                 f"{event.description_fi}\n\n{event.accessibility_fi}\n\n")
+    if "//" in event.dc:
+        event_dc_fi, event_dc_en = event.dc.split("//", 1)
+        event_dc_fi = event_dc_fi.strip()
+        event_dc_en = event_dc_en.strip()
+    else:
+        event_dc_fi = event.dc
+        event_dc_en = event.dc
+
+    if "//" in event.location:
+        event_location_fi, event_location_en = event.location.split("//", 1)
+        event_location_fi = event_location_fi.strip()
+        event_location_en = event_location_en.strip()
+    else:
+        event_location_fi = event.location
+        event_location_en = event.location
+
+    if lang_code == 1:
+        text_body = (f"Tapahtumapaikka: {event_location_fi}\nDresscode: {event_dc_fi}\n\n"
+                     f"{event.description_fi}\n\n{event.accessibility_fi}\n\n")
+
+    elif lang_code == 0:
+        text_body = (f"Location: {event_location_en}\nDresscode: {event_dc_en}\n\n"
+                     f"{event.description_en}\n\n{event.accessibility_en}\n\n")
+
+
+    try:
+        if "//" in event.ticket_link:
+            event_ticket_link_fi, event_ticket_link_en = event.ticket_link.split("//", 1)
+            event_ticket_link_fi = event_ticket_link_fi.strip()
+            event_ticket_link_en = event_ticket_link_en.strip()
+        else:
+            event_ticket_link_fi = event.ticket_link
+            event_ticket_link_en = event.ticket_link
+
+        event_ticket_link = [event_ticket_link_en, event_ticket_link_fi]
+
+
+    except:
+        event_ticket_link = None
+
 
     if event.price != 0:
-        text_tail = (
-            f"{prompts[lang_code][7]} {event.price}\n\n{prompts[lang_code][8]} {event.ticket_link}\n\n{prompts[lang_code][9]} {event.ticket_sell_time}\n\n")
+        text_tail += f"{prompts[lang_code][7]} {event.price}\n\n"
+    if event.price == 0:
+        if lang_code == 0:
+            text_tail += "The event is FREE!\n\n"
+        elif lang_code == 1:
+            text_tail += "Tapahtuma on ilmainen!\n\n"
+
+    if event_ticket_link is not None:
+        text_tail += f"{prompts[lang_code][8]} {event_ticket_link[lang_code]}"
+    if event.ticket_sell_time is not None:
+        text_tail += f"\n\n{prompts[lang_code][9]} {event.ticket_sell_time}\n\n"
 
     event_text = f"{text_head}...\n{text_body}{text_tail}"
 

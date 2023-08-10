@@ -25,7 +25,7 @@ async def list(update: Update, context: ContextTypes.DEFAULT_TYPE):
     elif arguments == "":
         time_sorted_event_list = sorted(event_list, key=lambda event: event.start_time)
 
-        await send_events(update, context, event_list)
+        await send_events(update, context, time_sorted_event_list)
 
     elif arguments.startswith("#"):
         time_sorted_event_list = sorted(event_list, key=lambda event: event.start_time)
@@ -114,6 +114,6 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         message_id = int(query.data)
         event = EventDatabase.event_finder_by_id(message_id, "events.json")
         await query.edit_message_text(
-            text=f"Selected option: {EventDatabase.event_parser_normal(event, context.user_data['user_lang'])}")
+            text=f"{EventDatabase.event_parser_normal(event, context.user_data['user_lang'])}")
     except ValueError:
         await query.edit_message_text("Please give a whole number!")

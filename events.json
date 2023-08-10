@@ -255,10 +255,10 @@
     },
     {
         "id": 19,
-        "name": "Hallituksen Ruusu",
+        "name": "Hallituksen Ruusu//Boards Ruusu-game",
         "creator": "Eki3ki",
-        "start_time": "2023-07-28 20:20:00",
-        "end_time": "2023-07-28 20:50:00",
+        "start_time": "2023-08-28 20:20:00",
+        "end_time": "2023-08-28 20:50:00",
         "ticket_sell_time": null,
         "location": "Vierula Lounge",
         "description_fi": "LTKYH '23 kes\u00e4p\u00e4ivien virallinen Ruusupeli",
@@ -268,7 +268,7 @@
         "accessibility_fi": "Nielent\u00e4-elimist\u00f6 jolla voi juoda noin 2-3 cl boolia kerralla, el\u00e4m\u00e4n sattuessa hieman enemm\u00e4n",
         "accessibility_en": "Ability to drink booze",
         "price": 0.0,
-        "dc": "Come as you are",
+        "dc": "Ole sellaisena kuin tulet//Come as you are",
         "accepted": true,
         "tags": [
             "#all"
@@ -317,6 +317,51 @@
         "accepted": false,
         "tags": [
             "#appro"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 22,
+        "name": "Nimitesti // nametest",
+        "creator": "ansu187",
+        "start_time": "2023-09-18 12:00:00",
+        "end_time": null,
+        "ticket_sell_time": null,
+        "location": "Kellari",
+        "description_fi": "On",
+        "description_en": "Yes",
+        "ticket_link": null,
+        "other_link": null,
+        "accessibility_fi": "On",
+        "accessibility_en": "Yes",
+        "price": 0.0,
+        "dc": "Dc",
+        "accepted": true,
+        "tags": [
+            "#wappu24"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 23,
+        "name": "Fuksiolympialaiset // Fresher  olympics",
+        "creator": "ansu187",
+        "start_time": "2023-08-29 18:00:00",
+        "end_time": "2023-08-29 23:00:00",
+        "ticket_sell_time": null,
+        "location": "Yliopiston kampus // campus",
+        "description_fi": "Tule puolustamaan kiltasi kunniaa kisaamalla opiskelijael\u00e4m\u00e4\u00e4n enemm\u00e4n tai v\u00e4hemm\u00e4n liittyvill\u00e4 rasteilla. Tapahtumassa kisataan tutorjoukkueissa.",
+        "description_en": "Come to represent your guild in checkpoints, that more or less have something to do with student life. Participate with your tutor group.",
+        "ticket_link": null,
+        "other_link": null,
+        "accessibility_fi": "Tapahtuma pidet\u00e4\u00e4n ulkona ja luvassa on monipuolisia rasteja. Osa rasteista voi vaatia liikuntasuorituksia, osa taas ei. Kaikilla rasteilla ei ole pakko k\u00e4yd\u00e4 menestyksen saavuttamiseksi.",
+        "accessibility_en": "Event is held outside and there is wide variety of checkpoints. Some of the checkpoints might contain sports, some don\u2019t. All of the checkpoints are not neccessary to win.",
+        "price": 0.0,
+        "dc": "Ulkoiluun sopivat vaatteet ja haalarit vanhemmille tieteenharjoittajille // Clothes that are fit for outdoors and overalls for those who have them.",
+        "accepted": true,
+        "tags": [
+            "#fuksiviikot23",
+            "#alcohol-free"
         ],
         "stage": 99
     }

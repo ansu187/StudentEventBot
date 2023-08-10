@@ -35,19 +35,21 @@ stages = ["OLD_EVENT", "NAME", "START_TIME", "END_TIME", "LOCATION", "DESCRIPTIO
           "TICKET_LINK_OR_INFO", "TICKET_SELL_TIME", "OTHER_LINK",
           "ACCESSIBILITY_FI", "ACCESSIBILITY_EN", "DC", "TAGS", "SAVE_EVENT"]
 
-user_prompts = ["", "Name of the event:", "When does the event start: (day.month.year hours.minutes):",
+user_prompts = ["", "Please type the name of the event.\nIf there is a different name for finnish and english, "
+                    "please separate the names with //",
+                "When does the event start: (day.month.year hours.minutes):",
                     "What time does the event end "
                     "(day.month.year hours.minutes) type skip if not needed. "
                     "If you only write the time, I'll assume that the event will end later the same day.", "Location:",
                     "Description in Finnish:",
                     "Description in English:",
                     "Price of the event, write 0, if the event is free.",
-                    "Ticket link or purchasing instructions:",
-                    "At which time the ticket sale starts? (day.month.year hours.minutes)",
-                    "Link, for example for a Facebook event:",
+                    "Ticket link or purchasing instructions: Separate finnish and english instructions with //. 'skip' if not needed.",
+                    "At which time the ticket sale starts? (day.month.year hours.minutes), 'skip' if not needed",
+                    "Link, for example for a Facebook event. Type 'skip if not needed'",
                     "Accessibility instructions in Finnish, if you need help for what to write here, type help.",
                     "Accessibility instructions in English.",
-                    "Dresscode:",
+                    "Dresscode: please separate the english and finnish dresscode with //",
                     "Tags:",
                     "Type 'save' if you want to save the event. You can return to edit it later.\n\n"
                     "Type 'submit' if you want to send the event to be accepted."]
@@ -388,27 +390,11 @@ async def price(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         await run_before_every_return(update, context)
         return PRICE
 
-    if event.price == 0:
-        context.user_data['free_event'] = True #in order to handle back command right!
-
-        #removes possible information if it's filled for some reason
-        event = context.user_data['event']
-        event.ticket_sell_time = None
-        event.ticket_link = None
-
-        # backup
-        event.stage = OTHER_LINK
-        EventDatabase.event_backup_save(event, update)
-
-        await update.message.reply_text(f"{user_prompts[OTHER_LINK]}")
-        await run_before_every_return(update, context)
-        return OTHER_LINK
-    else:
-        context.user_data['free_event'] = False #in order to handle back command right!
-        event.stage = TICKET_LINK_OR_INFO
-        await update.message.reply_text(f"{user_prompts[TICKET_LINK_OR_INFO]}")
-        await run_before_every_return(update, context)
-        return TICKET_LINK_OR_INFO
+    EventDatabase.event_backup_save(event, update)
+    event.stage = TICKET_LINK_OR_INFO
+    await update.message.reply_text(f"{user_prompts[TICKET_LINK_OR_INFO]}")
+    await run_before_every_return(update, context)
+    return TICKET_LINK_OR_INFO
 
 
 async def ticket_link(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -420,7 +406,11 @@ async def ticket_link(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
         return PRICE
 
     event = context.user_data['event']
-    event.ticket_link = update.message.text
+
+    if user_input == "skip":
+        event.ticket_link = None
+    else:
+        event.ticket_link = update.message.text
 
     # backup
     event.stage = TICKET_SELL_TIME
@@ -440,7 +430,47 @@ async def ticket_sell_time(update: Update, context: ContextTypes.DEFAULT_TYPE) -
         return TICKET_LINK_OR_INFO
 
     event = context.user_data['event']
-    event.ticket_sell_time = update.message.text
+    if user_input == "skip":
+        event.ticket_sell_time = None
+
+    else:
+        sell_time_text = user_input
+        sell_time_parsed = None
+
+        try:
+            # Parse the input text into a datetime object
+            for format_str in valid_start_date_formats:
+                try:
+                    sell_time_parsed = datetime.strptime(sell_time_text, format_str)
+                    break
+                except ValueError:
+                    continue
+
+            if sell_time_parsed is None:
+                raise ValueError
+
+            # checks if the time is in the future
+            if datetime.now() > sell_time_parsed:
+                await update.message.reply_text(
+                    "You've put the ticket sell time that is in the past. Please put a time that is in the future.")
+                return TICKET_SELL_TIME
+
+            event.ticket_sell_time = sell_time_parsed
+
+            # backup
+            EventDatabase.event_backup_save(event, update)
+
+            await update.message.reply_text(f"{user_prompts[OTHER_LINK]}")
+            event.stage = OTHER_LINK
+            await run_before_every_return(update, context)
+            return OTHER_LINK
+
+        except ValueError:
+            await update.message.reply_text(
+                f"Please enter the time in the correct format!\n\n{user_prompts[TICKET_SELL_TIME]}")
+            await run_before_every_return(update, context)
+            return TICKET_SELL_TIME
+
 
     # backup
     event.stage = OTHER_LINK
@@ -455,14 +485,10 @@ async def other_link(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user_input = update.message.text
     user_input = user_input.lower()
     if user_input == "back":
-        if context.user_data["free_event"]:
-            await update.message.reply_text(user_prompts[PRICE])
-            await run_before_every_return(update, context)
-            return PRICE
-        else:
-            await update.message.reply_text(user_prompts[TICKET_SELL_TIME])
-            await run_before_every_return(update, context)
-            return TICKET_SELL_TIME
+
+        await update.message.reply_text(user_prompts[TICKET_SELL_TIME])
+        await run_before_every_return(update, context)
+        return TICKET_SELL_TIME
 
     if user_input == "skip":
         await update.message.reply_text(user_prompts[ACCESSIBILITY_FI])
