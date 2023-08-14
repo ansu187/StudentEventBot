@@ -35,7 +35,7 @@ stages = ["OLD_EVENT", "NAME", "START_TIME", "END_TIME", "LOCATION", "DESCRIPTIO
           "TICKET_LINK_OR_INFO", "TICKET_SELL_TIME", "OTHER_LINK",
           "ACCESSIBILITY_FI", "ACCESSIBILITY_EN", "DC", "TAGS", "SAVE_EVENT"]
 
-user_prompts = ["", "Please type the name of the event.\nIf there is a different name for finnish and english, "
+user_prompts = [["", "Please type the name of the event.\nIf there is a different name for finnish and english, "
                     "please separate the names with //",
                 "When does the event start: (day.month.year hours.minutes):",
                     "What time does the event end "
@@ -52,7 +52,25 @@ user_prompts = ["", "Please type the name of the event.\nIf there is a different
                     "Dresscode: please separate the english and finnish dresscode with //",
                     "Tags:",
                     "Type 'save' if you want to save the event. You can return to edit it later.\n\n"
-                    "Type 'submit' if you want to send the event to be accepted."]
+                    "Type 'submit' if you want to send the event to be accepted."],
+                ["", "Please type the name of the event.\nIf there is a different name for finnish and english, "
+                    "please separate the names with //",
+                "When does the event start: (day.month.year hours.minutes):",
+                    "What time does the event end "
+                    "(day.month.year hours.minutes) type skip if not needed. "
+                    "If you only write the time, I'll assume that the event will end later the same day.", "Location:",
+                    "Description in Finnish:",
+                    "Description in English:",
+                    "Price of the event, write 0, if the event is free.",
+                    "Ticket link or purchasing instructions: Separate finnish and english instructions with //. 'skip' if not needed.",
+                    "At which time the ticket sale starts? (day.month.year hours.minutes), 'skip' if not needed",
+                    "Link, for example for a Facebook event. Type 'skip if not needed'",
+                    "Accessibility instructions in Finnish, if you need help for what to write here, type help.",
+                    "Accessibility instructions in English.",
+                    "Dresscode: please separate the english and finnish dresscode with //",
+                    "Tags:",
+                    "Type 'save' if you want to save the event. You can return to edit it later.\n\n"
+                    "Type 'submit' if you want to send the event to be accepted."]]
 
 
 valid_start_date_formats = ["%d.%m.%Y %H:%M", "%d.%m.%Y %H.%M", "%d.%m.%y %H:%M", "%d.%m.%y %H.%M", "%d.%m.%y %H",
@@ -687,4 +705,5 @@ async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     await update.message.reply_text(
         "Bye! I hope we can talk again some day.")
     await run_before_every_return(update, context)
+    ReplyKeyboardRemove()
     return ConversationHandler.END

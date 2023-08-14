@@ -4,7 +4,7 @@ from telegram.ext import Application, CommandHandler, ConversationHandler, Messa
 
 import EventSaver, Feedback
 import EventSaver
-import Start, Tags, List, Accept, Help, Edit, Dev
+import Start, Tags, List, Accept, Help, Edit, Dev, Menu
 import Secrets
 
 USERNAME: Final = "biletestibot"
@@ -82,7 +82,8 @@ def main() -> None:
     )
 
     feedback_handler = ConversationHandler(
-        entry_points=[CommandHandler("feedback", Feedback.feedback)],
+        entry_points=[CommandHandler("feedback", Feedback.feedback),
+                      MessageHandler(filters.Regex("^(Anna palautetta|Give feedback)$"), Feedback.feedback)],
         states={
             Feedback.FEEDBACK: [MessageHandler(filters.TEXT & ~filters.COMMAND, Feedback.save_text)]
         },
@@ -90,7 +91,8 @@ def main() -> None:
     )
 
     start_handler = ConversationHandler(
-        entry_points=[CommandHandler("start", Start.start), CommandHandler("lang", Start.start)],
+        entry_points=[CommandHandler("start", Start.start), CommandHandler("lang", Start.start),
+                      MessageHandler(filters.Regex("^(Change language|Vaihda kieli)$"), Start.start)],
         states={
             Start.LANG: [MessageHandler(filters.TEXT & ~filters.COMMAND, Start.lang)]
         },
@@ -108,17 +110,27 @@ def main() -> None:
         },
         fallbacks=[CommandHandler("cancel", EventSaver.cancel)]
     )
+    list_handler = ConversationHandler(
+        entry_points=[CommandHandler("list", List.list), MessageHandler(filters.Regex("^(List events|Listaa tapahtumat)$"), List.list)],
+        states={
+            List.MENU: [MessageHandler(filters.TEXT & ~filters.COMMAND, List.menu)],
+            List.TAGS: [MessageHandler(filters.TEXT & ~filters.COMMAND, List.list_by_tags)],
+            List.TIME_MENU: [MessageHandler(filters.TEXT & ~filters.COMMAND, List.time_menu)],
+        },
+        fallbacks=[CommandHandler("cancel", EventSaver.cancel)]
+    )
 
 
 
 
 
     application.add_handler(CommandHandler("menu", Menu.menu))
-    application.add_handler(CommandHandler("list", List.list))
+
     application.add_handler(CommandHandler("accept", Accept.accept))
     application.add_handler(CommandHandler("help", Help.help))
 
     application.add_handler(CallbackQueryHandler(List.button))
+    application.add_handler(list_handler)
     application.add_handler(start_handler)
     application.add_handler(event_handler)
     application.add_handler(edit_handler)

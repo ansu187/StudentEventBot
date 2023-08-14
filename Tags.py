@@ -8,12 +8,8 @@ ADD_REMOVE, ADD, REMOVE, SAVE = range(4)
 
 
 async def keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE, button: str, prompt: str):
-    try:
-        with open('tags.json', 'r') as file:
-            tags_data = json.load(file)
-            reply_keyboard = tags_data.get('tags', [])
-    except (FileNotFoundError, json.JSONDecodeError, KeyError):
-        reply_keyboard = [["all"], ["#alcohol-free", "#sits", "#appro"], ["#bar", "#kellari"]]
+
+    reply_keyboard = get_tag_language_list(update)
 
     reply_keyboard.append(["Save", "/cancel", f"{button}"])
 
@@ -29,6 +25,44 @@ async def keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE, button: s
 
 async def close_keyboard(update, context):
     ReplyKeyboardRemove()
+
+
+def get_tag_language_list(update):
+    user_lang = UserDatabase.get_user_lang(update)
+    try:
+        with open('tags.json', 'r') as file:
+            tags_data = json.load(file)
+            data = tags_data.get('tags', [])
+    except Exception:
+        print("Something went wrong")
+        return [[]]
+
+    english_tags = []
+    finnish_tags = []
+
+    for tag_list in data:
+        english_tags_list = []
+        finnish_tags_list = []
+
+        for tag in tag_list:
+            try:
+                english_tag, finnish_tag = tag.split("//")
+            except ValueError:
+                english_tag = tag
+                finnish_tag = tag
+
+
+            english_tags_list.append(english_tag)
+            finnish_tags_list.append(finnish_tag)
+
+        english_tags.append(english_tags_list)
+        finnish_tags.append(finnish_tags_list)
+
+    if user_lang == "fi":
+        return finnish_tags
+    else:
+        return english_tags
+
 
 
 async def list_tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
