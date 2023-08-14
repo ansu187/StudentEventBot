@@ -98,7 +98,7 @@ def main() -> None:
     )
 
     dev_handler = ConversationHandler(
-        entry_points=[CommandHandler("dev", Dev.dev)],
+        entry_points=[CommandHandler("dev", Dev.dev), MessageHandler(filters.Regex("^(dev)$"), Dev.dev)],
         states={
             Dev.MENU: [MessageHandler(filters.TEXT & ~filters.COMMAND, Dev.menu)],
             Dev.ADD_TAGS: [MessageHandler(filters.TEXT & ~filters.COMMAND, Dev.add_tag)],
@@ -112,6 +112,8 @@ def main() -> None:
 
 
 
+
+    application.add_handler(CommandHandler("menu", Menu.menu))
     application.add_handler(CommandHandler("list", List.list))
     application.add_handler(CommandHandler("accept", Accept.accept))
     application.add_handler(CommandHandler("help", Help.help))

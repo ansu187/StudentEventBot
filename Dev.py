@@ -10,7 +10,7 @@ USER_TYPE = ["normal", "organizer", "admin", "super_admin"]
 
 
 async def dev(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    if UserDatabase.get_user_type(update) < 3:
+    if UserDatabase.get_user_type(update) < 4:
         return ConversationHandler.END
 
 
@@ -22,7 +22,7 @@ async def dev(update: Update, context: ContextTypes.DEFAULT_TYPE):
             reply_keyboard, one_time_keyboard=True, input_field_placeholder="Event tags"
         ),
     )
-    #ReplyKeyboardRemove()
+    ReplyKeyboardRemove()
     return MENU
 
 
@@ -120,6 +120,7 @@ async def remove_tag(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def check_for_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_list = UserDatabase.user_reader()
     text = update.message.text
+    text = text.lower()
 
     users_to_remove = []
     for user in user_list:
@@ -131,8 +132,11 @@ async def check_for_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
         user_list.remove(user)
 
     UserDatabase.user_writer(user_list)
-
-    user = context.user_data['user']
+    try:
+        user = context.user_data['user']
+    except KeyError:
+        await update.message.reply_text(f"User {text} not found.")
+        return ConversationHandler.END
 
     await update.message.reply_text(f"The user is currently {USER_TYPE[user.user_type]}\n\n")
 
