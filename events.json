@@ -358,7 +358,7 @@
         "accessibility_en": "Event is held outside and there is wide variety of checkpoints. Some of the checkpoints might contain sports, some don\u2019t. All of the checkpoints are not neccessary to win.",
         "price": 0.0,
         "dc": "Ulkoiluun sopivat vaatteet ja haalarit vanhemmille tieteenharjoittajille // Clothes that are fit for outdoors and overalls for those who have them.",
-        "accepted": true,
+        "accepted": false,
         "tags": [
             "#fuksiviikot23",
             "#alcohol-free"
