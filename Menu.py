@@ -11,16 +11,27 @@ import Tags
 
 
 
-async def Menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_lang = UserDatabase.get_user_lang(update)
+    if user_lang == "fi":
+        lang_code = 0
+        reply_keyboard = [["Listaa tapahtumat", "Change language"], ["Anna palautetta", "Vaihda tagit"]]
+    else:
+        lang_code = 1
+        reply_keyboard = [["List events", "Vaihda kieli"], ["Give feedback", "Change tags"]]
 
-    reply_keyboard = [["all"], ["#alcohol-free", "#sits", "#appro"], ["#bar", "#kellari"]]
+    prompts = [["Mitä haluat tehdä?"],["What do you want to do?"]]
+
+
+
 
     await update.message.reply_text(
-        f"?",
+        f"{prompts[lang_code][0]}",
         reply_markup=ReplyKeyboardMarkup(
-            reply_keyboard, one_time_keyboard=True, input_field_placeholder="Event tags"
+            reply_keyboard, one_time_keyboard=True, input_field_placeholder="Menu"
         ),
     )
 
     ReplyKeyboardRemove()
+
+    return

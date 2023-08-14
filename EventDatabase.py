@@ -339,7 +339,17 @@ def get_event_to_edit(user_name: str) -> Event:
             return event
     return None
 
+def get_event_by_tag(tag: str):
+    event_list = get_accepted_events()
+    events_to_return = []
+    for event in event_list:
+        try:
+            if any(tag in event_tag or f"#{tag}" in event_tag for event_tag in event.tags):
+                events_to_return.append(event)
+        except TypeError:
+            pass
 
+    return events_to_return
 
 
 

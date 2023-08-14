@@ -44,52 +44,36 @@ async def tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
-    #Handles the argument
-    arguments = context.args
-    arguments = " ".join(arguments)
-    arguments = arguments.lower()
 
 
     #Gets user data
     user_list = UserDatabase.user_reader()
 
 
-    #sets the user type to organizer
-    if arguments == "organizer":
-        await update.message.reply_text("Welcome to organize events! You'll now have an access for creating events")
-
-
-        user_id = update.message.from_user.id
-        for user in user_list:
-            if user_id == user.id:
-                user.user_type = 2
-
-        UserDatabase.user_writer(user_list)
-
-        return ConversationHandler.END
 
 
 
     #Handles the new user
-    else:
-
-        user_id = update.message.from_user.id
-
-        #Sets the basic values
-        new_user = User.User(user_id, update.message.from_user.username, ["#all"], 1)
-
-        #Checks if the user is allready in the database
-        context.user_data['old_user'] = False
-        for user in user_list:
-            if user.id == user_id:
-                context.user_data['old_user'] = True
-
-        if not context.user_data['old_user']:
-            await update.message.reply_text(
-                "Welcome to use the Skinnarila Student Events bot! This bot is going to save your Telegram ID, and will send you messages about the new events.")
 
 
-        context.user_data['user'] = new_user
+    user_id = update.message.from_user.id
+
+    #Sets the basic values
+    new_user = User.User(user_id, update.message.from_user.username, ["#all"], 1)
+
+    #Checks if the user is allready in the database
+    context.user_data['old_user'] = False
+    for user in user_list:
+        if user.id == user_id:
+            context.user_data['old_user'] = True
+
+    if not context.user_data['old_user']:
+        await update.message.reply_text(
+            "Welcome to use the Skinnarila Student Events bot! This bot is going to save your Telegram ID, "
+            "and will send you messages about the new events.")
+
+
+    context.user_data['user'] = new_user
 
 
     await keyboard(update,context)
