@@ -15,10 +15,23 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_lang = UserDatabase.get_user_lang(update)
     if user_lang == "fi":
         lang_code = 0
-        reply_keyboard = [["Listaa tapahtumat", "Change language"], ["Anna palautetta", "Vaihda tagit"]]
+        reply_keyboard = [["Listaa tapahtumat", "Vaihda tagit"], ["Anna palautetta", "Change language"]]
+        if UserDatabase.get_user_type(update) >= 2:
+            reply_keyboard.append(["Luo tapahtuma", "Muokkaa tapahtumaa"])
+        if UserDatabase.get_user_type(update) == 3:
+            reply_keyboard.append(["Hyväksy tapahtumia"])
+        if UserDatabase.get_user_type(update) >= 4:
+            reply_keyboard.append(["Hyväksy tapahtumia", "Salainen menu"])
+
     else:
         lang_code = 1
-        reply_keyboard = [["List events", "Vaihda kieli"], ["Give feedback", "Change tags"]]
+        reply_keyboard = [["List events", "Change tags"], ["Give feedback", "Vaihda kieli"]]
+        if UserDatabase.get_user_type(update) >= 2:
+            reply_keyboard.append(["Create event", "Edit event"])
+        if UserDatabase.get_user_type(update) == 3:
+            reply_keyboard.append(["Accept events"])
+        if UserDatabase.get_user_type(update) >= 4:
+            reply_keyboard.append(["Accept events", "Secret menu"])
 
     prompts = [["Mitä haluat tehdä?"],["What do you want to do?"]]
 

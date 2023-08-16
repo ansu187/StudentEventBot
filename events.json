@@ -364,5 +364,29 @@
             "#alcohol-free"
         ],
         "stage": 99
+    },
+    {
+        "id": 25,
+        "name": "Kellaribileet // student union basement party",
+        "creator": "ansu187",
+        "start_time": "2023-09-18 23:00:00",
+        "end_time": "2023-09-19 08:00:00",
+        "ticket_sell_time": null,
+        "location": "Kellari // student union basement",
+        "description_fi": "Hyv\u00e4 eventti tulossa",
+        "description_en": "Good event incoming",
+        "ticket_link": "Ansulta voi ostaa // buy from Ansu",
+        "other_link": "Www.ltky.fi",
+        "accessibility_fi": "Kellariin pit\u00e4\u00e4 kulkea hissill\u00e4.",
+        "accessibility_en": "You\u2019ll have to take an elevator",
+        "price": 18.0,
+        "dc": "Haalarit // overalls",
+        "accepted": false,
+        "tags": [
+            "kellari",
+            "baari",
+            "poista"
+        ],
+        "stage": 99
     }
 ]

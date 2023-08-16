@@ -6,7 +6,7 @@ import json
 
 
 MENU, ADD_TAGS, REMOVE_TAGS, USER_COUNT, CHANGE_USER_TYPE_1, CHANGE_USER_TYPE_2 = range(6)
-USER_TYPE = ["normal", "organizer", "admin", "super_admin"]
+USER_TYPE = ["", "normal", "organizer", "admin", "super_admin"]
 
 
 async def dev(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -23,6 +23,7 @@ async def dev(update: Update, context: ContextTypes.DEFAULT_TYPE):
         ),
     )
     ReplyKeyboardRemove()
+
     return MENU
 
 
