@@ -50,6 +50,13 @@ def get_user_lang(update: Update) -> str | None:
 
     return
 
+def get_user_lang_code(update: Update) -> int:
+    user_lang = get_user_lang(update)
+    if user_lang == "fi":
+        return 0
+    else:
+        return 1
+
 
 def get_user_type(update: Update) -> int:
     current_user_id = update.message.from_user.id

@@ -38,25 +38,5 @@
         "accepted": false,
         "tags": null,
         "stage": 14
-    },
-    {
-        "id": 0,
-        "name": "Testitapahtuma",
-        "creator": "ansu187",
-        "start_time": "2023-08-12 20:00:00",
-        "end_time": null,
-        "ticket_sell_time": null,
-        "location": "Kellari",
-        "description_fi": "jee",
-        "description_en": "yeah",
-        "ticket_link": "kide.app/192i49u51308yhu18",
-        "other_link": null,
-        "accessibility_fi": null,
-        "accessibility_en": null,
-        "price": 0.0,
-        "dc": null,
-        "accepted": false,
-        "tags": [],
-        "stage": 10
     }
 ]
