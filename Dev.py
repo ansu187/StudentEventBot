@@ -1,7 +1,7 @@
-from telegram import Update, ReplyKeyboardMarkup, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardRemove
-from telegram.ext import Application, CommandHandler, ConversationHandler, MessageHandler, filters, ContextTypes, \
-    CallbackQueryHandler
-import UserDatabase, EventDatabase, Event, Tags
+from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove
+from telegram.ext import ConversationHandler, ContextTypes
+
+import UserDatabase, Tags
 import json
 
 

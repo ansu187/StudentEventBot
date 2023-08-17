@@ -25,7 +25,8 @@ from telegram.ext import Application, CommandHandler, ConversationHandler, Messa
     CallbackQueryHandler
 
 import Accept
-import Event, UserDatabase, EventDatabase
+import UserDatabase, EventDatabase
+from Event import Event
 import Tags
 
 OLD_EVENT, NAME, START_TIME, END_TIME, LOCATION, DESCRIPTION_FI, DESCRIPTION_EN, PRICE, TICKET_LINK_OR_INFO, \

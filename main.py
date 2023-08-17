@@ -2,7 +2,7 @@ from typing import Final
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ConversationHandler, MessageHandler, filters, ContextTypes, CallbackQueryHandler
 
-import EventSaver, Feedback
+import Feedback
 import EventSaver
 import Start, Tags, List, Accept, Help, Edit, Dev, Menu
 import Secrets

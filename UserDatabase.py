@@ -1,9 +1,7 @@
 import json
 import os
-from typing import Any
 
 import User
-import List
 from telegram import Update
 from typing import List
 
@@ -67,7 +65,7 @@ def get_user_type(update: Update) -> int:
 
 
 
-def get_admins()->List[User]:
+def get_admins():
     user_list = user_reader()
     admin_list = []
     for user in user_list:

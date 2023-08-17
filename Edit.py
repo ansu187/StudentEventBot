@@ -1,10 +1,10 @@
-import json
+
 from telegram.ext import ContextTypes, ConversationHandler
-from telegram import Update, ReplyKeyboardMarkup, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardRemove
-from typing import List
+from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove
+
 from datetime import datetime
 
-import Event
+
 import logging
 
 import EventSaver, EventDatabase, Tags
