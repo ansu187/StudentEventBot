@@ -26,7 +26,7 @@ from telegram.ext import Application, CommandHandler, ConversationHandler, Messa
 
 import Accept
 import UserDatabase, EventDatabase
-from Event import Event
+import Event
 import Tags
 
 OLD_EVENT, NAME, START_TIME, END_TIME, LOCATION, DESCRIPTION_FI, DESCRIPTION_EN, PRICE, TICKET_LINK_OR_INFO, \
@@ -46,7 +46,8 @@ user_prompts = [["Tervetuloa luomaan tapahtumaa. Kirjoittamalla 'back' pääset 
                 "Milloin tapahtuma alkaa: (päivä.kuukausi.vuosi tunti.minuutti):",
                     "Milloin tapahtuma päättyy?  "
                     "(päivä.kuukausi.vuosi tunti.minuutti) 'skip' jos päättymisaikaa ei tarvita. "
-                    "Jos kirjoitat pelkän kellonajan, oletan, että tapahtuma päättyy samana päivänä", "Sijainti:",
+                    "Jos kirjoitat pelkän kellonajan, oletan, että tapahtuma päättyy samana päivänä",
+                 "Sijainti: jos sijainnin nimi on eri suomeksi ja englanniksi, erota nämä laittamalla // väliin",
                     "Tapahtumakuvaus suomeksi:",
                     "Tapahtumakuvaus englanniksi:",
                     "Tapahtuman hinta, kirjoita 0, jos tapahtuma on ilmainen.",
@@ -70,7 +71,8 @@ user_prompts = [["Tervetuloa luomaan tapahtumaa. Kirjoittamalla 'back' pääset 
                 "When does the event start: (day.month.year hours.minutes):",
                     "What time does the event end "
                     "(day.month.year hours.minutes) type skip if not needed. "
-                    "If you only write the time, I'll assume that the event will end later the same day.", "Location:",
+                    "If you only write the time, I'll assume that the event will end later the same day.",
+                 "Location: Separate finnish and english location name with //",
                     "Description in Finnish:",
                     "Description in English:",
                     "Price of the event, write 0, if the event is free.",
@@ -147,7 +149,10 @@ async def run_before_every_return(update: Update, context: ContextTypes.DEFAULT_
         try:
             event = context.user_data['event']
             try:
-                print(f"The event stage is now: {stages[event.stage]}")
+                if event.stage == 99:
+                    print("The event stage is now COMPLETED!")
+                else:
+                    print(f"The event stage is now: {stages[event.stage]}")
             except TypeError:
                 pass
 
@@ -238,7 +243,7 @@ async def old_event(update: Update, context: ContextTypes.DEFAULT_TYPE)->int:
 
         #to pop the tags keyboard :) if needed
         if event_to_edit.stage == TAGS:
-            await Tags.keyboard(update, context, translate_string("remove",update), translate_string("add",update))
+            await Tags.full_keyboard(update, context, translate_string("remove", update), translate_string("add", update))
             context.user_data["tag_adding"] = True
         return event_to_edit.stage
 
@@ -509,7 +514,10 @@ async def ticket_sell_time(update: Update, context: ContextTypes.DEFAULT_TYPE) -
                     continue
 
             if sell_time_parsed is None:
-                raise ValueError
+                await update.message.reply_text(
+                    translate_string("ticket wrong time", update))
+                return TICKET_SELL_TIME
+
 
             # checks if the time is in the future
             if datetime.now() > sell_time_parsed:
@@ -635,20 +643,13 @@ async def dc(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     EventDatabase.event_backup_save(event, update)
 
     await update.message.reply_text(user_prompts[UserDatabase.get_user_lang_code(update)][TAGS])
-    await Tags.keyboard(update, context, "remove", "add")
+    await Tags.full_keyboard(update, context, "remove", "add")
     context.user_data["tag_adding"] = True
     await run_before_every_return(update, context)
     return TAGS
 
 
 async def tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
-
-
-
-
-
-
-
     reply = update.message.text
     reply = reply.lower()
 
@@ -659,11 +660,11 @@ async def tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if reply == "add" or reply == "lisää":
         context.user_data["tag_adding"] = True
-        await Tags.keyboard(update, context, translate_string("remove"), translate_string("add"))
+        await Tags.full_keyboard(update, context, translate_string("remove"), translate_string("add"))
         return TAGS
 
     elif reply == "remove" or reply == "poista":
-        await Tags.keyboard(update, context, translate_string("add"), translate_string("remove"))
+        await Tags.full_keyboard(update, context, translate_string("add"), translate_string("remove"))
         context.user_data["tag_adding"] = False
         return TAGS
 
@@ -691,7 +692,7 @@ async def tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         await update.message.reply_text(f"{event.tags}")
 
-        await Tags.keyboard(update, context, translate_string("remove", update), translate_string("add", update))
+        await Tags.full_keyboard(update, context, translate_string("remove", update), translate_string("add", update))
         return TAGS
 
     #removing tags
@@ -704,7 +705,7 @@ async def tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await update.message.reply_text(translate_string("No tag"))
 
         await update.message.reply_text(f"{event.tags}")
-        await Tags.keyboard(update,context, translate_string("add",update), translate_string("remove",update))
+        await Tags.full_keyboard(update, context, translate_string("add", update), translate_string("remove", update))
         return TAGS
 
     await update.message.reply_text(EventDatabase.event_parser_all(context.user_data['event']))

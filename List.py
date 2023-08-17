@@ -93,7 +93,7 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text
 
     if text == "Tietyn tyyppiset tapahtumat" or text == "Events of certain type":
-        await Tags.keyboard(update, context, "", "")
+        await Tags.normal_keyboard(update, context, "", "")
         await Tags.close_keyboard(update, context)
         return TAGS
 

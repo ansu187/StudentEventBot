@@ -36,7 +36,7 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return ADD_TAGS
 
     elif text == "remove_tags":
-        await Tags.keyboard(update, context, "add", "remove from the tag-list")
+        await Tags.normal_keyboard(update, context, "add", "remove from the tag-list")
         return REMOVE_TAGS
 
     elif text == "user_count":
@@ -111,7 +111,7 @@ async def remove_tag(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except (FileNotFoundError, json.JSONDecodeError, KeyError):
         print("Error: Unable to refactor the JSON file.")
 
-    await Tags.keyboard(update, context, "add", "remove from the tag-list")
+    await Tags.normal_keyboard(update, context, "add", "remove from the tag-list")
 
 
     return REMOVE_TAGS
@@ -125,7 +125,7 @@ async def check_for_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     users_to_remove = []
     for user in user_list:
-        if user.nick == text:
+        if user.nick.lower() == text:
             context.user_data['user'] = user
             users_to_remove.append(user)
 

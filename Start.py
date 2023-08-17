@@ -70,7 +70,9 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not context.user_data['old_user']:
         await update.message.reply_text(
             "Welcome to use the Skinnarila Student Events bot! This bot is going to save your Telegram ID, "
-            "and will send you messages about the new events.")
+            "and will send you messages about the new events.\n\n"
+            "THIS VERSION IS CURRENTLY IN BETA AND THERE IS HIGH CHANGE OF NOTHING WORKING\n\n"
+            "Bot is written by kylteri with ChatGPT 3.5")
 
 
     context.user_data['user'] = new_user
