@@ -1,0 +1,25 @@
+[
+    {
+        "id": 1,
+        "name": "Maksimikyyk\u00e4t",
+        "creator": "SamuliK96",
+        "start_time": "2023-08-18 22:45:00",
+        "end_time": "2023-08-19 04:20:00",
+        "ticket_sell_time": null,
+        "location": "lappeen Ranta // lappee's Beach",
+        "description_fi": "Kyykk\u00e4\u00e4",
+        "description_en": "Kyykk\u00e4",
+        "ticket_link": null,
+        "other_link": null,
+        "accessibility_fi": "Saavu paikalle",
+        "accessibility_en": "Come",
+        "price": 0.0,
+        "dc": "Vaatteet (valinnainen) // Clothes (optional)",
+        "accepted": false,
+        "tags": [
+            "alkoholiton",
+            "rento"
+        ],
+        "stage": 99
+    }
+]

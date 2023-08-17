@@ -19,7 +19,7 @@ from telegram import Update
 from typing import List
 from datetime import datetime
 
-from Event import Event
+import Event
 import logging
 
 import UserDatabase
@@ -57,10 +57,12 @@ def events_reader(file_name: str):
         for event_data in data:
             start_time_str = event_data['start_time']
             end_time_str = event_data['end_time']
+            sell_time_str = event_data['ticket_sell_time']
 
             # Gets the start and end times and turns them into datetime objects
             start_time = datetime.strptime(start_time_str, "%Y-%m-%d %H:%M:%S") if start_time_str else None
             end_time = datetime.strptime(end_time_str, "%Y-%m-%d %H:%M:%S") if end_time_str else None
+            ticket_sell_time = datetime.strptime(sell_time_str, "%Y-%m-%d %H:%M:%S") if sell_time_str else None
 
             event_object = Event.Event(
                 event_data['id'],
@@ -69,7 +71,7 @@ def events_reader(file_name: str):
             event_object.name = event_data['name']
             event_object.start_time = start_time
             event_object.end_time = end_time
-            event_object.ticket_sell_time = event_data['ticket_sell_time']
+            event_object.ticket_sell_time = sell_time_str
             event_object.location = event_data['location']
             event_object.description_fi = event_data['description_fi']
             event_object.description_en = event_data['description_en']
@@ -83,7 +85,7 @@ def events_reader(file_name: str):
             try:
                 event_object.tags = event_data['tags']
             except KeyError:
-                event_object.tags = ["#all"]
+                event_object.tags = ["all"]
             try:
                 event_object.stage = event_data["stage"]
             except:
@@ -345,7 +347,7 @@ def event_parser_all(event) -> str:
 
 
 def get_event_to_edit(user_name: str):
-    event_list: List[Event] = events_reader("events_backup.json")
+    event_list = events_reader("events_backup.json")
     for event in event_list:
         if user_name == event.creator:
             return event

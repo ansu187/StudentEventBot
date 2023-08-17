@@ -54,50 +54,51 @@ async def keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    lang_code = UserDatabase.get_user_lang_code(update)
     choice = update.message.text
     if choice == "NAME":
-        await update.message.reply_text(EventSaver.user_prompts[EventSaver.NAME])
+        await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.NAME])
         return EventSaver.NAME
     elif choice == "START TIME":
-        await update.message.reply_text(EventSaver.user_prompts[EventSaver.START_TIME])
+        await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.START_TIME])
         return EventSaver.START_TIME
     elif choice == "END TIME":
-        await update.message.reply_text(EventSaver.user_prompts[EventSaver.END_TIME])
+        await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.END_TIME])
         return EventSaver.END_TIME
     elif choice == "LOCATION":
-        await update.message.reply_text(EventSaver.user_prompts[EventSaver.LOCATION])
+        await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.LOCATION])
         return EventSaver.LOCATION
     elif choice == "DESCRIPTION FI":
-        await update.message.reply_text(EventSaver.user_prompts[EventSaver.DESCRIPTION_FI])
+        await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.DESCRIPTION_FI])
         return EventSaver.DESCRIPTION_FI
     elif choice == "DESCRIPTION EN":
-        await update.message.reply_text(EventSaver.user_prompts[EventSaver.DESCRIPTION_EN])
+        await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.DESCRIPTION_EN])
         return EventSaver.DESCRIPTION_EN
     elif choice == "PRICE":
-        await update.message.reply_text(EventSaver.user_prompts[EventSaver.PRICE])
+        await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.PRICE])
         return EventSaver.PRICE
     elif choice == "TICKET LINK":
-        await update.message.reply_text(EventSaver.user_prompts[EventSaver.TICKET_LINK_OR_INFO])
+        await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.TICKET_LINK_OR_INFO])
         return EventSaver.TICKET_LINK_OR_INFO
     elif choice == "TICKET SELL TIME":
-        await update.message.reply_text(EventSaver.user_prompts[EventSaver.TICKET_SELL_TIME])
+        await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.TICKET_SELL_TIME])
         return EventSaver.TICKET_SELL_TIME
     elif choice == "OTHER LINK":
-        await update.message.reply_text(EventSaver.user_prompts[EventSaver.OTHER_LINK])
+        await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.OTHER_LINK])
         return EventSaver.OTHER_LINK
     elif choice == "ACCESSIBILITY FI":
-        await update.message.reply_text(EventSaver.user_prompts[EventSaver.ACCESSIBILITY_FI])
+        await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.ACCESSIBILITY_FI])
         return EventSaver.ACCESSIBILITY_FI
     elif choice == "ACCESSIBILITY EN":
-        await update.message.reply_text(EventSaver.user_prompts[EventSaver.ACCESSIBILITY_EN])
+        await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.ACCESSIBILITY_EN])
         return EventSaver.ACCESSIBILITY_EN
     elif choice == "DC":
-        await update.message.reply_text(EventSaver.user_prompts[EventSaver.DC])
+        await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.DC])
         return EventSaver.DC
     elif choice == "TAGS":
         context.user_data["tag_adding"] = True
-        await update.message.reply_text(EventSaver.user_prompts[EventSaver.TAGS])
-        await Tags.keyboard(update,context,"add", "remove")
+        await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.TAGS])
+        await Tags.full_keyboard(update, context, "add", "remove")
         return EventSaver.TAGS
     elif choice == "END":
         await update.message.reply_text("You can submit the event later with /event command")
@@ -170,7 +171,7 @@ async def start_time(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         return MENU
 
     except ValueError:
-        await update.message.reply_text(f"Please enter the time in the correct format!\n\n{EventSaver.user_prompts[EventSaver.START_TIME]}")
+        await update.message.reply_text(f"Please enter the time in the correct format!\n\n{EventSaver.user_prompts[UserDatabase.get_user_lang_code(update)][EventSaver.START_TIME]}")
 
         return START_TIME
 
@@ -244,12 +245,7 @@ async def description_fi(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         await keyboard(update, context)
         return MENU
 
-    if len(user_input) > 240:
-        await update.message.reply_text(f"The maximum length of the event is 240 characters. "
-                                        f"Your input was {len(user_input) - 240} characters too long! "
-                                        f"Please write the Description again.")
 
-        return DESCRIPTION_FI
 
     event = context.user_data['event']
     event.description_fi = update.message.text
@@ -269,12 +265,7 @@ async def description_en(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         await keyboard(update, context)
         return MENU
 
-    if len(user_input) > 240:
-        await update.message.reply_text(f"The maximum length of the event is 240 characters. "
-                                        f"Your input was {len(user_input) - 240} characters too long! "
-                                        f"Please write the Description again.")
 
-        return DESCRIPTION_EN
 
     event = context.user_data['event']
     event.description_en = update.message.text
@@ -298,7 +289,7 @@ async def price(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     try:
         event.price = float(update.message.text)
     except ValueError:
-        await update.message.reply_text(f"{EventSaver.user_prompts[PRICE]}")
+        await update.message.reply_text(f"{EventSaver.user_prompts[UserDatabase.get_user_lang_code(update)][PRICE]}")
 
         return PRICE
 
@@ -440,11 +431,11 @@ async def tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if reply == "add":
         context.user_data["tag_adding"] = True
-        await Tags.keyboard(update, context, "remove")
+        await Tags.full_keyboard(update, context, "remove", "add")
         return TAGS
 
     elif reply == "remove":
-        await Tags.keyboard(update, context, "add")
+        await Tags.full_keyboard(update, context, "add", "remove")
         context.user_data["tag_adding"] = False
         return TAGS
 
@@ -472,7 +463,7 @@ async def tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         await update.message.reply_text(f"{event.tags}")
 
-        await Tags.keyboard(update, context, "remove", "add")
+        await Tags.full_keyboard(update, context, "remove", "add")
         return TAGS
 
     #removing tags
@@ -485,7 +476,7 @@ async def tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await update.message.reply_text("You don't have that tag in your event!")
 
         await update.message.reply_text(f"{event.tags}")
-        await Tags.keyboard(update,context, "add", "remove")
+        await Tags.normal_keyboard(update, context, "add", "remove")
         return TAGS
 
     await keyboard(update, context)

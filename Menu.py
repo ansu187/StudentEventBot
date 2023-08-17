@@ -12,7 +12,7 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_lang = UserDatabase.get_user_lang(update)
     if user_lang == "fi":
         lang_code = 0
-        reply_keyboard = [["Listaa tapahtumat", "Vaihda tagit"], ["Anna palautetta", "Change language"]]
+        reply_keyboard = [["Listaa tapahtumat"], ["Anna palautetta", "Change language"]]
         if UserDatabase.get_user_type(update) >= 2:
             reply_keyboard.append(["Luo tapahtuma", "Muokkaa tapahtumaa"])
         if UserDatabase.get_user_type(update) == 3:
