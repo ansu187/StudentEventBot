@@ -1,7 +1,7 @@
 from telegram import Update
-from telegram.ext import Application, CommandHandler, ConversationHandler, MessageHandler, filters, ContextTypes
+from telegram.ext import ContextTypes
 import UserDatabase
-import User
+
 
 
 async def help(update: Update, context: ContextTypes.DEFAULT_TYPE):

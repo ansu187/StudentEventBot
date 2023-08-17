@@ -1,4 +1,4 @@
-from telegram.ext import CommandHandler, ContextTypes, ConversationHandler
+from telegram.ext import ContextTypes, ConversationHandler
 from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove
 
 import UserDatabase

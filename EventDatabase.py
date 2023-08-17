@@ -19,7 +19,7 @@ from telegram import Update
 from typing import List
 from datetime import datetime
 
-import Event
+from Event import Event
 import logging
 
 import UserDatabase
@@ -30,7 +30,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def get_only_upcoming() -> List[Event]:
+def get_only_upcoming():
     event_list = events_reader("events.json")
     event_list_only_upcoming = []
     for event in event_list:
@@ -43,7 +43,7 @@ def get_only_upcoming() -> List[Event]:
     return event_list_only_upcoming
 
 
-def events_reader(file_name: str) -> List[Event]:
+def events_reader(file_name: str):
     event_list = []
 
     try:
@@ -118,7 +118,7 @@ def events_writer(event_list):
         print("Something went wrong")
 
 
-def event_finder_by_id(id: int, file_name) -> Event:
+def event_finder_by_id(id: int, file_name):
     event_list = events_reader(file_name)
     for event in event_list:
         if int(event.id) == id:
@@ -127,7 +127,7 @@ def event_finder_by_id(id: int, file_name) -> Event:
     return None
 
 
-def get_unaccepted_events() -> List[Event]:
+def get_unaccepted_events():
     event_list = events_reader("events.json")
     unaccepted_events = []
     for event in event_list:
@@ -137,7 +137,7 @@ def get_unaccepted_events() -> List[Event]:
     return unaccepted_events
 
 
-def get_accepted_events() -> List[Event]:
+def get_accepted_events():
     event_list = get_only_upcoming()
     accepted_events = []
     for event in event_list:
@@ -207,7 +207,7 @@ def get_head(id: int, user_lang) -> str:
 
 
 
-def event_parser_normal(event: Event, user_lang) -> str:
+def event_parser_normal(event, user_lang) -> str:
     # contains name and time
     prompts = [["from", "to", "Starts", "at", "Ends", "at", "at", "Price","Tickets: ", "Ticket sale time"],
                ["Klo: ", "-", "Alkaa", "klo", "Päättyy", "klo", "klo: ","Hinta: ", "Liput", "Lipunmyyntipäivä"]]
@@ -324,7 +324,7 @@ def event_parser_normal(event: Event, user_lang) -> str:
 
 
 
-def event_parser_all(event: Event) -> str:
+def event_parser_all(event) -> str:
     event_text = (
         f"Event: {event.id} "
         f"created by: {event.creator}\n"
@@ -344,7 +344,7 @@ def event_parser_all(event: Event) -> str:
     return event_text
 
 
-def get_event_to_edit(user_name: str) -> Event:
+def get_event_to_edit(user_name: str):
     event_list: List[Event] = events_reader("events_backup.json")
     for event in event_list:
         if user_name == event.creator:
@@ -365,7 +365,7 @@ def get_event_by_tag(tag: str):
 
 
 
-def event_backup_save(event: Event, update: Update):
+def event_backup_save(event, update: Update):
     event_list: List[Event] = events_reader("events_backup.json")
     new_event_list: List[Event] = []
 

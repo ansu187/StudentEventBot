@@ -1,13 +1,10 @@
-import logging
-from datetime import datetime
 
-from telegram import Update, ReplyKeyboardMarkup, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardRemove
-from telegram.ext import Application, CommandHandler, ConversationHandler, MessageHandler, filters, ContextTypes, \
-    CallbackQueryHandler
 
-import Accept
-import Event, UserDatabase, EventDatabase
-import Tags
+from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove
+from telegram.ext import ContextTypes
+
+import UserDatabase
+
 
 
 
