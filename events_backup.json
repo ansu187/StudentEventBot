@@ -38,5 +38,25 @@
         "accepted": false,
         "tags": null,
         "stage": 14
+    },
+    {
+        "id": 0,
+        "name": "Fuksiolympialaiset // fresher olympics",
+        "creator": "ansu187",
+        "start_time": null,
+        "end_time": null,
+        "ticket_sell_time": null,
+        "location": null,
+        "description_fi": null,
+        "description_en": null,
+        "ticket_link": null,
+        "other_link": null,
+        "accessibility_fi": null,
+        "accessibility_en": null,
+        "price": null,
+        "dc": null,
+        "accepted": false,
+        "tags": [],
+        "stage": 2
     }
 ]

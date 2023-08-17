@@ -7,7 +7,8 @@
 # get_unaccepted_events returns events, that have accepted tag as False
 # get_accepted_events return events, that have accepted tag as True
 # event_parser_normal returns an event text ready to be send to user
-# event_parser_all returns an event text with all possible fields. This is used for organizers and admins to check that all event fields are okay
+# event_parser_all returns an event text with all possible fields.
+# This is used for organizers and admins to check that all event fields are okay
 # event_backup_load loads the list of events backed up
 # event_backup_save saves the event to events_backup.json -file
 # event_finder_by_creator returns an event made by certain user
@@ -325,10 +326,21 @@ def event_parser_normal(event: Event, user_lang) -> str:
 
 def event_parser_all(event: Event) -> str:
     event_text = (
-        f"Id: {event.id}\n{event.name} - starts at: {event.start_time}\nends at: {event.end_time}\n\nLocation: {event.location}\n"
-        f"Finnish description: {event.description_fi}\n\nFinnish accessibility: {event.accessibility_fi}\n\n"
-        f"English description: {event.description_en}\n\nEnglish accessibility:{event.accessibility_en}\n\n"
-        f"Price: {event.price}\n\nTickets: {event.ticket_link}\n\nTicket sale date: {event.ticket_sell_time}\n\nDresscode: {event.dc}")
+        f"Event: {event.id} "
+        f"created by: {event.creator}\n"
+        f"Name:{event.name}\n"
+        f"starts at: {event.start_time}\n"
+        f"ends at: {event.end_time}\n\n"
+        f"Location: {event.location}\n"
+        f"Finnish description: {event.description_fi}\n\n"
+        f"Finnish accessibility: {event.accessibility_fi}\n\n"
+        f"English description: {event.description_en}\n\n"
+        f"English accessibility:{event.accessibility_en}\n\n"
+        f"Price: {event.price}\n"
+        f"Tickets: {event.ticket_link}\n"
+        f"Ticket sale date: {event.ticket_sell_time}\n"
+        f"Dresscode: {event.dc}\n\n"
+        f"Tags: {event.tags}")
     return event_text
 
 
