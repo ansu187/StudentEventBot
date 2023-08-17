@@ -101,7 +101,7 @@ def translate_string(string_key, update):
             "help": "Ohjeet tulee joskus myöhemmin. Kirjoita saavuttavuusohjeet",
             "submitted": "Tapahtuma tallennettu ja lähetetty LTKY:lle hyväksyttäväksi.",
             "saved": "Tapahtuma tallennettu. Voit muokata tapahtumaa valitsemalla menusta Muokkaa tapahtumaa ja lähettää sen tarkastettavaksi valitsemalla Luo tapahtuma.",
-            "cancel": "",
+            "cancel": "Toimenpide keskeytetty.",
         },
         1: {
             "add": "add",
@@ -117,7 +117,7 @@ def translate_string(string_key, update):
             "help": "Help will be here some day! Write the accessibility instructions.",
             "submitted": "Event saved and submitted for LTKY to check it!",
             "saved": "Event saved. You can edit the event by choosing Edit event from a menu. You can send it by choosing Create event.",
-            "cancel": "",
+            "cancel": "Action cancelled.",
     }
     }
 
@@ -243,7 +243,7 @@ async def old_event(update: Update, context: ContextTypes.DEFAULT_TYPE)->int:
 
     #if user wants to create a new event
     await update.message.reply_text(f"{user_prompts[UserDatabase.get_user_lang_code(update)][NAME]}")
-    await EventDatabase.event_backup_delete(update, context)
+    EventDatabase.event_backup_delete(update, context)
     await create_event_object(update, context)
     await run_before_every_return(update, context)
     return NAME
