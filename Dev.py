@@ -3,9 +3,10 @@ from telegram.ext import ConversationHandler, ContextTypes
 
 import UserDatabase, Tags
 import json
+import Filepaths
+import asyncio
 
-
-MENU, ADD_TAGS, REMOVE_TAGS, USER_COUNT, CHANGE_USER_TYPE_1, CHANGE_USER_TYPE_2 = range(6)
+MENU, ADD_TAGS, REMOVE_TAGS, USER_COUNT, CHANGE_USER_TYPE_1, CHANGE_USER_TYPE_2, LIST_USERS = range(7)
 USER_TYPE = ["", "normal", "organizer", "admin", "super_admin"]
 
 
@@ -15,7 +16,7 @@ async def dev(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 
-    reply_keyboard = [["add_tags", "remove_tags"], ["user_count", "change_user_type"]]
+    reply_keyboard = [["add_tags", "remove_tags"], ["user_count", "change_user_type"],["list users", "show feedback", "delete feedback"]]
     await update.message.reply_text(
         f"What do you want to do?",
         reply_markup=ReplyKeyboardMarkup(
@@ -26,7 +27,48 @@ async def dev(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     return MENU
 
+async def show_feedback(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    messages_per_second = 15
+    interval = 1 / messages_per_second
+    try:
+        with open(Filepaths.feedback_file, "r") as file:
+            for line in file:
+                feedback = line.strip()
+                if feedback:
+                    await update.message.reply_text(feedback)
+                    await asyncio.sleep(interval)
+                else:
+                    await update.message.reply_text("That's all feedback there is!")
 
+    except FileNotFoundError:
+        await update.message.reply_text(f"Feedback file '{Filepaths.feedback_file}' not found.")
+
+    return ConversationHandler.END
+
+async def delete_feedback(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    messages_per_second = 15
+    interval = 1 / messages_per_second
+    try:
+        with open(Filepaths.feedback_file, "r") as file:
+            for line in file:
+                feedback = line.strip()
+                if feedback:
+                    await update.message.reply_text(feedback)
+                    await asyncio.sleep(interval)
+
+
+    except FileNotFoundError:
+        await update.message.reply_text(f"Feedback file '{Filepaths.feedback_file}' not found.")
+        return ConversationHandler.END
+
+    try:
+        with open(Filepaths.feedback_file, "w") as file:
+            await update.message.reply_text("Feedbacks deleted!")
+
+    except FileNotFoundError:
+        await update.message.reply_text("Weird shit just happened!")
+
+    return ConversationHandler.END
 
 async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text
@@ -47,14 +89,44 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("Username:")
         return CHANGE_USER_TYPE_1
 
+    elif text == "list users":
+        reply_keyboard = [["all users", "normal users"], ["organizers", "admins"],
+                          ["super admins"]]
+        await update.message.reply_text(
+            f"What do you want to do?",
+            reply_markup=ReplyKeyboardMarkup(
+                reply_keyboard, one_time_keyboard=True, input_field_placeholder="List users"
+            ),
+        )
+        ReplyKeyboardRemove()
+        return LIST_USERS
+
+    elif text == "show feedback":
+        await show_feedback(update,context)
+        return ConversationHandler.END
+
+    elif text == "delete feedback":
+        await delete_feedback(update, context)
+        return ConversationHandler.END
+
+
+
     else:
         await update.message.reply_text("Please use the keyboard. If everything stops working, please type /cancel")
+        return ConversationHandler.END
+
+
+
+
+
+
+
 
 async def add_tag(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text
 
     try:
-        with open('tags.json', 'r') as file:
+        with open(Filepaths.tags_file, 'r') as file:
             data = json.load(file)
             tags_list = data.get('tags', [])
 
@@ -74,7 +146,7 @@ async def add_tag(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
             data['tags'] = tags_list
 
-        with open('tags.json', 'w') as file:
+        with open(Filepaths.tags_file, 'w') as file:
             json.dump(data, file, indent=2)
 
         await update.message.reply_text(f"Attribute '{text}' added to tags.json.")
@@ -91,7 +163,7 @@ async def remove_tag(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("What tag do you want to add?")
         return ADD_TAGS
     try:
-        with open("tags.json", 'r') as file:
+        with open(Filepaths.tags_file, 'r') as file:
             data = json.load(file)
 
         # Step 2: Remove variable text's string from each array
@@ -189,3 +261,52 @@ async def user_count(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(f"There are currently {count} users!")
 
     return ConversationHandler.END
+
+
+
+async def list_users(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_list = UserDatabase.user_reader()
+
+    text = update.message.text
+
+    messages_per_second = 15
+    interval = 1 / messages_per_second
+
+    if text == "all users":
+        await update.message.reply_text("Here are all the users:")
+        for user in user_list:
+            await update.message.reply_text(f"Username: {user.nick} Type: {user.user_type} Lang: {user.user_lang}")
+            await asyncio.sleep(interval)
+        return ConversationHandler.END
+
+    elif text == "normal users":
+        await update.message.reply_text("Here are all the normal users:")
+        for user in user_list:
+            if user.user_type == 1:
+                await update.message.reply_text(f"Username: {user.nick} Lang: {user.user_lang}")
+                await asyncio.sleep(interval)
+        return ConversationHandler.END
+
+    elif text == "organizers":
+        await update.message.reply_text("Here are all the organizers:")
+        for user in user_list:
+            if user.user_type == 2:
+                await update.message.reply_text(f"Username: {user.nick} Lang: {user.user_lang}")
+                await asyncio.sleep(interval)
+        return ConversationHandler.END
+
+    elif text == "admins":
+        await update.message.reply_text("Here are all the admins:")
+        for user in user_list:
+            if user.user_type == 3:
+                await update.message.reply_text(f"Username: {user.nick} Lang: {user.user_lang}")
+                await asyncio.sleep(interval)
+        return ConversationHandler.END
+
+    elif text == "super admins":
+        await update.message.reply_text("Here are all the super admins:")
+        for user in user_list:
+            if user.user_type == 4:
+                await update.message.reply_text(f"Username: {user.nick} Lang: {user.user_lang}")
+                await asyncio.sleep(interval)
+        return ConversationHandler.END

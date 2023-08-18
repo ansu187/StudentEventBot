@@ -660,11 +660,11 @@ async def tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if reply == "add" or reply == "lisää":
         context.user_data["tag_adding"] = True
-        await Tags.full_keyboard(update, context, translate_string("remove"), translate_string("add"))
+        await Tags.full_keyboard(update, context, translate_string("remove", update), translate_string("add", update))
         return TAGS
 
     elif reply == "remove" or reply == "poista":
-        await Tags.full_keyboard(update, context, translate_string("add"), translate_string("remove"))
+        await Tags.full_keyboard(update, context, translate_string("add", update), translate_string("remove", update))
         context.user_data["tag_adding"] = False
         return TAGS
 

@@ -1,5 +1,6 @@
 import json
 import os
+import Filepaths
 
 import User
 from telegram import Update
@@ -8,9 +9,9 @@ from typing import List
 def user_reader(): #Reads the user list from the JSON-file!
     user_list = []
 
-    if os.path.isfile("users.json") and os.path.getsize("users.json") > 0:
+    if os.path.isfile(Filepaths.users_file) and os.path.getsize(Filepaths.users_file) > 0:
         try:
-            with open("users.json", "r") as f:
+            with open(Filepaths.users_file, "r") as f:
                 data = json.load(f)
 
             for user_data in data:
@@ -33,9 +34,9 @@ def user_reader(): #Reads the user list from the JSON-file!
 def user_writer(user_list): #Writes user data back to the users.json -file
 
     try:
-        with open("Users.json", "w") as f:
+        with open(Filepaths.users_file, "w") as f:
             json.dump(user_list, f, cls=User.CustomerEncoder)
-            print("User added to the users.json")
+            print(f"User added to the {Filepaths.users_file}")
 
 
     except FileNotFoundError:
