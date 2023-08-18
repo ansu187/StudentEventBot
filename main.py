@@ -7,7 +7,7 @@ import EventSaver
 import Start, Tags, List, Accept, Help, Edit, Dev, Menu
 import Secrets
 
-USERNAME: Final = "biletestibot"
+
 
 # Event states
 ADD_REMOVE, ADD, REMOVE = range(3)
@@ -107,6 +107,7 @@ def main() -> None:
             Dev.REMOVE_TAGS: [MessageHandler(filters.TEXT & ~filters.COMMAND, Dev.remove_tag)],
             Dev.CHANGE_USER_TYPE_1: [MessageHandler(filters.TEXT & ~filters.COMMAND, Dev.check_for_user)],
             Dev.CHANGE_USER_TYPE_2: [MessageHandler(filters.TEXT & ~filters.COMMAND, Dev.set_user_type)],
+            Dev.LIST_USERS: [MessageHandler(filters.TEXT & ~filters.COMMAND, Dev.list_users)],
         },
         fallbacks=[CommandHandler("cancel", EventSaver.cancel)]
     )

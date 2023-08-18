@@ -3,6 +3,7 @@ from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove
 
 import UserDatabase
 import json
+import Filepaths
 
 ADD_REMOVE, ADD, REMOVE, SAVE = range(4)
 
@@ -25,7 +26,7 @@ async def normal_keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE, bu
 
 async def full_keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE, button: str, prompt: str):
     try:
-        with open('tags.json', 'r') as file:
+        with open(Filepaths.tags_file, 'r') as file:
             tags_data = json.load(file)
             data = tags_data.get('tags', [])
     except Exception:
@@ -54,7 +55,7 @@ async def close_keyboard(update, context):
 def get_tag_language_list(update):
     user_lang = UserDatabase.get_user_lang(update)
     try:
-        with open('tags.json', 'r') as file:
+        with open(Filepaths.tags_file, 'r') as file:
             tags_data = json.load(file)
             data = tags_data.get('tags', [])
     except Exception:
@@ -142,7 +143,7 @@ async def tags_all(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     await list_tags(update, context)
 
-    await normal_keyboard(update, context, "add")
+    await normal_keyboard(update, context, "add", "remove")
 
     return ADD
 

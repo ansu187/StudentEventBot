@@ -21,6 +21,7 @@ from datetime import datetime
 
 import Event
 import logging
+import Filepaths
 
 import UserDatabase
 
@@ -31,7 +32,7 @@ logger = logging.getLogger(__name__)
 
 
 def get_only_upcoming():
-    event_list = events_reader("events.json")
+    event_list = events_reader(Filepaths.events_file)
     event_list_only_upcoming = []
     for event in event_list:
         if event.start_time.date() >= datetime.now().date() and event.end_time == None:
@@ -111,7 +112,7 @@ def events_reader(file_name: str):
 
 def events_writer(event_list):
     try:
-        with open("events.json", "w") as f:
+        with open(Filepaths.events_file, "w") as f:
             json.dump(event_list, f, cls=Event.EventEncoder, indent=4, separators=(',', ': '))
             print("Event saved")
 
@@ -130,7 +131,7 @@ def event_finder_by_id(id: int, file_name):
 
 
 def get_unaccepted_events():
-    event_list = events_reader("events.json")
+    event_list = events_reader(Filepaths.events_file)
     unaccepted_events = []
     for event in event_list:
         if not event.accepted:
@@ -347,7 +348,7 @@ def event_parser_all(event) -> str:
 
 
 def get_event_to_edit(user_name: str):
-    event_list = events_reader("events_backup.json")
+    event_list = events_reader(Filepaths.events_backup_file)
     for event in event_list:
         if user_name == event.creator:
             return event
@@ -368,7 +369,7 @@ def get_event_by_tag(tag: str):
 
 
 def event_backup_save(event, update: Update):
-    event_list: List[Event] = events_reader("events_backup.json")
+    event_list: List[Event] = events_reader(Filepaths.events_backup_file)
     new_event_list: List[Event] = []
 
     for e in event_list:
@@ -379,7 +380,7 @@ def event_backup_save(event, update: Update):
     new_event_list.append(event)
 
     try:
-        with open("events_backup.json", "w") as f:
+        with open(Filepaths.events_backup_file, "w") as f:
             json.dump(new_event_list, f, cls=Event.EventEncoder, indent=4, separators=(',', ': '))
             print("Backup made!")
 
@@ -387,7 +388,7 @@ def event_backup_save(event, update: Update):
         print("Something went wrong")
 
 def event_backup_delete(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    event_list: List[Event] = events_reader("events_backup.json")
+    event_list: List[Event] = events_reader(Filepaths.events_backup_file)
     new_event_list: List[Event] = []
 
     for e in event_list:
@@ -396,9 +397,20 @@ def event_backup_delete(update: Update, context: ContextTypes.DEFAULT_TYPE):
         new_event_list.append(e)
 
     try:
-        with open("events_backup.json", "w") as f:
+        with open(Filepaths.events_backup_file, "w") as f:
             json.dump(new_event_list, f, cls=Event.EventEncoder, indent=4, separators=(',', ': '))
             print("Backup made!")
 
     except FileNotFoundError:
         print("Something went wrong")
+
+
+def get_events_by_creator(update: Update):
+    event_list = events_reader(Filepaths.events_file)
+    event_list_to_return = []
+
+    for event in event_list:
+        if update.message.from_user.username == event.creator:
+            event_list_to_return.append(event)
+
+    return event_list_to_return
