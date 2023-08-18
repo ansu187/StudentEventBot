@@ -71,7 +71,7 @@ def events_reader(file_name: str):
             event_object.name = event_data['name']
             event_object.start_time = start_time
             event_object.end_time = end_time
-            event_object.ticket_sell_time = sell_time_str
+            event_object.ticket_sell_time = ticket_sell_time
             event_object.location = event_data['location']
             event_object.description_fi = event_data['description_fi']
             event_object.description_en = event_data['description_en']
