@@ -83,7 +83,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def lang(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    input = update.message.text.lower()
+    text_in = update.message.text.lower()
     new_user = context.user_data['user']
     user_list = UserDatabase.user_reader()
 
@@ -91,9 +91,9 @@ async def lang(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         user_id = update.message.from_user.id
         for user in user_list:
             if user_id == user.id:
-                if input == "finnish":
+                if text_in == "finnish":
                     user.user_lang = "fi"
-                elif input == "english":
+                elif text_in == "english":
                     user.user_lang = "en"
                 UserDatabase.user_writer(user_list)
 
@@ -103,10 +103,10 @@ async def lang(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
             await update.message.reply_text("Kieli vaihdettu!")
         return ConversationHandler.END
 
-    if input == "finnish":
+    if text_in == "finnish":
         new_user.user_lang = "fi"
 
-    elif input == "english":
+    elif text_in == "english":
         new_user.user_lang = "en"
 
 

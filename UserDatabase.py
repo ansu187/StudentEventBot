@@ -22,6 +22,9 @@ def user_reader(): #Reads the user list from the JSON-file!
         except json.JSONDecodeError:
             print("Invalid JSON data in the file!")
 
+    else:
+        print("Something weird happened!")
+
     return user_list
 
 
