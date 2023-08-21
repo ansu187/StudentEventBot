@@ -76,3 +76,11 @@ def get_admins():
         if user.user_type >= 3:
             admin_list.append(user)
     return admin_list
+
+def get_user_id(user_name):
+    user_list = user_reader()
+    for user in user_list:
+        if user.nick == user_name:
+            return user.id
+
+    return "no user found"

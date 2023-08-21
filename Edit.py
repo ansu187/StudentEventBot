@@ -7,7 +7,7 @@ from datetime import datetime
 
 import logging
 
-import EventSaver, EventDatabase, Tags
+import EventSaver, EventDatabase, Tags, Accept
 import UserDatabase
 
 logging.basicConfig(
@@ -15,8 +15,42 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-MENU, NAME, START_TIME, END_TIME, LOCATION, DESCRIPTION_FI, DESCRIPTION_EN, PRICE, TICKET_LINK_OR_INFO, \
-    TICKET_SELL_TIME, OTHER_LINK, ACCESSIBILITY_FI, ACCESSIBILITY_EN, DC, TAGS, SUBMIT = range(16)
+EVENT_SELECTOR, MENU, NAME, START_TIME, END_TIME, LOCATION, DESCRIPTION_FI, DESCRIPTION_EN, PRICE, TICKET_LINK_OR_INFO, \
+    TICKET_SELL_TIME, OTHER_LINK, ACCESSIBILITY_FI, ACCESSIBILITY_EN, DC, TAGS, SUBMIT = range(17)
+
+
+async def event_to_edit_keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE, event_list):
+    reply_keyboard = []
+
+    for event in event_list:
+        button = [f"{event.name}"]
+        reply_keyboard.append(button)
+
+    reply_keyboard.append(["/cancel"])
+
+    await update.message.reply_text(
+        f"what event do you want to edit?",
+        reply_markup=ReplyKeyboardMarkup(
+            reply_keyboard, one_time_keyboard=True, input_field_placeholder="Edit events?"
+        ),
+    )
+
+    ReplyKeyboardRemove()
+    return
+
+
+async def event_selector(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    event_list = context.user_data['event_list']
+    text = update.message.text.lower()
+
+    for event in event_list:
+        event_name = event.name.lower()
+        if event_name == text:
+            context.user_data['event'] = event
+
+    await keyboard(update, context)
+    return MENU
+
 
 async def edit_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
@@ -25,17 +59,19 @@ async def edit_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
         await update.message.reply_text("You're not supposed to know about this command! I will contact the cyber police immediately! \U0001F46E!")
         return ConversationHandler.END
 
-    event_to_edit = EventDatabase.get_event_to_edit(update.message.from_user.username)
-    context.user_data['event'] = event_to_edit
+    event_list = EventDatabase.get_events_from_backup(update.message.from_user.username)
 
-    if event_to_edit == None:
+    if event_list == []:
         await update.message.reply_text("You don't have any events to edit")
         return ConversationHandler.END
 
-    if event_to_edit is not None:
-        await update.message.reply_text(EventDatabase.event_parser_all(event_to_edit))
-        await keyboard(update,context)
-        return MENU
+    await event_to_edit_keyboard(update, context, event_list)
+
+
+    context.user_data['event_list'] = event_list
+
+
+    return EVENT_SELECTOR
 
 async def keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE):
     reply_keyboard = [["NAME", "START TIME", "END TIME"], ["LOCATION", "DESCRIPTION FI", "DESCRIPTION EN"], ["PRICE",
@@ -122,7 +158,6 @@ async def name(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     event = context.user_data['event']
 
     event.name = update.message.text
-    event.stage = START_TIME
 
     # backup
     EventDatabase.event_backup_save(event, update)
@@ -171,7 +206,8 @@ async def start_time(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         return MENU
 
     except ValueError:
-        await update.message.reply_text(f"Please enter the time in the correct format!\n\n{EventSaver.user_prompts[UserDatabase.get_user_lang_code(update)][EventSaver.START_TIME]}")
+        await update.message.reply_text(f"Please enter the time in the correct format!\n\n"
+                                        f"{EventSaver.user_prompts[UserDatabase.get_user_lang_code(update)][EventSaver.START_TIME]}")
 
         return START_TIME
 
@@ -214,7 +250,8 @@ async def end_time(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         EventDatabase.event_backup_save(event, update)
 
     except ValueError:
-        await update.message.reply_text("Invalid time format. Please enter the time in (day.month.year hours.minutes) -format.")
+        await update.message.reply_text("Invalid time format. "
+                                        "Please enter the time in (day.month.year hours.minutes) -format.")
         return END_TIME
 
     await keyboard(update, context)
@@ -487,24 +524,15 @@ async def submit(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user_input = update.message.text
     user_input = user_input.lower()
 
-
     if user_input == "submit":
-        event_list = EventDatabase.events_reader("events.json")
         event = context.user_data['event']
-        try:
-            event.id = event_list[-1].id + 1
-        except IndexError:
-            event.id = 1
+        event.stage = EventSaver.STAGE_SUBMITTED
+        await update.message.reply_text(EventSaver.translate_string("submitted", update))
+        await update.message.reply_text(EventDatabase.event_parser_all(event))
+        # EventDatabase.event_backup_delete(update, context)
+        await Accept.message_to_admins(context)
 
-        event.stage = 99
-        event_list.append(event)
-        EventDatabase.events_writer(event_list)
-        await update.message.reply_text(
-            f"Event saved and submitted for LTKY to check it!")
-        await update.message.reply_text(EventDatabase.event_parser_all(context.user_data['event']))
-        await EventDatabase.event_backup_delete(update, context)
         return ConversationHandler.END
-
     else:
         await keyboard(update,context)
         return MENU

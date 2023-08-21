@@ -4,7 +4,7 @@ from telegram.ext import Application, CommandHandler, ConversationHandler, Messa
 
 import Feedback
 import EventSaver
-import Start, Tags, List, Accept, Help, Edit, Dev, Menu
+import Start, Tags, List, Accept, Help, Edit, Dev, Menu, Cancel
 import Secrets
 
 
@@ -15,7 +15,6 @@ ADD_REMOVE, ADD, REMOVE = range(3)
 
 def main() -> None:
     application = Application.builder().token(Secrets.TOKEN).build()
-
 
 
     # Conversation handler for handling the creation of events
@@ -39,12 +38,15 @@ def main() -> None:
             EventSaver.TAGS: [MessageHandler(filters.TEXT & ~filters.COMMAND, EventSaver.tags)],
             EventSaver.SAVE_EVENT: [MessageHandler(filters.TEXT & ~filters.COMMAND, EventSaver.save)],
         },
-        fallbacks=[CommandHandler("cancel", EventSaver.cancel)],
+        fallbacks=[CommandHandler("cancel", EventSaver.cancel), MessageHandler(filters.COMMAND, Cancel.cancel)]
     )
 
+
+    #convhandler for editing allready created events
     edit_handler = ConversationHandler(
         entry_points=[CommandHandler("edit", Edit.edit_command), MessageHandler(filters.Regex("^(Edit event|Muokkaa tapahtumaa)$"), Edit.edit_command)],
         states={
+            Edit.EVENT_SELECTOR: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.event_selector)],
             Edit.MENU: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.menu)],
             Edit.NAME: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.name)],
             Edit.START_TIME: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.start_time)],
@@ -62,9 +64,11 @@ def main() -> None:
             Edit.TAGS: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.tags)],
             Edit.SUBMIT: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.submit)],
         },
-        fallbacks=[CommandHandler("cancel", EventSaver.cancel)],
+        fallbacks=[CommandHandler("cancel", EventSaver.cancel), MessageHandler(filters.COMMAND, Cancel.cancel)],
     )
 
+
+    #To handle user adding tags
     tag_handler = ConversationHandler(
         entry_points=[CommandHandler("tags", Tags.start_tags)],
         states={
@@ -77,9 +81,11 @@ def main() -> None:
                      MessageHandler(filters.Regex("^(Save)$"), Tags.save_tag)],
 
         },
-        fallbacks=[CommandHandler("cancel", EventSaver.cancel)],
+        fallbacks=[CommandHandler("cancel", EventSaver.cancel), MessageHandler(filters.COMMAND, Cancel.cancel)],
 
     )
+
+
 
     feedback_handler = ConversationHandler(
         entry_points=[CommandHandler("feedback", Feedback.feedback),
@@ -87,7 +93,7 @@ def main() -> None:
         states={
             Feedback.FEEDBACK: [MessageHandler(filters.TEXT & ~filters.COMMAND, Feedback.save_text)]
         },
-        fallbacks=[CommandHandler("cancel", EventSaver.cancel)]
+        fallbacks=[CommandHandler("cancel", EventSaver.cancel), MessageHandler(filters.COMMAND, Cancel.cancel)]
     )
 
     start_handler = ConversationHandler(
@@ -96,9 +102,10 @@ def main() -> None:
         states={
             Start.LANG: [MessageHandler(filters.TEXT & ~filters.COMMAND, Start.lang)]
         },
-        fallbacks=[CommandHandler("cancel", EventSaver.cancel)]
+        fallbacks=[CommandHandler("cancel", EventSaver.cancel), MessageHandler(filters.COMMAND, Cancel.cancel)]
     )
 
+    #secret keyboard for super admins
     dev_handler = ConversationHandler(
         entry_points=[CommandHandler("dev", Dev.dev), MessageHandler(filters.Regex("^(Secret menu|Salainen menu)$"), Dev.dev)],
         states={
@@ -109,8 +116,10 @@ def main() -> None:
             Dev.CHANGE_USER_TYPE_2: [MessageHandler(filters.TEXT & ~filters.COMMAND, Dev.set_user_type)],
             Dev.LIST_USERS: [MessageHandler(filters.TEXT & ~filters.COMMAND, Dev.list_users)],
         },
-        fallbacks=[CommandHandler("cancel", EventSaver.cancel)]
+        fallbacks=[CommandHandler("cancel", EventSaver.cancel), MessageHandler(filters.COMMAND, Cancel.cancel)]
     )
+
+    #handles user query for events
     list_handler = ConversationHandler(
         entry_points=[CommandHandler("list", List.list), MessageHandler(filters.Regex("^(List events|Listaa tapahtumat)$"), List.list)],
         states={
@@ -118,26 +127,37 @@ def main() -> None:
             List.TAGS: [MessageHandler(filters.TEXT & ~filters.COMMAND, List.list_by_tags)],
             List.TIME_MENU: [MessageHandler(filters.TEXT & ~filters.COMMAND, List.time_menu)],
         },
-        fallbacks=[CommandHandler("cancel", EventSaver.cancel)]
+        fallbacks=[CommandHandler("cancel", EventSaver.cancel), MessageHandler(filters.COMMAND, Cancel.cancel)]
+    )
+
+    #handles admins accepting events
+    accept_handler = ConversationHandler(
+        entry_points=[CommandHandler("Accept", Accept.accept), MessageHandler(filters.Regex("^(Hyväksy tapahtumia|Accept events)$"), Accept.accept)],
+        states={
+            Accept.EVENT_SELECTOR: [MessageHandler(filters.TEXT & ~filters.COMMAND, Accept.event_selector)],
+            Accept.DECISION: [MessageHandler(filters.TEXT & ~filters.COMMAND, Accept.decision)],
+            Accept.REPLY: [MessageHandler(filters.TEXT & ~filters.COMMAND, Accept.reply)],
+        },
+        fallbacks=[CommandHandler("cancel", EventSaver.cancel), MessageHandler(filters.COMMAND, Cancel.cancel)]
     )
 
 
 
 
-
-    application.add_handler(CommandHandler("menu", Menu.menu))
-
-    application.add_handler(CommandHandler("accept", Accept.accept))
-    application.add_handler(CommandHandler("help", Help.help))
-
     application.add_handler(CallbackQueryHandler(List.button))
-    application.add_handler(list_handler)
-    application.add_handler(start_handler)
-    application.add_handler(event_handler)
-    application.add_handler(edit_handler)
-    application.add_handler(tag_handler)
-    application.add_handler(dev_handler)
-    application.add_handler(feedback_handler)
+    application.add_handler(accept_handler, 1)
+    application.add_handler(list_handler, 2)
+    application.add_handler(start_handler, 3)
+    application.add_handler(event_handler, 4)
+    application.add_handler(edit_handler, 5)
+    application.add_handler(tag_handler, 6)
+    application.add_handler(dev_handler, 7)
+    application.add_handler(feedback_handler, 8)
+
+    application.add_handler(CommandHandler("menu", Menu.menu), 0)
+
+    application.add_handler(CommandHandler("accept", Accept.accept), 0)
+    application.add_handler(CommandHandler("help", Help.help), 0)
 
 
 

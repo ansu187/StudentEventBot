@@ -32,6 +32,10 @@ import Tags
 OLD_EVENT, NAME, START_TIME, END_TIME, LOCATION, DESCRIPTION_FI, DESCRIPTION_EN, PRICE, TICKET_LINK_OR_INFO, \
     TICKET_SELL_TIME, OTHER_LINK, ACCESSIBILITY_FI, ACCESSIBILITY_EN, DC, TAGS, SAVE_EVENT = range(16)
 
+STAGE_SAVED = 50
+STAGE_SUBMITTED = 99
+
+
 stages = ["OLD_EVENT", "NAME", "START_TIME", "END_TIME", "LOCATION", "DESCRIPTION_FI", "DESCRIPTION_EN", "PRICE",
           "TICKET_LINK_OR_INFO", "TICKET_SELL_TIME", "OTHER_LINK",
           "ACCESSIBILITY_FI", "ACCESSIBILITY_EN", "DC", "TAGS", "SAVE_EVENT"]
@@ -96,7 +100,7 @@ def translate_string(string_key, update):
             "save": "tallenna",
             "No tag": "Sinulla ei ole tägejä tapahtumassasi.",
             "no access": "Sinulla ei ole oikeuksia tapahtuman luomiseen.",
-            "unsaved event": "Sinulla on tapahtuma, jota et ole vielä tallentanut.",
+            "unsaved event": "Sinulla on tapahtuma/tapahtumia, jota et ole vielä tallentanut.",
             "time machine": "Joko sinulla on aikakone, tai sitten laitoit väärän ajan. Yritä uudestaan :)",
             "correct format": "Anna aika oikeassa muodossa.",
             "correct format2": "Aika on väärässä muodossa. Anna aika (päivä.kuukausi.vuosi tunti.minuutti) -muodossa.",
@@ -112,7 +116,7 @@ def translate_string(string_key, update):
             "save": "save",
             "No tag": "You don't have any tags in your event.",
             "no access": "You have no authorization to create an event.",
-            "unsaved event": "You have an event that you haven't yet submitted.",
+            "unsaved event": "You have event(s) that you haven't yet submitted.",
             "time machine": "Either you have a time machine, or then you accidentally put there a wrong time, try again :)",
             "correct format": "Please enter the time in the correct format!",
             "correct format2": "Invalid time format. Please enter the time in (day.month.year hours.minutes) -format.",
@@ -151,6 +155,8 @@ async def run_before_every_return(update: Update, context: ContextTypes.DEFAULT_
             try:
                 if event.stage == 99:
                     print("The event stage is now COMPLETED!")
+                elif event.stage == 50:
+                    print("Event stage is now SAVED!")
                 else:
                     print(f"The event stage is now: {stages[event.stage]}")
             except TypeError:
@@ -179,6 +185,9 @@ async def want_to_edit_keyboard(update: Update, context: ContextTypes.DEFAULT_TY
     )
     ReplyKeyboardRemove()
 
+
+
+
 async def close_keyboard(update, context):
     ReplyKeyboardRemove()
 
@@ -202,12 +211,14 @@ async def event_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
         await update.message.reply_text(translate_string("no access", update))
         return ConversationHandler.END
 
-    #checks if there is a event backed up, if is, pops the keyboard and the response goes to old_event()
+    #checks if there is a event backed up with event stage not set to STAGE_SUBMITTED (99), if is,
+    # pops the keyboard and the response goes to old_event()
+
     event_to_edit = EventDatabase.get_event_to_edit(update.message.from_user.username)
+
     if event_to_edit is not None:
         await update.message.reply_text(EventDatabase.event_parser_all(event_to_edit))
         await update.message.reply_text(translate_string("unsaved event", update))
-
         await want_to_edit_keyboard(update, context)
         await run_before_every_return(update, context)
         return OLD_EVENT
@@ -249,7 +260,7 @@ async def old_event(update: Update, context: ContextTypes.DEFAULT_TYPE)->int:
 
     #if user wants to create a new event
     await update.message.reply_text(f"{user_prompts[UserDatabase.get_user_lang_code(update)][NAME]}")
-    EventDatabase.event_backup_delete(update, context)
+    EventDatabase.event_backup_delete(EventDatabase.get_event_to_edit(update.message.from_user.username))
     await create_event_object(update, context)
     await run_before_every_return(update, context)
     return NAME
@@ -726,28 +737,31 @@ async def save(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     choice = text.lower()
 
     if choice == "submit":
-        event_list = EventDatabase.events_reader("events.json")
+        #event_list = EventDatabase.events_reader("events.json")
         event = context.user_data['event']
-        try:
+        """try:
             event.id = event_list[-1].id + 1
         except IndexError:
-            event.id = 1
+            event.id = 1"""
 
-        event.stage = 99
-        event_list.append(event)
-        EventDatabase.events_writer(event_list)
+        event.stage = STAGE_SUBMITTED
+        #event_list.append(event)
+        #EventDatabase.events_writer(event_list)
         event = context.user_data['event']
+        event.stage = 99
         await update.message.reply_text(translate_string("submitted", update))
         await update.message.reply_text(EventDatabase.event_parser_all(event))
-        EventDatabase.event_backup_delete(update, context)
+        #EventDatabase.event_backup_delete(update, context)
+        EventDatabase.event_backup_save(event, update)
         await Accept.message_to_admins(context)
         await run_before_every_return(update, context)
         return ConversationHandler.END
 
     if choice == "save":
         event = context.user_data['event']
-        event.stage = 99
         await update.message.reply_text(translate_string("saved", update))
+        EventDatabase.event_backup_save(event, update)
+
 
         await run_before_every_return(update, context)
         return ConversationHandler.END
