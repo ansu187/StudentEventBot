@@ -750,7 +750,13 @@ async def save(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         event = context.user_data['event']
         event.stage = 99
         await update.message.reply_text(translate_string("submitted", update))
-        await update.message.reply_text(EventDatabase.event_parser_all(event))
+        try:
+            await update.message.reply_text(EventDatabase.event_parser_all(event))
+        except Exception:
+            await update.message.reply_text(EventDatabase.event_parser_all(event))
+            await update.message.reply_text(EventDatabase.event_parser_all(event))
+
+
         #EventDatabase.event_backup_delete(update, context)
         EventDatabase.event_backup_save(event, update)
         await Accept.message_to_admins(context)

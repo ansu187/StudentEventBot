@@ -113,6 +113,8 @@ async def decision(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         message_to_user = f"Your event {event.name} has been accepted!"
 
+        await send_message_to_all_users(update, context, event.id)
+
         user_id = UserDatabase.get_user_id(event.creator)
         try:
             await context.bot.send_message(chat_id=user_id, text=message_to_user)
@@ -143,7 +145,6 @@ async def reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     event = context.user_data['event']
     text = f"There was a problem with event {event.name}\n\nUse Edit event in your menu to edit it!\n\nThe problem:"
 
-    await send_message_to_all_users(update, context, event.id)
 
     text += update.message.text
 
