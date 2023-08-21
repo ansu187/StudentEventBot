@@ -4,6 +4,8 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKe
 from datetime import datetime, timedelta
 import asyncio
 
+import Filepaths
+
 TAGS, TAGS1, MENU, TIME_MENU, NEXT_WEEK, THIS_WEEK, THIS_MONTH, TODAY, LIST_BY_NUMBER = range(9)
 
 async def list(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -282,7 +284,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
     try:
         message_id = int(query.data)
-        event = EventDatabase.event_finder_by_id(message_id, "events.json")
+        event = EventDatabase.event_finder_by_id(message_id, Filepaths.events_file)
         await query.edit_message_text(
             text=f"{EventDatabase.event_parser_normal(event, context.user_data['user_lang'])}")
     except ValueError:

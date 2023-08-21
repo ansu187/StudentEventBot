@@ -21,6 +21,8 @@ from datetime import datetime
 
 import Event
 import logging
+
+import EventSaver
 import Filepaths
 
 import UserDatabase
@@ -107,6 +109,9 @@ def events_reader(file_name: str):
     except json.JSONDecodeError:
         print("Invalid JSON data in the file!")
 
+    except Exception:
+        print("Something went wrong with the event reading from jsons")
+
     return event_list
 
 
@@ -131,10 +136,10 @@ def event_finder_by_id(id: int, file_name):
 
 
 def get_unaccepted_events():
-    event_list = events_reader(Filepaths.events_file)
+    event_list = events_reader(Filepaths.events_backup_file)
     unaccepted_events = []
     for event in event_list:
-        if not event.accepted:
+        if event.stage == EventSaver.STAGE_SUBMITTED:
             unaccepted_events.append(event)
 
     return unaccepted_events
@@ -262,6 +267,7 @@ def event_parser_normal(event, user_lang) -> str:
                          f"{prompts[lang_code][4]}\t{end_date} {prompts[lang_code][5]} {end_time}\n\n")
 
 
+
     except AttributeError:
         text_head = (
             f"**{event_name[lang_code].upper()}**\n"
@@ -293,7 +299,13 @@ def event_parser_normal(event, user_lang) -> str:
 
 
     try:
-        if "//" in event.ticket_link:
+        ticket_sell_time_full = event.ticket_sell_time
+        ticket_sell_time = ticket_sell_time_full.strftime("%d.%m.%Y %H:%M")
+    except Exception:
+        ticket_sell_time = None
+
+    try:
+        if " // " in event.ticket_link:
             event_ticket_link_fi, event_ticket_link_en = event.ticket_link.split("//", 1)
             event_ticket_link_fi = event_ticket_link_fi.strip()
             event_ticket_link_en = event_ticket_link_en.strip()
@@ -309,7 +321,15 @@ def event_parser_normal(event, user_lang) -> str:
 
 
     if event.price != 0:
-        text_tail += f"{prompts[lang_code][7]} {event.price}\n\n"
+        try:
+            event_price = f"{int(event.price)} €"
+        except Exception:
+            event_price = f"{event.price} €"
+
+
+        text_tail += f"{prompts[lang_code][7]} {event_price}\n\n"
+
+
     if event.price == 0:
         if lang_code == 0:
             text_tail += "The event is FREE!\n\n"
@@ -318,8 +338,8 @@ def event_parser_normal(event, user_lang) -> str:
 
     if event_ticket_link is not None:
         text_tail += f"{prompts[lang_code][8]} {event_ticket_link[lang_code]}"
-    if event.ticket_sell_time is not None:
-        text_tail += f"\n\n{prompts[lang_code][9]} {event.ticket_sell_time}\n\n"
+    if ticket_sell_time is not None:
+        text_tail += f"\n\n{prompts[lang_code][9]} {ticket_sell_time}\n\n"
 
     event_text = f"{text_head}...\n{text_body}{text_tail}"
 
@@ -347,11 +367,21 @@ def event_parser_all(event) -> str:
     return event_text
 
 
-def get_event_to_edit(user_name: str):
+def get_events_from_backup(user_name: str):
     event_list = events_reader(Filepaths.events_backup_file)
+    event_list_to_return = []
     for event in event_list:
         if user_name == event.creator:
+            event_list_to_return.append(event)
+    return event_list_to_return
+
+def get_event_to_edit(user_name: str):
+    event_list = events_reader(Filepaths.events_backup_file)
+
+    for event in event_list:
+        if user_name == event.creator and event.stage != 99:
             return event
+
     return None
 
 def get_event_by_tag(tag: str):
@@ -373,8 +403,8 @@ def event_backup_save(event, update: Update):
     new_event_list: List[Event] = []
 
     for e in event_list:
-        if e.creator == update.message.from_user.username:
-            continue  # Skip the event with the same creator
+        if e.name == event.name:
+            continue  # Skip the event with the same name
         new_event_list.append(e)
 
     new_event_list.append(event)
@@ -387,12 +417,12 @@ def event_backup_save(event, update: Update):
     except FileNotFoundError:
         print("Something went wrong")
 
-def event_backup_delete(update: Update, context: ContextTypes.DEFAULT_TYPE):
+def event_backup_delete(event):
     event_list: List[Event] = events_reader(Filepaths.events_backup_file)
     new_event_list: List[Event] = []
 
     for e in event_list:
-        if e.creator == update.message.from_user.username:
+        if e.name == event.name:
             continue  # Skip the event with the same creator
         new_event_list.append(e)
 
@@ -414,3 +444,30 @@ def get_events_by_creator(update: Update):
             event_list_to_return.append(event)
 
     return event_list_to_return
+
+def event_parser_creator_1(event):
+    event_text = (
+        f"Event: {event.id} "
+        f"created by: {event.creator}\n"
+        f"Name:{event.name}\n"
+        f"starts at: {event.start_time}\n"
+        f"ends at: {event.end_time}\n\n"
+        f"Location: {event.location}\n"
+        f"Finnish description: {event.description_fi}\n\n"
+        f"Finnish accessibility: {event.accessibility_fi}\n\n"
+        f"Price: {event.price}\n"
+        f"Tickets: {event.ticket_link}\n"
+        f"Ticket sale date: {event.ticket_sell_time}\n"
+        f"Dresscode: {event.dc}\n\n"
+        f"Tags: {event.tags}")
+    return event_text
+
+
+
+def event_parser_creator_2(event):
+    event_text = (
+        f"English description: {event.description_en}\n\n"
+        f"English accessibility:{event.accessibility_en}\n\n"
+    )
+
+    return event_text
