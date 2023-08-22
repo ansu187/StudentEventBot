@@ -9,6 +9,11 @@ import UserDatabase
 
 
 async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
+    if not UserDatabase.is_user(update):
+        await update.message.reply_text("You have no user.")
+        return
+
     user_lang = UserDatabase.get_user_lang(update)
     if user_lang == "fi":
         lang_code = 0

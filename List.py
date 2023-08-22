@@ -31,45 +31,6 @@ async def list(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 
-    event_list = EventDatabase.get_accepted_events()
-    user_lang = UserDatabase.get_user_lang(update)
-    if arguments == "id":
-
-        await send_events(update,context, event_list)
-
-
-
-
-    elif arguments.startswith("#"):
-        time_sorted_event_list = sorted(event_list, key=lambda event: event.start_time)
-        for event in time_sorted_event_list:
-            try:
-                if arguments in event.tags:
-                    await update.message.reply_text(EventDatabase.event_parser_normal(event, user_lang))
-            except TypeError:
-                continue
-
-    elif arguments.isdigit():
-        try:
-            arguments = int(arguments)
-            complete_event_list = []
-            time_sorted_event_list = sorted(event_list, key=lambda event: event.start_time)
-            i = 0
-            for event in time_sorted_event_list:
-                complete_event_list.append(event)
-                i+=1
-                if i >= arguments:
-                    break
-            await send_events(update, context, complete_event_list)
-
-        except TypeError:
-            await update.message.reply_text("Please give a whole number!")
-
-
-
-    else:
-        await update.message.reply_text("Invalid argument.")
-
 async def time_sort_keyboard(update: Update):
     prompts = [["Miltä ajalta haluat tapahtumat?"], ["From what time do you want the events?"]]
     user_lang = UserDatabase.get_user_lang(update)
@@ -93,9 +54,10 @@ async def time_sort_keyboard(update: Update):
 
 async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text
+    prompts = ["Millaisia tapahtumia haluat nähdä?", "What kind of events do you want to see?"]
 
     if text == "Tietyn tyyppiset tapahtumat" or text == "Events of certain type":
-        await Tags.normal_keyboard(update, context, "", "")
+        await Tags.normal_keyboard(update, context, "", prompts[UserDatabase.get_user_lang_code(update)])
         await Tags.close_keyboard(update, context)
         return TAGS
 
@@ -273,7 +235,13 @@ async def send_events(update: Update, context: ContextTypes.DEFAULT_TYPE, event_
 
 
 async def list_by_tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await send_events(update,context, EventDatabase.get_event_by_tag(update.message.text))
+    prompts = ["Tämän tyyppisiä tapahtumia ei löytynyt.", "No this kind of events found."]
+    event_list = EventDatabase.get_event_by_tag(update.message.text)
+    if event_list is not None:
+        await send_events(update,context, event_list)
+
+    else:
+        await update.message.reply_text(prompts[UserDatabase.get_user_lang_code(update)])
     return ConversationHandler.END
 
 

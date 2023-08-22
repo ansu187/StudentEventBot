@@ -8,10 +8,10 @@ import User
 import UserDatabase
 
 
-LANG = 0
+DATA_COLLECTION, LANG = range(2)
 
 
-async def keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def lang_keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE):
     reply_keyboard = [["finnish", "english"]]
 
     await update.message.reply_text(
@@ -62,24 +62,69 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     new_user = User.User(user_id, update.message.from_user.username, ["#all"], 1)
 
     #Checks if the user is allready in the database
-    context.user_data['old_user'] = False
-    for user in user_list:
-        if user.id == user_id:
-            context.user_data['old_user'] = True
+    context.user_data['old_user'] = UserDatabase.is_user(update)
 
     if not context.user_data['old_user']:
-        await update.message.reply_text(
-            "Welcome to use the Skinnarila Student Events bot! This bot is going to save your Telegram ID, "
-            "and will send you messages about the new events.\n\n"
-            "THIS VERSION IS CURRENTLY IN BETA AND THERE IS HIGH CHANGE OF NOTHING WORKING\n\n"
-            "Bot is written by kylteri with ChatGPT 3.5")
+        lang = update.message.from_user.language_code
+        if lang == "fi":
+            await update.message.reply_text(
+                "Tervetuloa käyttämään Skinnarila Events Bottia!\n\n"
+                "TÄMÄ VERSIO ON BETA, JA ON ERITTÄIN TODENNÄKÖISTÄ ETTEI MIKÄÄN TOIMI.\n\n"
+                "Tämän botin on kirjoittanut kylteri apunaan ChatGPT 3.5\n\n\n"
+                "Onko ok, jos tallennamme Telegram ID:n, Telegram käyttäjänimen ja valitsemasi kielen. "
+                "Nämä tiedot eivät ole tallennettu tietoturvallisesti. Onko tämä ok, jos ei, botti ei toimi :(")
+
+            reply_keyboard = [["Kyllä", "Ei"]]
+
+            await update.message.reply_text(
+                f"Käykö jos tallennamme tietosi?",
+                reply_markup=ReplyKeyboardMarkup(
+                    reply_keyboard, one_time_keyboard=True, input_field_placeholder="Valintasi:"
+                ),
+            )
+            ReplyKeyboardRemove()
+            context.user_data['user'] = new_user
+            return DATA_COLLECTION
+
+        else:
+            await update.message.reply_text(
+                "Welcome to use the Skinnarila Student Events bot!\n\n"
+                "THIS VERSION IS CURRENTLY IN BETA AND THERE IS HIGH CHANGE OF NOTHING WORKING\n\n"
+                "Bot is written by kylteri with ChatGPT 3.5\n\n\n"
+                "Is it okay if we save your Telegram ID, Telegram username and the language that you choose. "
+                "This information is not saved securely. Is this okay for you, if not, the bot won't work :(")
+
+            reply_keyboard = [["Yes", "No"]]
+
+            await update.message.reply_text(
+                f"Is it okay that we save?",
+                reply_markup=ReplyKeyboardMarkup(
+                    reply_keyboard, one_time_keyboard=True, input_field_placeholder="Your choice:"
+                ),
+            )
+            ReplyKeyboardRemove()
+            context.user_data['user'] = new_user
+            return DATA_COLLECTION
 
 
-    context.user_data['user'] = new_user
 
 
-    await keyboard(update,context)
+
+
+    await lang_keyboard(update, context)
     return LANG
+
+
+async def data_collection(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_text = update.message.text
+    if user_text == "Kyllä" or user_text == "Yes":
+
+        await lang_keyboard(update,context)
+        return LANG
+
+    else:
+        await update.message.reply_text("Nothing saved, the bot will not work.")
+        return ConversationHandler.END
 
 
 async def lang(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:

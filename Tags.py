@@ -12,12 +12,10 @@ async def normal_keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE, bu
 
     reply_keyboard = get_tag_language_list(update)
 
-    reply_keyboard.append(["Save", "/cancel", f"{button}"])
-
     await update.message.reply_text(
-        f"What tags do you want to {prompt}?",
+        f"{prompt}",
         reply_markup=ReplyKeyboardMarkup(
-            reply_keyboard, one_time_keyboard=True, input_field_placeholder="Event tags"
+            reply_keyboard, one_time_keyboard=True, input_field_placeholder="Tags"
         ),
     )
 
@@ -37,7 +35,7 @@ async def full_keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE, butt
     reply_keyboard.append(["Save", "/cancel", f"{button}"])
 
     await update.message.reply_text(
-        f"What tags do you want to {prompt}?",
+        f"{prompt}",
         reply_markup=ReplyKeyboardMarkup(
             reply_keyboard, one_time_keyboard=True, input_field_placeholder="Event tags"
         ),
@@ -97,6 +95,9 @@ async def list_tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def start_tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not UserDatabase.is_user(update):
+        await update.message.reply_text("You have no user.")
+        return
     # Gets the user list from database
     user_list = UserDatabase.user_reader()
     context.user_data["user_list"] = user_list
@@ -120,10 +121,10 @@ async def add_remove(update: Update, context: ContextTypes.DEFAULT_TYPE):
     choice = update.message.text
     await list_tags(update, context)
     if choice == "Add":
-        await normal_keyboard(update, context, "remove", "add")
+        await normal_keyboard(update, context, "remove", "What tags do you want to add?")
         return ADD
     if choice == "Remove":
-        await normal_keyboard(update, context, "add", "remove")
+        await normal_keyboard(update, context, "add", "What tags do you want to remove?")
         return REMOVE
 
     else:
@@ -143,7 +144,7 @@ async def tags_all(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     await list_tags(update, context)
 
-    await normal_keyboard(update, context, "add", "remove")
+    await normal_keyboard(update, context, "add", "What tags do you want to remove?")
 
     return ADD
 
@@ -152,7 +153,7 @@ async def tags_all(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def add_tag(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text.lower()
     if text == "remove":
-        await normal_keyboard(update, context, "add", "remove")
+        await normal_keyboard(update, context, "add", "What tags do you want to remove?")
         return REMOVE
 
     user_list = context.user_data["user_list"]
@@ -166,7 +167,7 @@ async def add_tag(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     await list_tags(update, context)
 
-    await normal_keyboard(update, context, "remove", "add")
+    await normal_keyboard(update, context, "remove", "What tags do you want to add?")
 
     return ADD
 
@@ -175,7 +176,7 @@ async def add_tag(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def remove_tag(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text.lower()
     if text == "add":
-        await normal_keyboard(update, context, "remove", "add")
+        await normal_keyboard(update, context, "remove", "What tags do you want to add?")
         return REMOVE
 
     user_list = context.user_data["user_list"]
@@ -186,7 +187,7 @@ async def remove_tag(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     await list_tags(update, context)
 
-    await normal_keyboard(update, context, "add", "remove")
+    await normal_keyboard(update, context, "add", "What tags do you want to remove?")
     return REMOVE
 
 
