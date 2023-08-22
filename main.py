@@ -98,9 +98,11 @@ def main() -> None:
 
     start_handler = ConversationHandler(
         entry_points=[CommandHandler("start", Start.start), CommandHandler("lang", Start.start),
+
                       MessageHandler(filters.Regex("^(Change language|Vaihda kieli)$"), Start.start)],
         states={
-            Start.LANG: [MessageHandler(filters.TEXT & ~filters.COMMAND, Start.lang)]
+            Start.LANG: [MessageHandler(filters.TEXT & ~filters.COMMAND, Start.lang)],
+            Start.DATA_COLLECTION: [MessageHandler(filters.TEXT & ~filters.COMMAND, Start.data_collection)]
         },
         fallbacks=[CommandHandler("cancel", EventSaver.cancel), MessageHandler(filters.COMMAND, Cancel.cancel)]
     )

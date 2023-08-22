@@ -54,8 +54,10 @@ async def event_selector(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def edit_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
+
+
     # checks if its regular user
-    if UserDatabase.get_user_type(update) == 1:
+    if UserDatabase.get_user_type(update) < 2:
         await update.message.reply_text("You're not supposed to know about this command! I will contact the cyber police immediately! \U0001F46E!")
         return ConversationHandler.END
 

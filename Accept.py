@@ -46,6 +46,9 @@ async def choose_event_keyboard(update: Update, context: ContextTypes.DEFAULT_TY
     ReplyKeyboardRemove()
 
 async def accept(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not UserDatabase.is_user(update):
+        await update.message.reply_text("You have no user.")
+        return
 
     if UserDatabase.get_user_type(update) < 3:
         await update.message.reply_text("You have no authorization to accept events!")

@@ -207,7 +207,7 @@ async def event_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
     #the starting point of the handler
 
     # checks if its regular user
-    if UserDatabase.get_user_type(update) == 1:
+    if UserDatabase.get_user_type(update) < 2:
         await update.message.reply_text(translate_string("no access", update))
         return ConversationHandler.END
 

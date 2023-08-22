@@ -84,3 +84,14 @@ def get_user_id(user_name):
             return user.id
 
     return "no user found"
+
+def is_user(update):
+    user_id = update.message.from_user.id
+    user_list = user_reader()
+    found = False
+    for user in user_list:
+        if user.id == user_id:
+            found = True
+
+    print(found)
+    return found
