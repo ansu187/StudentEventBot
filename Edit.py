@@ -115,7 +115,7 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     elif choice == "PRICE":
         await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.PRICE])
         return PRICE
-    elif choice == "TICKET LINK":
+    elif choice == "TICKET LINK OR INFO":
         await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.TICKET_LINK_OR_INFO])
         return TICKET_LINK_OR_INFO
     elif choice == "TICKET SELL TIME":
@@ -534,10 +534,11 @@ async def submit(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         try:
             await update.message.reply_text(EventDatabase.event_parser_all(event))
         except Exception:
-            await update.message.reply_text(EventDatabase.event_parser_all(event))
-            await update.message.reply_text(EventDatabase.event_parser_all(event))
+            await update.message.reply_text(EventDatabase.event_parser_creator_1(event))
+            await update.message.reply_text(EventDatabase.event_parser_creator_2(event))
         # EventDatabase.event_backup_delete(update, context)
         await Accept.message_to_admins(context)
+        EventDatabase.event_backup_save(event)
 
         return ConversationHandler.END
     else:

@@ -747,14 +747,13 @@ async def save(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         event.stage = STAGE_SUBMITTED
         #event_list.append(event)
         #EventDatabase.events_writer(event_list)
-        event = context.user_data['event']
-        event.stage = 99
+
         await update.message.reply_text(translate_string("submitted", update))
         try:
             await update.message.reply_text(EventDatabase.event_parser_all(event))
         except Exception:
-            await update.message.reply_text(EventDatabase.event_parser_all(event))
-            await update.message.reply_text(EventDatabase.event_parser_all(event))
+            await update.message.reply_text(EventDatabase.event_parser_creator_1(event))
+            await update.message.reply_text(EventDatabase.event_parser_creator_2(event))
 
 
         #EventDatabase.event_backup_delete(update, context)

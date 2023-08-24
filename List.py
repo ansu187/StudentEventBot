@@ -8,6 +8,9 @@ import Filepaths
 
 TAGS, TAGS1, MENU, TIME_MENU, NEXT_WEEK, THIS_WEEK, THIS_MONTH, TODAY, LIST_BY_NUMBER = range(9)
 
+
+
+
 async def list(update: Update, context: ContextTypes.DEFAULT_TYPE):
     prompts = [["Mitä tapahtumia haluat nähdä?"],["What events you want to see?"]]
     user_lang = UserDatabase.get_user_lang(update)
@@ -257,3 +260,38 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             text=f"{EventDatabase.event_parser_normal(event, context.user_data['user_lang'])}")
     except ValueError:
         await query.edit_message_text("Please give a whole number!")
+
+
+async def send_message_to_all_users(update: Update, context: ContextTypes.DEFAULT_TYPE, id):
+    user_list = UserDatabase.user_reader()
+
+    event_fi = EventDatabase.event_parser_normal(EventDatabase.event_finder_by_id(id, Filepaths.events_file), "fi")
+    event_en = EventDatabase.event_parser_normal(EventDatabase.event_finder_by_id(id, Filepaths.events_file), "en")
+    event_text_list = [event_fi, event_en]
+
+    messages_per_second = 20
+    interval = 1/messages_per_second
+
+    for user in user_list:
+        try:
+            if user.user_lang == "fi":
+                keyboard = [
+                    [
+                        InlineKeyboardButton("Show:", callback_data=f"{id}")]
+                ]
+
+                reply_markup = InlineKeyboardMarkup(keyboard)
+                await context.bot.send_message(chat_id=user.id, text=event_text_list[0], reply_markup=reply_markup)
+            else:
+                keyboard = [
+                    [
+                        InlineKeyboardButton("Show:", callback_data=f"{id}")]
+                ]
+
+                reply_markup = InlineKeyboardMarkup(keyboard)
+                await context.bot.send_message(chat_id=user.id, text=event_text_list[1], reply_markup=reply_markup)
+            print(f"Message sent to user {user.id}")
+
+            await asyncio.sleep(interval)
+        except Exception as e:
+            print(f"Failed to send message to user {user.id}: {str(e)}")
