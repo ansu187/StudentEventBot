@@ -197,7 +197,11 @@ async def check_for_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     users_to_remove = []
     for user in user_list:
-        user_nick = user.nick.lower()
+        try:
+            user_nick = user.nick.lower()
+        except Exception:
+            continue
+
         if user_nick == text:
             context.user_data['user'] = user
             users_to_remove.append(user)
