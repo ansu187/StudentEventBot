@@ -2,29 +2,15 @@ import Filepaths
 import UserDatabase
 from telegram import Update, ReplyKeyboardRemove, ReplyKeyboardMarkup
 from telegram.ext import ContextTypes, ConversationHandler
-import EventDatabase
+import EventDatabase, List
 import asyncio
+
 
 EVENT_SELECTOR, DECISION, REPLY = range(3)
 
 
 
-async def send_message_to_all_users(update: Update, context: ContextTypes.DEFAULT_TYPE, id):
-    user_list = UserDatabase.user_reader()
 
-    event_fi = EventDatabase.event_parser_normal(EventDatabase.event_finder_by_id(id, Filepaths.events_file), "fi")
-
-    messages_per_second = 20
-    interval = 1/messages_per_second
-
-    for user in user_list:
-        try:
-            await context.bot.send_message(chat_id=user.id, text=event_fi)
-            print(f"Message sent to user {user.id}")
-
-            await asyncio.sleep(interval)
-        except Exception as e:
-            print(f"Failed to send message to user {user.id}: {str(e)}")
 
 
 async def choose_event_keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE, event_list):
@@ -116,7 +102,7 @@ async def decision(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         message_to_user = f"Your event {event.name} has been accepted!"
 
-        await send_message_to_all_users(update, context, event.id)
+        await List.send_message_to_all_users(update, context, event.id)
 
         user_id = UserDatabase.get_user_id(event.creator)
         try:

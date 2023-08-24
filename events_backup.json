@@ -24,48 +24,6 @@
     },
     {
         "id": 0,
-        "name": "Jeee",
-        "creator": "ansu187",
-        "start_time": "2023-08-28 12:00:00",
-        "end_time": null,
-        "ticket_sell_time": null,
-        "location": "Hyv\u00e4t bileet",
-        "description_fi": "S",
-        "description_en": "6.9",
-        "ticket_link": "Nope",
-        "other_link": null,
-        "accessibility_fi": "Jes",
-        "accessibility_en": "Yes",
-        "price": 0.0,
-        "dc": "He",
-        "accepted": false,
-        "tags": [
-            "bar // baari"
-        ],
-        "stage": 99
-    },
-    {
-        "id": 0,
-        "name": "Nimi",
-        "creator": "ansu187",
-        "start_time": null,
-        "end_time": null,
-        "ticket_sell_time": null,
-        "location": null,
-        "description_fi": null,
-        "description_en": null,
-        "ticket_link": null,
-        "other_link": null,
-        "accessibility_fi": null,
-        "accessibility_en": null,
-        "price": null,
-        "dc": null,
-        "accepted": false,
-        "tags": [],
-        "stage": 2
-    },
-    {
-        "id": 0,
         "name": "\") return None;",
         "creator": "Robinkarlsson",
         "start_time": null,
@@ -83,27 +41,5 @@
         "accepted": false,
         "tags": [],
         "stage": 2
-    },
-    {
-        "id": 0,
-        "name": "Jee // yeah",
-        "creator": "ansu187",
-        "start_time": "2023-08-28 12:00:00",
-        "end_time": null,
-        "ticket_sell_time": null,
-        "location": "Hyv\u00e4t bileet",
-        "description_fi": "S",
-        "description_en": "6.9",
-        "ticket_link": "Nope",
-        "other_link": null,
-        "accessibility_fi": "Jes",
-        "accessibility_en": "Yes",
-        "price": 0.0,
-        "dc": "He",
-        "accepted": false,
-        "tags": [
-            "bar // baari"
-        ],
-        "stage": 99
     }
 ]
