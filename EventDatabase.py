@@ -195,18 +195,18 @@ def get_head(id: int, user_lang) -> str:
 
                 if start_date == end_date:
                     text_head = (
-                        f"{event_name[lang_code].upper()} - {start_date}\n"
+                        f"*{event_name[lang_code].upper()}* - {start_date}\n"
                         f"{prompts[lang_code][0]} {start_time} {prompts[lang_code][1]} {end_time}\n")
 
                 if end_date != start_date:
-                    text_head = (f"**{event_name[lang_code].upper()}**\n" \
+                    text_head = (f"*{event_name[lang_code].upper()}*\n" \
                                  f"{prompts[lang_code][2]}\t{start_date} {prompts[lang_code][3]} {start_time}\n"
                                  f"{prompts[lang_code][4]}\t{end_date} {prompts[lang_code][5]} {end_time}\n\n")
 
 
             except AttributeError:
                 text_head = (
-                    f"**{event_name[lang_code].upper()}**\n"
+                    f"*{event_name[lang_code].upper()}*\n"
                     f"{start_date} {prompts[lang_code][6]} {start_time}->\n")
 
             return text_head

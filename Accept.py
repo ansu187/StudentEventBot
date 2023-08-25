@@ -102,7 +102,7 @@ async def decision(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         message_to_user = f"Your event {event.name} has been accepted!"
 
-        await List.send_message_to_all_users(update, context, event.id)
+        await List.send_new_event_to_all(update, context, event.id)
 
         user_id = UserDatabase.get_user_id(event.creator)
         try:
