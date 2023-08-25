@@ -44,7 +44,14 @@ def user_writer(user_list): #Writes user data back to the users.json -file
 
 
 def get_user_lang(update: Update) -> str | None:
-    current_user_id = update.message.from_user.id
+    try:
+        current_user_id = update.message.from_user.id
+    except AttributeError:
+        try:
+            current_user_id = update.callback_query.from_user.id
+        except AttributeError:
+            return
+
     user_list = user_reader()
     for user in user_list:
         if current_user_id == user.id:

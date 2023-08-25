@@ -129,7 +129,10 @@ async def data_collection(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def lang(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     text_in = update.message.text.lower()
-    new_user = context.user_data['user']
+    try:
+        new_user = context.user_data['user']
+    except KeyError:
+        pass
     user_list = UserDatabase.user_reader()
 
     if context.user_data['old_user']:
