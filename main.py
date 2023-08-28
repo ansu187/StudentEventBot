@@ -4,8 +4,9 @@ from telegram.ext import Application, CommandHandler, ConversationHandler, Messa
 
 import Feedback
 import EventSaver
-import Start, Tags, List, Accept, Help, Edit, Dev, Menu, Cancel
+import Start, Tags, List, Accept, Help, Edit, Dev, Menu, Cancel, Messages
 import Secrets
+
 
 
 
@@ -143,7 +144,7 @@ def main() -> None:
         fallbacks=[CommandHandler("cancel", EventSaver.cancel), MessageHandler(filters.COMMAND, Cancel.cancel)]
     )
 
-
+    message_handler = MessageHandler(filters.TEXT & ~filters.COMMAND, Messages.BasicHandler)
 
 
     application.add_handler(CallbackQueryHandler(List.button))
@@ -160,6 +161,7 @@ def main() -> None:
 
     application.add_handler(CommandHandler("accept", Accept.accept), 0)
     application.add_handler(CommandHandler("help", Help.help), 0)
+    application.add_handler(message_handler)
 
 
 
