@@ -457,6 +457,7 @@ def event_parser_creator_1(event):
         f"Finnish accessibility: {event.accessibility_fi}\n\n"
         f"Price: {event.price}\n"
         f"Tickets: {event.ticket_link}\n"
+        f"Other link: {event.other_link}\n"
         f"Ticket sale date: {event.ticket_sell_time}\n"
         f"Dresscode: {event.dc}\n\n"
         f"Tags: {event.tags}")
