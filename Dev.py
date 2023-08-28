@@ -1,12 +1,13 @@
 from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import ConversationHandler, ContextTypes
 
+import MessageSender
 import UserDatabase, Tags
 import json
 import Filepaths
 import asyncio
 
-MENU, ADD_TAGS, REMOVE_TAGS, USER_COUNT, CHANGE_USER_TYPE_1, CHANGE_USER_TYPE_2, LIST_USERS = range(7)
+MENU, ADD_TAGS, REMOVE_TAGS, USER_COUNT, CHANGE_USER_TYPE_1, CHANGE_USER_TYPE_2, LIST_USERS, SEND_MESSAGE = range(8)
 USER_TYPE = ["", "normal", "organizer", "admin", "super_admin"]
 
 
@@ -16,7 +17,7 @@ async def dev(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 
-    reply_keyboard = [["add_tags", "remove_tags"], ["user_count", "change_user_type"],["list users", "show feedback", "delete feedback"]]
+    reply_keyboard = [["add_tags", "remove_tags"], ["user_count", "change_user_type"],["list users", "show feedback", "delete feedback"], ["send message to all"]]
     await update.message.reply_text(
         f"What do you want to do?",
         reply_markup=ReplyKeyboardMarkup(
@@ -109,6 +110,10 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await delete_feedback(update, context)
         return ConversationHandler.END
 
+    elif text == "send message to all":
+        await update.message.reply_text("Please type the message, separate finnish and english with //")
+        return SEND_MESSAGE
+
 
 
     else:
@@ -118,7 +123,9 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 
-
+async def send_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await MessageSender.send_message_to_all(update,context,update.message.text)
+    return ConversationHandler.END
 
 
 

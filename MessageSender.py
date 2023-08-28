@@ -353,13 +353,15 @@ async def send_new_event_to_all(update: Update, context: ContextTypes.DEFAULT_TY
     user_list = UserDatabase.user_reader()
     prompt = ["Uusi tapahtuma lisätty:", "A new event added:"]
 
-    #event_fi = EventDatabase.event_parser_normal(EventDatabase.event_finder_by_id(id, Filepaths.events_file), "fi")
-    #event_en = EventDatabase.event_parser_normal(EventDatabase.event_finder_by_id(id, Filepaths.events_file), "en")
-    #event_text_list = [event_fi, event_en]
-
     messages_per_second = 20
     interval = 1/messages_per_second
 
+    event_fi = EventDatabase.get_head(event_id, 0)
+    event_en = EventDatabase.get_head(event_id, 1)
+    event_list = [event_fi, event_en]
+
+    start_time = datetime.now()
+    user_counter = 0
 
     for user in user_list:
         try:
@@ -370,11 +372,55 @@ async def send_new_event_to_all(update: Update, context: ContextTypes.DEFAULT_TY
             ]
 
             reply_markup = InlineKeyboardMarkup(keyboard)
-            await context.bot.send_message(chat_id=user.id, text=prompt[UserDatabase.get_user_lang_code(update)])
-            await context.bot.send_message(chat_id=user.id, text=f"{EventDatabase.get_head(event_id, UserDatabase.get_user_lang(update))}", reply_markup=reply_markup)
+            user_lang_code = UserDatabase.get_user_lang_code(update)
+            await context.bot.send_message(
+                chat_id=user.id, text=f"{prompt[user_lang_code]}\n\n{event_list[user_lang_code]}",
+                reply_markup=reply_markup)
 
             print(f"Message sent to user {user.id}")
+            user_counter += 1
 
             await asyncio.sleep(interval)
         except Exception as e:
             print(f"Failed to send message to user {user.id}: {str(e)}")
+    end_time = datetime.now()
+    await update.message.reply_text(f"All messages send in {end_time - start_time} to {user_counter} users!")
+
+    event = EventDatabase.event_finder_by_id(event_id, "events.json")
+    user_id = UserDatabase.get_user_id(event.creator)
+    await context.bot.send_message(chat_id=user_id, text=f"The event {event.name} was send to {user_counter} users!")
+
+
+
+async def send_message_to_all(update: Update, context: ContextTypes.DEFAULT_TYPE, message):
+
+    message_fi, message_en = message.split("//")
+    prompt = [message_fi, message_en]
+
+    user_list = UserDatabase.user_reader()
+
+    messages_per_second = 20
+    interval = 1/messages_per_second
+
+
+    start_time = datetime.now()
+    user_counter = 0
+
+    for user in user_list:
+        try:
+            user_lang_code = UserDatabase.get_user_lang_code(update)
+            await context.bot.send_message(chat_id=user.id, text=prompt[user_lang_code])
+
+
+            print(f"Message sent to user {user.id}")
+            user_counter += 1
+
+            await asyncio.sleep(interval)
+        except Exception as e:
+            print(f"Failed to send message to user {user.id}: {str(e)}")
+
+
+    end_time = datetime.now()
+    await update.message.reply_text(f"All messages send in {end_time - start_time} to {user_counter} users!")
+
+

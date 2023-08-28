@@ -4,7 +4,7 @@ from telegram.ext import Application, CommandHandler, ConversationHandler, Messa
 
 import Feedback
 import EventSaver
-import Start, Tags, List, Accept, Help, Edit, Dev, Menu, Cancel, Messages
+import Start, Tags, MessageSender, Accept, Help, Edit, Dev, Menu, Cancel, Dictionary
 import Secrets
 
 
@@ -113,6 +113,7 @@ def main() -> None:
         entry_points=[CommandHandler("dev", Dev.dev), MessageHandler(filters.Regex("^(Secret menu|Salainen menu)$"), Dev.dev)],
         states={
             Dev.MENU: [MessageHandler(filters.TEXT & ~filters.COMMAND, Dev.menu)],
+            Dev.SEND_MESSAGE: [MessageHandler(filters.TEXT & ~filters.COMMAND, Dev.send_message)],
             Dev.ADD_TAGS: [MessageHandler(filters.TEXT & ~filters.COMMAND, Dev.add_tag)],
             Dev.REMOVE_TAGS: [MessageHandler(filters.TEXT & ~filters.COMMAND, Dev.remove_tag)],
             Dev.CHANGE_USER_TYPE_1: [MessageHandler(filters.TEXT & ~filters.COMMAND, Dev.check_for_user)],
@@ -124,11 +125,11 @@ def main() -> None:
 
     #handles user query for events
     list_handler = ConversationHandler(
-        entry_points=[CommandHandler("list", List.list), MessageHandler(filters.Regex("^(List events|Listaa tapahtumat)$"), List.list)],
+        entry_points=[CommandHandler("list", MessageSender.list), MessageHandler(filters.Regex("^(List events|Listaa tapahtumat)$"), MessageSender.list)],
         states={
-            List.MENU: [MessageHandler(filters.TEXT & ~filters.COMMAND, List.menu)],
-            List.TAGS: [MessageHandler(filters.TEXT & ~filters.COMMAND, List.list_by_tags)],
-            List.TIME_MENU: [MessageHandler(filters.TEXT & ~filters.COMMAND, List.time_menu)],
+            MessageSender.MENU: [MessageHandler(filters.TEXT & ~filters.COMMAND, MessageSender.menu)],
+            MessageSender.TAGS: [MessageHandler(filters.TEXT & ~filters.COMMAND, MessageSender.list_by_tags)],
+            MessageSender.TIME_MENU: [MessageHandler(filters.TEXT & ~filters.COMMAND, MessageSender.time_menu)],
         },
         fallbacks=[CommandHandler("cancel", EventSaver.cancel), MessageHandler(filters.COMMAND, Cancel.cancel)]
     )
@@ -144,10 +145,10 @@ def main() -> None:
         fallbacks=[CommandHandler("cancel", EventSaver.cancel), MessageHandler(filters.COMMAND, Cancel.cancel)]
     )
 
-    message_handler = MessageHandler(filters.TEXT & ~filters.COMMAND, Messages.BasicHandler)
+    message_handler = MessageHandler(filters.TEXT & ~filters.COMMAND, Dictionary.BasicHandler)
 
 
-    application.add_handler(CallbackQueryHandler(List.button))
+    application.add_handler(CallbackQueryHandler(MessageSender.button))
     application.add_handler(accept_handler, 1)
     application.add_handler(list_handler, 2)
     application.add_handler(start_handler, 3)
