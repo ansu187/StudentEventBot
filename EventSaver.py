@@ -475,10 +475,19 @@ async def price(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     return TICKET_LINK_OR_INFO
 
 
+
+
 async def ticket_link(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user_input = update.message.text
-    user_input = user_input.lower()
-    if user_input == "back":
+
+    if user_input.startswith("https://"):
+        user_input = user_input[len("https://"):]
+
+
+
+
+    user_input_lower = user_input.lower()
+    if user_input_lower == "back":
         await update.message.reply_text(f"{user_prompts[UserDatabase.get_user_lang_code(update)][PRICE]}")
         await run_before_every_return(update, context)
         return PRICE
@@ -488,7 +497,7 @@ async def ticket_link(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
     if user_input == "skip":
         event.ticket_link = None
     else:
-        event.ticket_link = update.message.text
+        event.ticket_link = user_input
 
     # backup
     event.stage = TICKET_SELL_TIME
