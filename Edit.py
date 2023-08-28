@@ -353,13 +353,16 @@ async def price(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 async def ticket_link(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user_input = update.message.text
-    user_input = user_input.lower()
-    if user_input == "back":
+    if user_input.startswith("https://"):
+        user_input = user_input[len("https://"):]
+
+    user_input_lower = user_input.lower()
+    if user_input_lower == "back":
         await keyboard(update, context)
         return MENU
 
     event = context.user_data['event']
-    event.ticket_link = update.message.text
+    event.ticket_link = user_input
 
     # backup
     event.stage = TICKET_SELL_TIME
