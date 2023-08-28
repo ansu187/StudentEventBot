@@ -2,7 +2,7 @@ from telegram.ext import ContextTypes, ConversationHandler
 from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove
 
 
-import List
+import MessageSender
 import User
 
 import UserDatabase
