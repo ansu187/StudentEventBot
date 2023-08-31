@@ -75,12 +75,55 @@ keywords_dict_fi = {
     "wappu": "Koko vuoden huipennus, jota Lappeenrannassa juhlitaan muuta Suomea pidemmän kaavan mukaan. Vuonna 2023 Wappua juhlittiin 36 päivää.",
     "vappu": "Tarkoititko Wappu?\n\nKoko vuoden huipennus, jota Lappeenrannassa juhlitaan muuta Suomea pidemmän kaavan mukaan. Vuonna 2023 Wappua juhlittiin 36 päivää.",
     "häirintä": "LTKY:n häirintäyhdyshenkilö on Niilo Hendolin: niilo.hendolin@ltky.fi 044 293 8820",
-    "härö": "LTKY:n häirintäyhdyshenkilö on Niilo Hendolin: niilo.hendolin@ltky.fi 044 293 8820",
+    "häry": "LTKY:n häirintäyhdyshenkilö on Niilo Hendolin: niilo.hendolin@ltky.fi 044 293 8820",
     "häirintäyhdyshenkilö": "LTKY:n häirintäyhdyshenkilö on Niilo Hendolin: niilo.hendolin@ltky.fi 044 293 8820",
     "häirintä yhdys henkilö": "LTKY:n häirintäyhdyshenkilö on Niilo Hendolin: niilo.hendolin@ltky.fi 044 293 8820",
-    "kafi": "Grilliseuran asuntovaunu yliopistonkadun varrella. Täytti 18 vuonna 2023"
-
-    }
+    "kafi": "Grilliseuran asuntovaunu yliopistonkadun varrella. Täytti 18 vuonna 2023",
+    "powi": "Polyteknillinen Willimiesklubi eli PoWi ry. Julkaisee Wappulehti Hässiä, sekä järjestää PoWiCupin.",
+    "yths": "Ylioppilaiden terveydenhuoltosäätiö. Sijatsee 7-rakennuksen Ylioppilastalon päädyssä.",
+    "appro": "Opiskelijatapahtuma, jossa kierretään baareja ja kerätään niistä leimoja, joilla saa haalarimerkin.",
+    "dresscode": "Pukukoodi, eli mitä pitää laittaa päälle. Dresscodejen selitykset löytyy osoitteesta https://ltky.fi/opiskelijalle/opiskelijakulttuuri/",
+    "nesu": "Nordiska Ekonomie Studerandes Union. Yhdistys, jonka tavoitteena on yhdistää pohjoismaisia kauppatieteiden opiskelijoita."
+            "Järjestää etupäässä sitsejä, sekä kahdesti vuodessa järjestettävän NESU-Conferencen.",
+    "lakki": "",
+    "fuksilakki": "Lähtökohtaisesti ylioppilaslakista tehty päähine, jossa roikkuu ei mustasta narusta tutti, ja jossa ei ole kokardia.",
+    "juhis": "LUTin rehtori.",
+    "loas": "Lappeenrannan opiskelija-asuntosäätiö. loas.fi",
+    "lytky": "LTKY, eli LUT-Yliopiston Ylioppilaskunta, tuttavallisemmin Lytky. Valvoo opiskelijoiden etuja niin opiskelu, kuin vapaa-aikanakin.",
+    "gemmi": "Gigglin Marlin. Yksi keskustan kolmesta yökerhosta.",
+    "palmas": "Las-Palmas. Yksi keskustan kolmesta yökerhosta.",
+    "valta": "Valta. Yksi keskustan kolmesta yökerhosta.",
+    "iltatähti": "Ollut joskus kunnon menomesta. Perimätiedon mukaan viimeiset bileet Iltatähdessä järjestetty keväällä 2019.",
+    "tetra": "Järjestää Karjala-Approt ja tekee hyväntekeväisyyttä.",
+    "lötköt": "Järjestää Willimiehen Wipellyksen ja tukee urheilua.",
+    "kilta": "Tekniikan alan nimitys ainejärjestölle. LUTin ei-teknillisiä ainejärjestöjä kutsutaan killoiksi, vaikka virallisesti ne ovat ainejärjestöjä.",
+    "ainejärjestö": "AMKin kiltoja vastaava taho.",
+    "ylioppilastalo": "Rakennus, jossa on Sale, ravintola YOLO ja LTKY:n toimisto. Ylioppilastalon kellarissa on juhlatila.",
+    "tykki": "Tykkien tärkeimmät tehtävät ovat paikallisen opiskelijakulttuurin tukeminen ja uusien tekniikan opiskelijoiden ohjaaminen TEKin jäseniksi. LUTissa tykkinä toimii Miko Kuokkanen.",
+    "kylli": "Kylli, eli kylteriyhdyshenkilö toimii läheisessä yhteistyössä Enklaavin hallituksen kanssa, ja välittää tietoa Ekonomeilta opiskelijoille. Enklaavin kyllinä toimii Mari Salmi",
+    "yka": "Yhteiskunta-alan korkeakoulutetut. Yhteiskuntatieteilijöiden oma liitto. Myös viestintätieteilijät voivat liittyä YKA:n jäseniksi.",
+    "timppa": "Kampuksella sijaitsevat opiskelija-talot. Loasin toimisto on Timpan alakerrassa.",
+    "seppo": "Sk28:n sisäpihan eteläisin rakennus. Erottaa itse Sk28:sta siitä, että on niitä korkeampi.",
+    "orion": "Sammonlahden S- ja K-Marketilta länteen sijaitsevat opiskelija-asunnot.",
+    "leiri": "Prismalta pohjoiseen olevat opiskelija-asunnot. Leirissä on yksi LOASin kerhotiloista.",
+    "tekno": "Punkkerimäeltä alas tultaessa vasemmalla olevat tiilitalot.",
+    "laserpuisto": "YO-talon vieressä oleva U:n muotoinen rakennus.",
+    "kotaniemi": "Punkkerimäkeä alas tultaessa oikealla oleva rakennus.",
+    "pk": "Punkkerikatu.",
+    "pk5": "Punkkerikatu 5:ssä oleva kerhotila, jossa järjestetään tiistaisaunikset.",
+    "vierula": "LOASin rantasauna. Löytää kävelemällä Laserpuistosta suoraan rantaan päin.",
+    "notskipaikka": "Yliopiston pääovilta kävelemällä suoraan rantaan päin pääsee notskipaikalle. Laulamista ja yleistä hengailuseuraa tarjoava paikka, etenkin Wapun aikaan.",
+    "yhvi": "Yhteiskunta- ja Viestintätieteiden koulutusohjelman epävirallinen lyhenne.",
+    "jhc": "Jamie Hyneman Center. Puukäsityön luokka on steroids. Ei tarvitse olla tekniikan opiskelija käyttääkseen JHC:tä.",
+    "indiana curry": "Lämmöllä muistamme.",
+    "propagandamylly": "Notskipaikan vieressä ollut tuulimylly, joka pyöri merkkivieraiden tullessa LUTille, tai kun kuvattiin mainosvideoita.",
+    "kiltis": "Kiltahuone. Muiden alojen kiltahuoneilla vierailu on sallittu, mutta vain kutsusta. "
+              "Toisten kiltahuoneille meneminen ilman lupaa, tai siellä tökerösti käyttäytyminen ei ole Skinnarilan Hengen mukaista.",
+    "fuksivastaava": "Jokaisen killan fuksikasvatuksesta vastaava henkilö.",
+    "tutor": "Fuksit Yliopisto-elämän alkuun auttava henkilö.",
+    "buffa": "Yliopiston pääaulassa sijaitseva ravintola.",
+    "laseri": "IVH-Kampuksella sijainnut ravintola, lämmöllä muistamme.",
+}
 
 keywords_dict_en = {
     "aalef": "A company owned by the Student Union. It runs a kiosk and two restaurants in Lappeenranta campus.",
@@ -94,9 +137,9 @@ keywords_dict_en = {
     "enklaavi": "Student association of Business students, neon yellow overalls.",
     "esn": "Erasmus Student Network (ESN), a non-profit student organization that represents international students. The goal is to strengthen intercultural understanding and as students help each other. For now, ESN only organizes events in Lappeenranta.",
     "event arena": "A lobby space at Lahti campus, where you can hang out, hold events, play games and enjoy the café products.",
-    "freshman": "Also called Fresher, is a first year student.",
-    "freshman point card": "Or fresher slip, is a paper on which freshmen collect points in their first year by completing various tasks and participating in events.",
-    "freshman weeks": "The university path for new students begins with an orientation week, followed by another eventful week. These two weeks are called freshman weeks.",
+    "fresher": "Also called Fresher, is a first year student.",
+    "fresher point card": "Or fresher slip, is a paper on which freshmen collect points in their first year by completing various tasks and participating in events.",
+    "fresher weeks": "The university path for new students begins with an orientation week, followed by another eventful week. These two weeks are called freshman weeks.",
     "g": "Officially Cafe Bar G, a student-friendly café / restaurant next to the Student Union building in Lappeenranta.",
     "gallery lounge": "At the Lappeenranta campus, next to the library, there is a lobby/reading/group work space that also has a grand piano.",
     "gallery neste": "Space between Street Cafe and TEK Lounge, where art exhibitions are held in Lappeenranta.",
@@ -140,8 +183,10 @@ keywords_dict_en = {
     "tutor": "Your helper, mentor, advisor and friend throughout your studies.",
     "vierula": "LOAS’s cottage with saunas on the shores of Lake Saimaa along Skinnarilankatu.",
     "vujut": "Annual ball, guild or association birthday, or a great academic celebration. It usually includes a gorgeous academic table party, or fancy sitz.",
-    "wappu": "Nationally Vappu is May Day (1st of May) celebration. In the student community, Wappu is the culmination of the whole year, which is celebrated in Lappeenranta according to a longer formula than the rest of Finland. In 2023, Wappu was celebrated for 36 days."
-
+    "wappu": "Nationally Vappu is May Day (1st of May) celebration. In the student community, Wappu is the culmination of the whole year, which is celebrated in Lappeenranta according to a longer formula than the rest of Finland. In 2023, Wappu was celebrated for 36 days.",
+    "harassment": "LTKY's harassment contact person is Niilo Hendolin, niilo.hendolin@ltky.fi +358 44 293 8820",
+    "harassment contact person": "LTKY's harassment contact person is Niilo Hendolin, niilo.hendolin@ltky.fi +358 44 293 8820",
+    "harassment-contact-person": "LTKY's harassment contact person is Niilo Hendolin, niilo.hendolin@ltky.fi +358 44 293 8820"
     }
 
 async def BasicHandler(update: Update, context: ContextTypes.DEFAULT_TYPE):

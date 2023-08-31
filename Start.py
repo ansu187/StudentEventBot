@@ -164,7 +164,6 @@ async def lang(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 
     await update.message.reply_text("Your account is now saved!\nHere are the upcoming events!")
-    await List.list(update, context)
 
     return ConversationHandler.END
 
