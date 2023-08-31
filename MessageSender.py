@@ -9,8 +9,7 @@ import Filepaths
 TAGS, TAGS1, MENU, TIME_MENU, NEXT_WEEK, THIS_WEEK, THIS_MONTH, TODAY, LIST_BY_NUMBER = range(9)
 SHORT_MESSAGE, LONG_MESSAGE, CALENDER_LINK, EVENT_LINK, TICKET_LINK = range(5)
 
-def translate_string(string_key, update):
-    language_code = UserDatabase.get_user_lang_code(update)
+def translate_string(string_key, language_code):
     language_strings = {
         0: {
             "Show more": "Näytä lisää",
@@ -217,11 +216,13 @@ async def list_next_month(update: Update, context: ContextTypes.DEFAULT_TYPE):
     event_list = EventDatabase.get_accepted_events()
     this_month = datetime.now().month
 
+    next_month = (this_month % 12) + 1
+
     time_sorted_event_list = sorted(event_list, key=lambda event: event.start_time)
     complete_event_list = []
 
     for event in time_sorted_event_list:
-        if event.start_time.date().month == this_month+1:
+        if event.start_time.date().month == next_month:
             complete_event_list.append(event)
 
     if not complete_event_list:
@@ -365,14 +366,22 @@ async def send_new_event_to_all(update: Update, context: ContextTypes.DEFAULT_TY
 
     for user in user_list:
         try:
+            if user.user_lang == "fi":
+                user_lang_code = 0
+
+            else:
+                user_lang_code = 1
 
             keyboard = [
                 [
-                    InlineKeyboardButton(translate_string("Show more", update), callback_data=f"{event_id};{SHORT_MESSAGE}")]
+                    InlineKeyboardButton(translate_string("Show more", user_lang_code),
+                                         callback_data=f"{event_id};{SHORT_MESSAGE}")]
             ]
 
             reply_markup = InlineKeyboardMarkup(keyboard)
-            user_lang_code = UserDatabase.get_user_lang_code(update)
+
+
+
             await context.bot.send_message(
                 chat_id=user.id, text=f"{prompt[user_lang_code]}\n\n{event_list[user_lang_code]}",
                 reply_markup=reply_markup)
@@ -408,7 +417,11 @@ async def send_message_to_all(update: Update, context: ContextTypes.DEFAULT_TYPE
 
     for user in user_list:
         try:
-            user_lang_code = UserDatabase.get_user_lang_code(update)
+            if user.user_lang == "fi":
+                user_lang_code = 0
+            else:
+                user_lang_code = 1
+
             await context.bot.send_message(chat_id=user.id, text=prompt[user_lang_code])
 
 
