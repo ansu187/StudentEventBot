@@ -154,104 +154,31 @@ def get_accepted_events():
 
     return accepted_events
 
-def get_head(id: int, user_lang) -> str:
-    prompts = [["from", "to", "Starts", "at", "Ends", "at", "at", "Price", "Tickets: ", "Ticket sale time"],
-               ["Klo: ", "-", "Alkaa", "klo", "Päättyy", "klo", "klo: ", "Hinta: ", "Liput", "Lipunmyyntipäivä"]]
-
-
-    #set lang_code so we can point to correct lang version in prompt
-    if user_lang == "fi":
-        lang_code = 1
-    else:
-        lang_code = 0
-
-
-    event_list = get_accepted_events()
-    for event in event_list:
-        if id == event.id:
-            event_name_fi = ""
-            event_name_eng = ""
-
-            if "//" in event.name:
-                event_name_fi, event_name_eng = event.name.split("//", 1)
-                event_name_fi = event_name_fi.strip()
-                event_name_eng = event_name_eng.strip()
-            else:
-                event_name_fi = event.name
-                event_name_eng = event.name
-
-            event_name = [event_name_eng, event_name_fi]
-
-            text_head = ""
-            start_time_full = event.start_time
-
-            start_date = start_time_full.strftime("%d.%m.%Y")
-            start_time = start_time_full.strftime("%H:%M")
-
-            try:
-                end_time_full = event.end_time
-                end_date = end_time_full.strftime("%d.%m.%Y")
-                end_time = end_time_full.strftime("%H:%M")
-
-                if start_date == end_date:
-                    text_head = (
-                        f"*{event_name[lang_code].upper()}* - {start_date}\n"
-                        f"{prompts[lang_code][0]} {start_time} {prompts[lang_code][1]} {end_time}\n")
-
-                if end_date != start_date:
-                    text_head = (f"*{event_name[lang_code].upper()}*\n" \
-                                 f"{prompts[lang_code][2]}\t{start_date} {prompts[lang_code][3]} {start_time}\n"
-                                 f"{prompts[lang_code][4]}\t{end_date} {prompts[lang_code][5]} {end_time}\n\n")
-
-
-            except AttributeError:
-                text_head = (
-                    f"*{event_name[lang_code].upper()}*\n"
-                    f"{start_date} {prompts[lang_code][6]} {start_time}->\n")
-
-            return text_head
 
 
 
 
-
-def event_parser_normal(event, user_lang) -> str:
-    # contains name and time
-    prompts = [["from", "to", "Starts", "at", "Ends", "at", "at", "Price","Tickets: ", "Ticket sale time", "More info at:"],
-               ["Klo: ", "-", "Alkaa", "klo", "Päättyy", "klo", "klo: ","Hinta: ", "Liput", "Lipunmyyntipäivä", "Lisää tietoja:"]]
-
-    if user_lang == "fi":
-        lang_code = 1
-    else:
-        lang_code = 0
-
-    text_head = ""
-
-    # Contains location, drescode, description and accesibility information
-    text_body = ""
-
-    # contains ticket information
-    text_tail = ""
+def get_head(event, user_lang_code) -> str:
+    prompts = [["Klo: ", "-", "Alkaa", "klo", "Päättyy", "klo", "klo: ", "Hinta: ", "Liput", "Lipunmyyntipäivä"],
+               ["from", "to", "Starts", "at", "Ends", "at", "at", "Price", "Tickets: ", "Ticket sale time"]]
 
 
-    #name
     if "//" in event.name:
-        event_name_fi, event_name_en = event.name.split("//", 1)
+        event_name_fi, event_name_eng = event.name.split("//", 1)
         event_name_fi = event_name_fi.strip()
-        event_name_en = event_name_en.strip()
+        event_name_eng = event_name_eng.strip()
     else:
         event_name_fi = event.name
-        event_name_en = event.name
+        event_name_eng = event.name
 
-    event_name = [event_name_en, event_name_fi]
+    event_name = [event_name_eng, event_name_fi]
 
-    #start time
+    text_head = ""
     start_time_full = event.start_time
 
     start_date = start_time_full.strftime("%d.%m.%Y")
     start_time = start_time_full.strftime("%H:%M")
 
-    #end time and parsing the header
     try:
         end_time_full = event.end_time
         end_date = end_time_full.strftime("%d.%m.%Y")
@@ -259,21 +186,29 @@ def event_parser_normal(event, user_lang) -> str:
 
         if start_date == end_date:
             text_head = (
-                f"{event_name[lang_code].upper()} - {start_date}\n"
-                f"{prompts[lang_code][0]} {start_time} {prompts[lang_code][1]} {end_time}\n")
+                f"*{event_name[user_lang_code].upper()}* - {start_date}\n"
+                f"{prompts[user_lang_code][0]} {start_time} {prompts[user_lang_code][1]} {end_time}\n")
 
         if end_date != start_date:
-            text_head = (f"**{event_name[lang_code].upper()}**\n" \
-                         f"{prompts[lang_code][2]}\t{start_date} {prompts[lang_code][3]} {start_time}\n"
-                         f"{prompts[lang_code][4]}\t{end_date} {prompts[lang_code][5]} {end_time}\n\n")
+            text_head = (f"*{event_name[user_lang_code].upper()}*\n" \
+                         f"{prompts[user_lang_code][2]}\t{start_date} {prompts[user_lang_code][3]} {start_time}\n"
+                         f"{prompts[user_lang_code][4]}\t{end_date} {prompts[user_lang_code][5]} {end_time}\n\n")
+
 
     except AttributeError:
         text_head = (
-            f"**{event_name[lang_code].upper()}**\n"
-            f"{start_date} {prompts[lang_code][6]} {start_time}->\n")
+            f"*{event_name[user_lang_code].upper()}*\n"
+            f"{start_date} {prompts[user_lang_code][6]} {start_time}->\n")
+
+    return text_head
 
 
-    #dc
+def get_body(event, user_lang_code):
+    prompts = [["Klo: ", "-", "Alkaa", "klo", "Päättyy", "klo", "klo: ", "Hinta: ", "Liput:", "Lipunmyyntipäivä", "Lisää tietoja:"],
+        ["from", "to", "Starts", "at", "Ends", "at", "at", "Price", "Tickets:", "Ticket sale time", "More info at:"]]
+
+
+    # dc
     if "//" in event.dc:
         event_dc_fi, event_dc_en = event.dc.split("//", 1)
         event_dc_fi = event_dc_fi.strip()
@@ -282,8 +217,7 @@ def event_parser_normal(event, user_lang) -> str:
         event_dc_fi = event.dc
         event_dc_en = event.dc
 
-
-    #location
+    # location
     if "//" in event.location:
         event_location_fi, event_location_en = event.location.split("//", 1)
         event_location_fi = event_location_fi.strip()
@@ -292,70 +226,78 @@ def event_parser_normal(event, user_lang) -> str:
         event_location_fi = event.location
         event_location_en = event.location
 
-    #make the body
-    if lang_code == 1:
-        text_body = (f"Tapahtumapaikka: {event_location_fi}\nDresscode: {event_dc_fi}\n\n"
-                     f"{event.description_fi}\n\n{event.accessibility_fi}\n\n")
+    # make the body
+    if user_lang_code == 0:
+        text_body = (f"\nTapahtumapaikka: {event_location_fi}\nDresscode: {event_dc_fi}\n\n")
 
-    elif lang_code == 0:
-        text_body = (f"Location: {event_location_en}\nDresscode: {event_dc_en}\n\n"
-                     f"{event.description_en}\n\n{event.accessibility_en}\n\n")
+    else:
+        text_body = (f"\nLocation: {event_location_en}\nDresscode: {event_dc_en}\n\n")
 
-
-    #ticket sell time and info
+    # ticket sell time and info
     try:
         ticket_sell_time_full = event.ticket_sell_time
         ticket_sell_time = ticket_sell_time_full.strftime("%d.%m.%Y %H:%M")
     except Exception:
         ticket_sell_time = None
 
-    #ticket link
+    # ticket link
     try:
         if " // " in event.ticket_link:
-            event_ticket_link_fi, event_ticket_link_en = event.ticket_link.split("//", 1)
+            event_ticket_link_fi, event_ticket_link_en = event.ticket_link.split(" // ", 1)
             event_ticket_link_fi = event_ticket_link_fi.strip()
             event_ticket_link_en = event_ticket_link_en.strip()
         else:
             event_ticket_link_fi = event.ticket_link
             event_ticket_link_en = event.ticket_link
 
-        event_ticket_link = [event_ticket_link_en, event_ticket_link_fi]
+        event_ticket_link = [event_ticket_link_fi, event_ticket_link_en]
 
 
     except:
         event_ticket_link = None
 
-
-    #event price
+    # event price
     if event.price != 0:
         try:
             event_price = f"{int(event.price)} €"
         except Exception:
             event_price = f"{event.price} €"
 
-
-        text_tail += f"{prompts[lang_code][7]} {event_price}\n\n"
-
+        text_body += f"{prompts[user_lang_code][7]} {event_price}\n\n"
 
     if event.price == 0:
-        if lang_code == 0:
-            text_tail += "The event is FREE!\n\n"
-        elif lang_code == 1:
-            text_tail += "Tapahtuma on ilmainen!\n\n"
+        if user_lang_code == 0:
+            text_body += "The event is FREE!\n\n"
+        else:
+            text_body += "Tapahtuma on ilmainen!\n\n"
 
-
-    #adding the tail if it exists
+    # adding if exists
     if event_ticket_link is not None:
-        text_tail += f"{prompts[lang_code][8]} {event_ticket_link[lang_code]}"
+        text_body += f"{prompts[user_lang_code][8]} {event_ticket_link[user_lang_code]}"
     if ticket_sell_time is not None:
-        text_tail += f"\n\n{prompts[lang_code][9]} {ticket_sell_time}\n\n"
+        text_body += f"\n\n{prompts[user_lang_code][9]} {ticket_sell_time}\n\n"
     if event.other_link is not None:
-        text_tail += f"\n\n{prompts[lang_code][9]} {event.other_link}\n\n"
+        text_body += f"{prompts[user_lang_code][10]} {event.other_link}\n\n"
+
+    return text_body
 
 
-    event_text = f"{text_head}...\n{text_body}{text_tail}"
+def get_tail(event, user_lang_code):
 
-    return event_text
+    if user_lang_code == 0:
+        text_tail = f"{event.description_fi}\n\n{event.accessibility_fi}\n\n"
+    else:
+        text_tail = f"{event.description_en}\n\n{event.accessibility_en}\n\n"
+
+    return text_tail
+
+
+def event_parser_compact(event, user_lang_code):
+    return f"{get_head(event, user_lang_code)} {get_body(event, user_lang_code)}"
+
+def event_parser_normal(event, user_lang_code) -> str:
+
+    return f"{get_head(event, user_lang_code)}{get_body(event, user_lang_code)}{get_tail(event, user_lang_code)}"
 
 
 

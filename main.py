@@ -4,7 +4,7 @@ from telegram.ext import Application, CommandHandler, ConversationHandler, Messa
 
 import Feedback
 import EventSaver
-import Start, Tags, MessageSender, Accept, Help, Edit, Dev, Menu, Cancel, Dictionary
+import Start, Tags, MessageSender, Accept, Help, Edit, Dev, Menu, Cancel, Dictionary, Button, MyEvents
 import Secrets
 
 
@@ -145,10 +145,21 @@ def main() -> None:
         fallbacks=[CommandHandler("cancel", EventSaver.cancel), MessageHandler(filters.COMMAND, Cancel.cancel)]
     )
 
+    my_events_handler = ConversationHandler(
+        entry_points=[CommandHandler("get_events", MyEvents.menu),
+                      MessageHandler(filters.Regex("^(Näytä omat tapahtumat|Show my events)$"), MyEvents.menu)],
+        states={
+            MyEvents.CHOICE: [MessageHandler(filters.TEXT & ~filters.COMMAND, MyEvents.choice)],
+
+        },
+        fallbacks=[CommandHandler("cancel", EventSaver.cancel), MessageHandler(filters.COMMAND, Cancel.cancel)]
+    )
+
+
     message_handler = MessageHandler(filters.TEXT & ~filters.COMMAND, Dictionary.BasicHandler)
 
 
-    application.add_handler(CallbackQueryHandler(MessageSender.button))
+    application.add_handler(CallbackQueryHandler(Button.button))
     application.add_handler(accept_handler, 1)
     application.add_handler(list_handler, 2)
     application.add_handler(start_handler, 3)
@@ -157,6 +168,9 @@ def main() -> None:
     application.add_handler(tag_handler, 6)
     application.add_handler(dev_handler, 7)
     application.add_handler(feedback_handler, 8)
+    application.add_handler(my_events_handler, 10)
+
+
 
     application.add_handler(CommandHandler("menu", Menu.menu), 0)
 

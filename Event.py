@@ -34,6 +34,7 @@ class Event:
         self.tags = tags
         self.stage = stage
 
+
     def to_dict(self):
         return {
             "id": self.id,
