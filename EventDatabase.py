@@ -171,7 +171,7 @@ def get_head(event, user_lang_code) -> str:
         event_name_fi = event.name
         event_name_eng = event.name
 
-    event_name = [event_name_eng, event_name_fi]
+    event_name = [event_name_fi, event_name_eng]
 
     text_head = ""
     start_time_full = event.start_time
@@ -266,7 +266,7 @@ def get_body(event, user_lang_code):
         text_body += f"{prompts[user_lang_code][7]} {event_price}\n\n"
 
     if event.price == 0:
-        if user_lang_code == 0:
+        if user_lang_code == 1:
             text_body += "The event is FREE!\n\n"
         else:
             text_body += "Tapahtuma on ilmainen!\n\n"

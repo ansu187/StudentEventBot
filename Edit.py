@@ -8,6 +8,7 @@ from datetime import datetime
 import logging
 
 import EventSaver, EventDatabase, Tags, Accept
+import MessageSender
 import UserDatabase
 
 logging.basicConfig(
@@ -16,7 +17,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 EVENT_SELECTOR, MENU, NAME, START_TIME, END_TIME, LOCATION, DESCRIPTION_FI, DESCRIPTION_EN, PRICE, TICKET_LINK_OR_INFO, \
-    TICKET_SELL_TIME, OTHER_LINK, ACCESSIBILITY_FI, ACCESSIBILITY_EN, DC, TAGS, SUBMIT = range(17)
+    TICKET_SELL_TIME, OTHER_LINK, ACCESSIBILITY_FI, ACCESSIBILITY_EN, DC, TAGS, SUBMIT, SHOW_EVENT = range(18)
 
 
 async def event_to_edit_keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE, event_list):
@@ -78,7 +79,7 @@ async def edit_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
 async def keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE):
     reply_keyboard = [["NAME", "START TIME", "END TIME"], ["LOCATION", "DESCRIPTION FI", "DESCRIPTION EN"], ["PRICE",
                       "TICKET LINK OR INFO", "TICKET SELL TIME"], ["OTHER LINK",
-                      "ACCESSIBILITY FI", "ACCESSIBILITY EN"], ["DC", "TAGS", "END", "SUBMIT"]]
+                      "ACCESSIBILITY FI", "ACCESSIBILITY EN"], ["DC", "TAGS", "END", "SUBMIT"], ["SHOW EVENT"]]
 
     await update.message.reply_text(
         f"All edits will be instantly saved\nSubmit sends the event to be accepted\nWhat do you want to edit?",
@@ -147,10 +148,21 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
                                         "This is irreversible!")
         return SUBMIT
 
+    elif choice == "SHOW EVENT":
+        event = context.user_data['event']
+        try:
+            await update.message.reply_text(f"{EventDatabase.event_parser_all(event)}")
+        except Exception:
+            await update.message.reply_text(f"{EventDatabase.event_parser_creator_1(event)}")
+            await update.message.reply_text(f"{EventDatabase.event_parser_creator_2(event)}")
+        await keyboard(update, context)
+        return MENU
+
+
+
 
 async def name(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
-    print("namessa ollaan")
     user_input = update.message.text
     user_input = user_input.lower()
     if user_input == "back":
@@ -320,15 +332,13 @@ async def description_en(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 async def price(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user_input = update.message.text
     user_input = user_input.lower()
-    if user_input == "back":
-        await keyboard(update, context)
-        return DESCRIPTION_EN
+
 
     event = context.user_data['event']
     try:
         event.price = float(update.message.text)
     except ValueError:
-        await update.message.reply_text(f"{EventSaver.user_prompts[UserDatabase.get_user_lang_code(update)][PRICE]}")
+        await update.message.reply_text(EventSaver.user_prompts[UserDatabase.get_user_lang_code(update)][EventSaver.PRICE])
 
         return PRICE
 
@@ -345,7 +355,6 @@ async def price(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         return MENU
 
     else:
-        event.stage = TICKET_LINK_OR_INFO
 
         await keyboard(update, context)
         return MENU

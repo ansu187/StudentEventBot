@@ -242,8 +242,11 @@ async def event_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
 async def old_event(update: Update, context: ContextTypes.DEFAULT_TYPE)->int:
     await close_keyboard(update, context)
 
+
+    user_input = update.message.text.lower()
+
     #If user wants to edit the saved event
-    if update.message.text == "Yes" or update.message.text == "Kyllä":
+    if user_input == "yes" or user_input == "kyllä":
         #Gets the event from the database
         event_to_edit = EventDatabase.get_event_to_edit(update.message.from_user.username)
         context.user_data["event"] = event_to_edit
@@ -258,12 +261,21 @@ async def old_event(update: Update, context: ContextTypes.DEFAULT_TYPE)->int:
             context.user_data["tag_adding"] = True
         return event_to_edit.stage
 
-    #if user wants to create a new event
-    await update.message.reply_text(f"{user_prompts[UserDatabase.get_user_lang_code(update)][NAME]}")
-    EventDatabase.event_backup_delete(EventDatabase.get_event_to_edit(update.message.from_user.username))
-    await create_event_object(update, context)
-    await run_before_every_return(update, context)
-    return NAME
+    elif user_input == "no" or user_input == "ei":
+        #if user wants to create a new event
+        await update.message.reply_text(f"{user_prompts[UserDatabase.get_user_lang_code(update)][NAME]}")
+        EventDatabase.event_backup_delete(EventDatabase.get_event_to_edit(update.message.from_user.username))
+        await create_event_object(update, context)
+        await run_before_every_return(update, context)
+        return NAME
+
+    else:
+        prompts = ["Vastaa 'kyllä' tai 'ei'.", "Please answer 'yes' or 'no'."]
+        await update.message.reply_text(f"{prompts[UserDatabase.get_user_lang_code(update)]}")
+        #await update.message.reply_text(translate_string("unsaved event", update))
+        await want_to_edit_keyboard(update, context)
+        return OLD_EVENT
+
 
 
 
