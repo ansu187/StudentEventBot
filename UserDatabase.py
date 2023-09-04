@@ -95,10 +95,21 @@ def get_user_id(user_name):
 def is_user(update):
     user_id = update.message.from_user.id
     user_list = user_reader()
-    found = False
+    user_found = False
+    user_nick_not_found = False
+
     for user in user_list:
         if user.id == user_id:
-            found = True
+            if user.nick == None:
+                user.nick = update.message.from_user.username
+                user_nick_not_found = True
+            user_found = True
 
-    print(found)
-    return found
+    if user_nick_not_found:
+        user_writer(user_list)
+        print("User nick updated")
+
+
+    print(f"user found: {user_found}")
+
+    return user_found

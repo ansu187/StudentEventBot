@@ -1,4 +1,4 @@
-import Event, EventDatabase, User, UserDatabase, Tags
+import Event, EventDatabase, User, UserDatabase, Tags, Button
 from telegram.ext import Application, CommandHandler, ConversationHandler, MessageHandler, filters, ContextTypes
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove
 from datetime import datetime, timedelta
@@ -7,27 +7,9 @@ import asyncio
 import Filepaths
 
 TAGS, TAGS1, MENU, TIME_MENU, NEXT_WEEK, THIS_WEEK, THIS_MONTH, TODAY, LIST_BY_NUMBER = range(9)
-SHORT_MESSAGE, LONG_MESSAGE, CALENDER_LINK, EVENT_LINK, TICKET_LINK = range(5)
 
-def translate_string(string_key, language_code):
-    language_strings = {
-        0: {
-            "Show more": "Näytä lisää",
-            "Hide": "Piilota",
-            "Link": "Luo kalenterilinkki",
-            "Ticket": "Lipunmyynti"
 
-        },
-        1: {
-            "Show more": "Show more",
-            "Hide": "Hide",
-            "Link": "Create a calender link",
-            "Ticket": "Ticket+sale"
 
-    }
-    }
-
-    return language_strings.get(language_code, language_strings[1]).get(string_key, string_key)
 
 
 async def list(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -252,19 +234,21 @@ async def send_event_list(update: Update, context: ContextTypes.DEFAULT_TYPE, ev
 
     user_lang = UserDatabase.get_user_lang(update)
     context.user_data["user_lang"] = user_lang
-    messages_per_second = 2
+    messages_per_second = 5
     interval = 1 / messages_per_second
 
     for event in event_list:
         keyboard = [
             [
-                InlineKeyboardButton(translate_string("Show more", update), callback_data=f"{event.id};{SHORT_MESSAGE}")]
+                InlineKeyboardButton(Button.translate_string("Link", update), callback_data=f"{event.id};{Button.CALENDER_LINK}"),
+                InlineKeyboardButton(Button.translate_string("Show more", update), callback_data=f"{event.id};{Button.MORE_INFORMATION}")],
+            #[InlineKeyboardButton(Button.translate_string("Like", update), callback_data=f"{event.id};{Button.LIKE}")]
         ]
 
 
         reply_markup = InlineKeyboardMarkup(keyboard)
         await asyncio.sleep(interval)
-        await update.message.reply_text(f"{EventDatabase.get_head(event.id, UserDatabase.get_user_lang(update))}", reply_markup=reply_markup)
+        await update.message.reply_text(f"{EventDatabase.get_head(event, UserDatabase.get_user_lang_code(update))}", reply_markup=reply_markup)
 
     return
 
@@ -290,64 +274,10 @@ def generate_ticket_calendar_link(event, update):
     start_str = event.start_time.strftime("%Y%m%dT%H%M%S")
     end_str = end_time.strftime("%Y%m%dT%H%M%S")
 
-    link = f"https://www.google.com/calendar/render?action=TEMPLATE&text={event.name.replace(' ', '+')}+{translate_string('Ticket', update)}&dates={start_str}/{end_str}&location=&sf=true&output=xml"
+    link = f"https://www.google.com/calendar/render?action=TEMPLATE&text={event.name.replace(' ', '+')}+{Button.translate_string('Ticket', update)}&dates={start_str}/{end_str}&location=&sf=true&output=xml"
     return link
 
-async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    query = update.callback_query
-    await query.answer()
-    message_id_str, message_type_str = query.data.split(";")
 
-
-    try:
-        message_id = int(message_id_str)
-        message_type = int(message_type_str)
-        event = EventDatabase.event_finder_by_id(message_id, Filepaths.events_file)
-
-        #puts in the long message
-        if message_type == SHORT_MESSAGE:
-            keyboard = [[
-
-                    InlineKeyboardButton(translate_string("Link", update), callback_data=f"{event.id};{CALENDER_LINK}"),
-                    InlineKeyboardButton(translate_string("Hide", update), callback_data=f"{event.id};{LONG_MESSAGE}")]
-            ]
-
-            reply_markup = InlineKeyboardMarkup(keyboard)
-            await query.edit_message_text(
-                text=f"{EventDatabase.event_parser_normal(event, UserDatabase.get_user_lang(update))}" , reply_markup=reply_markup)
-
-        #puts in the short message
-        elif message_type == LONG_MESSAGE:
-            keyboard = [
-                [
-                    InlineKeyboardButton(translate_string("Show more", update), callback_data=f"{event.id};{SHORT_MESSAGE}")]
-            ]
-
-            reply_markup = InlineKeyboardMarkup(keyboard)
-            await query.edit_message_text(f"{EventDatabase.get_head(event.id, UserDatabase.get_user_lang(update))}",
-                                            reply_markup=reply_markup)
-
-        elif message_type == CALENDER_LINK:
-            keyboard = [[
-
-                InlineKeyboardButton(translate_string("Event", update), callback_data=f"{event.id};{EVENT_LINK}")],
-                [InlineKeyboardButton(translate_string("Ticket sale", update), callback_data=f"{event.id};{TICKET_LINK}")],
-                [InlineKeyboardButton(translate_string("Hide", update), callback_data=f"{event.id};{LONG_MESSAGE}")]
-            ]
-
-            reply_markup = InlineKeyboardMarkup(keyboard)
-            await query.edit_message_text(
-                text=f"{EventDatabase.event_parser_normal(event, UserDatabase.get_user_lang(update))}",
-                reply_markup=reply_markup)
-
-        elif message_type == EVENT_LINK:
-            await query.message.reply_text(generate_event_calendar_link(event, update))
-
-        elif message_type == TICKET_LINK:
-            await query.message.reply_text(generate_ticket_calendar_link(event, update))
-
-    except ValueError:
-        await query.edit_message_text("Please give a whole number!")
 
 
 async def send_new_event_to_all(update: Update, context: ContextTypes.DEFAULT_TYPE, event_id):
@@ -357,8 +287,8 @@ async def send_new_event_to_all(update: Update, context: ContextTypes.DEFAULT_TY
     messages_per_second = 20
     interval = 1/messages_per_second
 
-    event_fi = EventDatabase.get_head(event_id, 0)
-    event_en = EventDatabase.get_head(event_id, 1)
+    event_fi = EventDatabase.get_head(EventDatabase.event_finder_by_id(event_id,Filepaths.events_file), 0)
+    event_en = EventDatabase.get_head(EventDatabase.event_finder_by_id(event_id,Filepaths.events_file),  1)
     event_list = [event_fi, event_en]
 
     start_time = datetime.now()
@@ -374,8 +304,11 @@ async def send_new_event_to_all(update: Update, context: ContextTypes.DEFAULT_TY
 
             keyboard = [
                 [
-                    InlineKeyboardButton(translate_string("Show more", user_lang_code),
-                                         callback_data=f"{event_id};{SHORT_MESSAGE}")]
+                    InlineKeyboardButton(Button.translate_string("Link", update), callback_data=f"{event_id};{Button.CALENDER_LINK}"),
+                    InlineKeyboardButton(Button.translate_string("Show more", update),
+                                         callback_data=f"{event_id};{Button.MORE_INFORMATION}"),
+                    #[InlineKeyboardButton(Button.translate_string("Like", update), callback_data=f"{event_id};{Button.LIKE}")]
+                ]
             ]
 
             reply_markup = InlineKeyboardMarkup(keyboard)
