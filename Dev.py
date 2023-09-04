@@ -223,7 +223,7 @@ async def check_for_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(f"User {text} not found.")
         return ConversationHandler.END
 
-    await update.message.reply_text(f"The user is currently {USER_TYPE[user.user_type]}\n\n")
+    await update.message.reply_text(f"{user.nick} is currently {USER_TYPE[user.user_type]}\n\n")
 
     reply_keyboard = [["Normal", "Organizer"], ["Admin", "Super-admin"], ["Cancel"]]
     await update.message.reply_text(
