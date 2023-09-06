@@ -274,7 +274,8 @@ def generate_ticket_calendar_link(event, update):
     start_str = event.start_time.strftime("%Y%m%dT%H%M%S")
     end_str = end_time.strftime("%Y%m%dT%H%M%S")
 
-    link = f"https://www.google.com/calendar/render?action=TEMPLATE&text={event.name.replace(' ', '+')}+{Button.translate_string('Ticket', update)}&dates={start_str}/{end_str}&location=&sf=true&output=xml"
+    link = f"https://www.google.com/calendar/render?action=TEMPLATE&text={event.name.replace(' ', '+')}+" \
+           f"{Button.translate_string('Ticket', update)}&dates={start_str}/{end_str}&location=&sf=true&output=xml"
     return link
 
 

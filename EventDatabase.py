@@ -258,9 +258,9 @@ def get_body(event, user_lang_code):
 
     # event price
     if event.price != 0:
-        try:
+        if event.price.is_integer():
             event_price = f"{int(event.price)} €"
-        except Exception:
+        else:
             event_price = f"{event.price} €"
 
         text_body += f"{prompts[user_lang_code][7]} {event_price}\n\n"
