@@ -59,7 +59,7 @@ user_prompts = [["Tervetuloa luomaan tapahtumaa. Kirjoittamalla 'back' pääset 
                     "Eroita suomen- ja englanninkieliset ohjeet laittamalla //. 'skip' jos ei tarvita.",
                     "Monelta lipunmyynti alkaa? (päivä.kuukausi.vuosi tunti.minuutti), 'skip' jos ei tarvita.",
                     "Linkki, esimerkiksi Facebook-tapahtumaan. 'skip' jos ei tarvita.",
-                    "Saavutettavuusohjeet suomeksi, kirjoita help, jos tarvitset ohjeita.",
+                    "Saavutettavuusohjeet suomeksi, kirjoita help, jos tarvitset ohjeita. Kenttä on pakollinen.",
                     "Saavutettavuusohjeet englanniksi.",
                     "Dresscode: eroita suomen- ja englanninkieliset ohjeet laittamalla //",
                     "Tunnisteet:",
@@ -83,7 +83,7 @@ user_prompts = [["Tervetuloa luomaan tapahtumaa. Kirjoittamalla 'back' pääset 
                     "Ticket link or purchasing instructions: Separate finnish and english instructions with //. 'skip' if not needed.",
                     "At which time the ticket sale starts? (day.month.year hours.minutes), 'skip' if not needed",
                     "Link, for example for a Facebook event. Type 'skip if not needed'",
-                    "Accessibility instructions in Finnish, if you need help for what to write here, type help.",
+                    "Accessibility instructions in Finnish, if you need help for what to write here, type help. This field is mandatory.",
                     "Accessibility instructions in English.",
                     "Dresscode: please separate the english and finnish dresscode with //",
                     "Tags:",
@@ -105,10 +105,14 @@ def translate_string(string_key, update):
             "correct format": "Anna aika oikeassa muodossa.",
             "correct format2": "Aika on väärässä muodossa. Anna aika (päivä.kuukausi.vuosi tunti.minuutti) -muodossa.",
             "ticket wrong time": "Laitoit ajan, joka on menneisyydessä. Laita aika joka on tulevaisuudessa (edes minuutin päässä).",
-            "help": "Ohjeet tulee joskus myöhemmin. Kirjoita saavuttavuusohjeet",
+            "help": "Saavutettavuutta ovat esimerkiksi fyysinen saavutettavuus (esim. pystyykö tapahtumassa liikkumaan pyörätuolilla), "
+                    "laita myös tapahtuman saavutettavuudesta vastaavan yhteystiedot. Jos tapahtuma ei ole saavutettava, mainitse se tässä."
+                    "\n\nKirjoita saavutettavuusohjeet:",
             "submitted": "Tapahtuma tallennettu ja lähetetty LTKY:lle hyväksyttäväksi.",
-            "saved": "Tapahtuma tallennettu. Voit muokata tapahtumaa valitsemalla menusta Muokkaa tapahtumaa ja lähettää sen tarkastettavaksi valitsemalla Luo tapahtuma.",
+            "saved": "Tapahtuma tallennettu. Voit muokata tapahtumaa valitsemalla menusta Muokkaa tapahtumaa ja lähettää "
+                     "sen tarkastettavaksi valitsemalla Luo tapahtuma.",
             "cancel": "Toimenpide keskeytetty.",
+            "no skip": "Tätä kenttää ei voi skipata, vaan se on pakollinen.",
         },
         1: {
             "add": "add",
@@ -121,10 +125,12 @@ def translate_string(string_key, update):
             "correct format": "Please enter the time in the correct format!",
             "correct format2": "Invalid time format. Please enter the time in (day.month.year hours.minutes) -format.",
             "ticket wrong time": "You've put the ticket sell time that is in the past. Please put a time that is in the future (even by a minute).",
-            "help": "Help will be here some day! Write the accessibility instructions.",
+            "help": "Accessibility is for example: Physical accessibility (Can you participate in a wheel chair), "
+                    "Put here the contact information of person in charge of accessibility. If the event isn't accesible, tell it here.",
             "submitted": "Event saved and submitted for LTKY to check it!",
             "saved": "Event saved. You can edit the event by choosing Edit event from a menu. You can send it by choosing Create event.",
             "cancel": "Action cancelled.",
+            "no skip": "Tätä kenttää ei voi skipata, vaan se on pakollinen.",
     }
     }
 
@@ -282,7 +288,7 @@ async def old_event(update: Update, context: ContextTypes.DEFAULT_TYPE)->int:
 
 
 async def name(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-
+    # stage 1
     event = context.user_data['event']
     event.name = update.message.text
     event.stage = START_TIME
@@ -296,6 +302,7 @@ async def name(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 
 async def start_time(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    # stage 2
 
     user_input = update.message.text
     user_input = user_input.lower()
@@ -344,6 +351,7 @@ async def start_time(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 
 async def end_time(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    # stage 3
     user_input = update.message.text
     user_input = user_input.lower()
     if user_input == "back":
@@ -403,6 +411,7 @@ async def end_time(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 
 async def location(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    # stage 4
     user_input = update.message.text
     user_input = user_input.lower()
     if user_input == "back":
@@ -423,6 +432,7 @@ async def location(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 
 async def description_fi(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    # stage 5
     user_input = update.message.text
     user_input = user_input.lower()
     if user_input == "back":
@@ -444,6 +454,7 @@ async def description_fi(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
 
 async def description_en(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    # stage 6
     user_input = update.message.text
     user_input = user_input.lower()
     if user_input == "back":
@@ -465,6 +476,7 @@ async def description_en(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
 
 async def price(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    # stage 7
     user_input = update.message.text
     user_input = user_input.lower()
     if user_input == "back":
@@ -476,7 +488,8 @@ async def price(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     try:
         event.price = float(update.message.text)
     except ValueError:
-        await update.message.reply_text(f"{user_prompts[UserDatabase.get_user_lang_code(update)][PRICE]}")
+        prompt = ["Anna hinta pelkkänä lukuna.", "Please give the price as a number."]
+        await update.message.reply_text(f"{prompt[UserDatabase.get_user_lang_code(update)]}{user_prompts[UserDatabase.get_user_lang_code(update)][PRICE]}")
         await run_before_every_return(update, context)
         return PRICE
 
@@ -490,6 +503,7 @@ async def price(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 
 async def ticket_link(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    # stage 8
     user_input = update.message.text
 
     if user_input.startswith("https://"):
@@ -521,6 +535,7 @@ async def ticket_link(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
 
 
 async def ticket_sell_time(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    # stage 9
     user_input = update.message.text
     user_input = user_input.lower()
     if user_input == "back":
@@ -584,6 +599,7 @@ async def ticket_sell_time(update: Update, context: ContextTypes.DEFAULT_TYPE) -
 
 
 async def other_link(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    # stage 10
     user_input = update.message.text
     user_input = user_input.lower()
     if user_input == "back":
@@ -610,6 +626,7 @@ async def other_link(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 
 async def accessibility_fi(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    # stage 11
     user_input = update.message.text
     user_input = user_input.lower()
     if user_input == "back":
@@ -619,6 +636,11 @@ async def accessibility_fi(update: Update, context: ContextTypes.DEFAULT_TYPE) -
 
     if user_input == "help":
         await update.message.reply_text(translate_string("help", update))
+        await run_before_every_return(update, context)
+        return ACCESSIBILITY_FI
+
+    if user_input == "skip":
+        await update.message.reply_text(translate_string("no skip", update))
         await run_before_every_return(update, context)
         return ACCESSIBILITY_FI
 
@@ -635,6 +657,7 @@ async def accessibility_fi(update: Update, context: ContextTypes.DEFAULT_TYPE) -
 
 
 async def accessibility_en(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    # stage 12
     user_input = update.message.text
     user_input = user_input.lower()
     if user_input == "back":
@@ -646,6 +669,11 @@ async def accessibility_en(update: Update, context: ContextTypes.DEFAULT_TYPE) -
         await update.message.reply_text("Help will be here some day! Write the accessibility instructions in Finnish.")
         await run_before_every_return(update, context)
         return ACCESSIBILITY_EN
+
+    if user_input == "skip":
+        await update.message.reply_text(translate_string("no skip", update))
+        await run_before_every_return(update, context)
+        return ACCESSIBILITY_FI
 
     event = context.user_data['event']
     event.accessibility_en = update.message.text
@@ -660,6 +688,7 @@ async def accessibility_en(update: Update, context: ContextTypes.DEFAULT_TYPE) -
 
 
 async def dc(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    # stage 13
     user_input = update.message.text
     user_input = user_input.lower()
     if user_input == "back":
@@ -682,22 +711,27 @@ async def dc(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 
 async def tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    #stage 14
     reply = update.message.text
     reply = reply.lower()
 
     event = context.user_data["event"]
+    tag_adding = context.user_data['tag_adding']
 
     if event.tags == None:
         event.tags = []
 
+    #makes the add, remove and save buttons work.
     if reply == "add" or reply == "lisää":
-        context.user_data["tag_adding"] = True
+        tag_adding = True
         await Tags.full_keyboard(update, context, translate_string("remove", update), translate_string("add", update))
+        context.user_data['tag_adding'] = tag_adding
         return TAGS
 
     elif reply == "remove" or reply == "poista":
         await Tags.full_keyboard(update, context, translate_string("add", update), translate_string("remove", update))
-        context.user_data["tag_adding"] = False
+        tag_adding = False
+        context.user_data['tag_adding'] = tag_adding
         return TAGS
 
     elif reply == "save":
@@ -710,11 +744,10 @@ async def tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 
-    #adding tags
-    if context.user_data['tag_adding']:
-        if reply == "all":
-            event.tags = ["all"]
-        elif reply not in event.tags:
+    #if tag_adding = true, add tags
+    print(f"tag adding is now {tag_adding}")
+    if tag_adding:
+        if reply not in event.tags:
             try:
                 if "all" in event.tags:
                     event.tags.remove("all")
@@ -727,14 +760,14 @@ async def tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await Tags.full_keyboard(update, context, translate_string("remove", update), translate_string("add", update))
         return TAGS
 
-    #removing tags
-    if not context.user_data['tag_adding']:
+    #if tag_adding = true, add tags
+    elif not tag_adding:
         if reply == "all":
             event.tags = ["all"]
         try:
             event.tags.remove(reply)
         except AttributeError:
-            await update.message.reply_text(translate_string("No tag"))
+            await update.message.reply_text(translate_string("No tag", update))
 
         await update.message.reply_text(f"{event.tags}")
         await Tags.full_keyboard(update, context, translate_string("add", update), translate_string("remove", update))
@@ -747,6 +780,7 @@ async def tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def save(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    # stage 15
     user_input = update.message.text
     user_input = user_input.lower()
     if user_input == "back":
