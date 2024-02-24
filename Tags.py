@@ -22,16 +22,23 @@ async def normal_keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE, bu
     await close_keyboard(update, context)
 
 
-async def full_keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE, button: str, prompt: str):
+async def get_keyboard() -> []:
     try:
         with open(Filepaths.tags_file, 'r') as file:
             tags_data = json.load(file)
             data = tags_data.get('tags', [])
     except Exception:
         print("Something went wrong")
-        return
-
+        return None
     reply_keyboard = data
+    return reply_keyboard
+
+async def full_keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE, button: str, prompt: str):
+
+
+    reply_keyboard = get_keyboard()
+    if reply_keyboard == None:
+        return
     reply_keyboard.append(["Save", "/cancel", f"{button}"])
 
     await update.message.reply_text(
@@ -94,10 +101,12 @@ async def list_tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await update.message.reply_text(f"You currently have these tags:\n{user.tags}")
 
 
-async def start_tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def start_tags(update: Update, context: ContextTypes.DEFAULT_TYPE): #The command takes you here
+
     if not UserDatabase.is_user(update):
         await update.message.reply_text("You have no user.")
         return
+
     # Gets the user list from database
     user_list = UserDatabase.user_reader()
     context.user_data["user_list"] = user_list

@@ -30,7 +30,9 @@ import Event
 import Tags
 
 OLD_EVENT, NAME, START_TIME, END_TIME, LOCATION, DESCRIPTION_FI, DESCRIPTION_EN, PRICE, TICKET_LINK_OR_INFO, \
-    TICKET_SELL_TIME, OTHER_LINK, ACCESSIBILITY_FI, ACCESSIBILITY_EN, DC, TAGS, SAVE_EVENT = range(16)
+    TICKET_SELL_TIME, OTHER_LINK, ACCESSIBILITY_FI, ACCESSIBILITY_EN, DC, TAG_ADDING, SAVE_EVENT = range(16)
+
+TAG_REMOVING = 22
 
 STAGE_SAVED = 50
 STAGE_SUBMITTED = 99
@@ -124,14 +126,15 @@ def translate_string(string_key, update):
             "time machine": "Either you have a time machine, or then you accidentally put there a wrong time, try again :)",
             "correct format": "Please enter the time in the correct format!",
             "correct format2": "Invalid time format. Please enter the time in (day.month.year hours.minutes) -format.",
-            "ticket wrong time": "You've put the ticket sell time that is in the past. Please put a time that is in the future (even by a minute).",
+            "ticket wrong time": "You've put the ticket sell time that is in the past. "
+                                 "Please put a time that is in the future (even by a minute).",
             "help": "Accessibility is for example: Physical accessibility (Can you participate in a wheel chair), "
                     "Put here the contact information of person in charge of accessibility. If the event isn't accesible, tell it here.",
             "submitted": "Event saved and submitted for LTKY to check it!",
             "saved": "Event saved. You can edit the event by choosing Edit event from a menu. You can send it by choosing Create event.",
             "cancel": "Action cancelled.",
             "no skip": "Tätä kenttää ei voi skipata, vaan se on pakollinen.",
-    }
+        }
     }
 
     return language_strings.get(language_code, language_strings[1]).get(string_key, string_key)
@@ -262,8 +265,8 @@ async def old_event(update: Update, context: ContextTypes.DEFAULT_TYPE)->int:
         await run_before_every_return(update, context)
 
         #to pop the tags keyboard :) if needed
-        if event_to_edit.stage == TAGS:
-            await Tags.full_keyboard(update, context, translate_string("remove", update), translate_string("add", update))
+        if event_to_edit.stage == TAG_ADDING:
+            await add_keyboard(update,context)
             context.user_data["tag_adding"] = True
         return event_to_edit.stage
 
@@ -345,7 +348,8 @@ async def start_time(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
     except ValueError:
 
-        await update.message.reply_text(f"{translate_string('correct format', update)}\n\n{user_prompts[UserDatabase.get_user_lang_code(update)][START_TIME]}")
+        await update.message.reply_text(f"{translate_string('correct format', update)}\n\n"
+                                        f"{user_prompts[UserDatabase.get_user_lang_code(update)][START_TIME]}")
         await run_before_every_return(update, context)
         return START_TIME
 
@@ -385,10 +389,8 @@ async def end_time(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         except ValueError:
             continue
 
-
     if end_time_parsed is None:
         raise ValueError
-
 
     try:
         #end_time_parsed = datetime.strptime(end_time_parsed, "%d.%m.%Y %H:%M")
@@ -489,7 +491,8 @@ async def price(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         event.price = float(update.message.text)
     except ValueError:
         prompt = ["Anna hinta pelkkänä lukuna.", "Please give the price as a number."]
-        await update.message.reply_text(f"{prompt[UserDatabase.get_user_lang_code(update)]}{user_prompts[UserDatabase.get_user_lang_code(update)][PRICE]}")
+        await update.message.reply_text(f"{prompt[UserDatabase.get_user_lang_code(update)]}"
+                                        f"{user_prompts[UserDatabase.get_user_lang_code(update)][PRICE]}")
         await run_before_every_return(update, context)
         return PRICE
 
@@ -584,7 +587,8 @@ async def ticket_sell_time(update: Update, context: ContextTypes.DEFAULT_TYPE) -
 
         except ValueError:
             await update.message.reply_text(
-                f"{translate_string('correct format', update)}\n\n{user_prompts[UserDatabase.get_user_lang_code(update)][TICKET_SELL_TIME]}")
+                f"{translate_string('correct format', update)}\n\n"
+                f"{user_prompts[UserDatabase.get_user_lang_code(update)][TICKET_SELL_TIME]}")
             await run_before_every_return(update, context)
             return TICKET_SELL_TIME
 
@@ -700,83 +704,123 @@ async def dc(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     event.dc = update.message.text
 
     #backup
-    event.stage = TAGS
+    event.stage = TAG_ADDING
     EventDatabase.event_backup_save(event, update)
 
-    await update.message.reply_text(user_prompts[UserDatabase.get_user_lang_code(update)][TAGS])
-    await Tags.full_keyboard(update, context, "remove", "add")
+    await update.message.reply_text(user_prompts[UserDatabase.get_user_lang_code(update)][TAG_ADDING])
+    await tag_adding(update, context)
     context.user_data["tag_adding"] = True
     await run_before_every_return(update, context)
-    return TAGS
+    return TAG_ADDING
 
 
-async def tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def add_keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
+    reply_keyboard = await Tags.get_keyboard()
+    reply_keyboard.append(["Save", f"Remove tags"])
+
+    await update.message.reply_text(
+        f"What tags do you want to add to the event?",
+        reply_markup=ReplyKeyboardMarkup(
+            reply_keyboard, one_time_keyboard=True, input_field_placeholder="Event tags"
+        ),
+    )
+    await close_keyboard(update,context)
+
+
+async def remove_keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    reply_keyboard = await Tags.get_keyboard()
+    reply_keyboard.append(["Save", f"Add tags"])
+
+    await update.message.reply_text(
+        f"What tags do you want to remove from this event?",
+        reply_markup=ReplyKeyboardMarkup(
+            reply_keyboard, one_time_keyboard=True, input_field_placeholder="Event tags"
+        ),
+    )
+    await close_keyboard(update, context)
+
+async def tag_removing(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    reply = update.message.text
+    reply = reply.lower()
+    event = context.user_data["event"]
+
+
+    if reply == "all":
+        event.tags = ["all"]
+    elif reply == "save":
+        # backup
+        event.stage = SAVE_EVENT
+        EventDatabase.event_backup_save(event, update)
+        await update.message.reply_text(user_prompts[UserDatabase.get_user_lang_code(update)][SAVE_EVENT])
+        await update.message.reply_text(EventDatabase.event_parser_all(context.user_data['event']))
+        await run_before_every_return(update, context)
+        return SAVE_EVENT
+
+    elif reply == "add tags" or reply == "lisää":
+        await add_keyboard(update, context)
+        return TAG_ADDING
+
+    try:
+        event.tags.remove(reply)
+    except AttributeError:
+        await update.message.reply_text(translate_string("No tag", update))
+    except ValueError:
+        await update.message.reply_text(translate_string("No tag", update))
+
+    await update.message.reply_text(f"{event.tags}")
+    await remove_keyboard(update,context)
+    return TAG_REMOVING
+
+async def tag_adding(update: Update, context: ContextTypes.DEFAULT_TYPE):
     #stage 14
     reply = update.message.text
     reply = reply.lower()
-
     event = context.user_data["event"]
-    tag_adding = context.user_data['tag_adding']
 
+    #Just to be safe
     if event.tags == None:
         event.tags = []
 
-    #makes the add, remove and save buttons work.
-    if reply == "add" or reply == "lisää":
-        tag_adding = True
-        await Tags.full_keyboard(update, context, translate_string("remove", update), translate_string("add", update))
-        context.user_data['tag_adding'] = tag_adding
-        return TAGS
+    #makes the remove and save buttons work.
 
-    elif reply == "remove" or reply == "poista":
-        await Tags.full_keyboard(update, context, translate_string("add", update), translate_string("remove", update))
-        tag_adding = False
-        context.user_data['tag_adding'] = tag_adding
-        return TAGS
+
+    if reply == "remove tags" or reply == "poista":
+        await remove_keyboard(update, context)
+        return TAG_REMOVING
 
     elif reply == "save":
         # backup
         event.stage = SAVE_EVENT
         EventDatabase.event_backup_save(event, update)
         await update.message.reply_text(user_prompts[UserDatabase.get_user_lang_code(update)][SAVE_EVENT])
+        await update.message.reply_text(EventDatabase.event_parser_all(context.user_data['event']))
         await run_before_every_return(update,context)
         return SAVE_EVENT
 
 
 
     #if tag_adding = true, add tags
-    print(f"tag adding is now {tag_adding}")
-    if tag_adding:
-        if reply not in event.tags:
-            try:
-                if "all" in event.tags:
-                    event.tags.remove("all")
-                event.tags.append(reply)
-            except AttributeError:
-                event.tags = [f"{reply}"]
 
-        await update.message.reply_text(f"{event.tags}")
-
-        await Tags.full_keyboard(update, context, translate_string("remove", update), translate_string("add", update))
-        return TAGS
-
-    #if tag_adding = true, add tags
-    elif not tag_adding:
-        if reply == "all":
-            event.tags = ["all"]
+    if reply not in event.tags:
         try:
-            event.tags.remove(reply)
+            if "all" in event.tags:
+                event.tags.remove("all")
+            event.tags.append(reply)
         except AttributeError:
-            await update.message.reply_text(translate_string("No tag", update))
+            event.tags = [f"{reply}"]
 
         await update.message.reply_text(f"{event.tags}")
-        await Tags.full_keyboard(update, context, translate_string("add", update), translate_string("remove", update))
-        return TAGS
 
-    await update.message.reply_text(EventDatabase.event_parser_all(context.user_data['event']))
-    await update.message.reply_text(user_prompts[UserDatabase.get_user_lang_code(update)][SAVE_EVENT])
-    await run_before_every_return(update, context)
-    return SAVE_EVENT
+        await add_keyboard(update, context)
+        return TAG_ADDING
+
+    else:
+        await update.message.reply_text("You have already this tag!")
+        await add_keyboard(update, context)
+        return TAG_ADDING
+
+
 
 
 async def save(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -784,7 +828,7 @@ async def save(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user_input = update.message.text
     user_input = user_input.lower()
     if user_input == "back":
-        await update.message.reply_text("Dresscode:")
+        await add_keyboard(update, context)
         await run_before_every_return(update, context)
         return DC
 
@@ -794,10 +838,6 @@ async def save(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     if choice == "submit":
         #event_list = EventDatabase.events_reader("events.json")
         event = context.user_data['event']
-        """try:
-            event.id = event_list[-1].id + 1
-        except IndexError:
-            event.id = 1"""
 
         event.stage = STAGE_SUBMITTED
         #event_list.append(event)

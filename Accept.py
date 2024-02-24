@@ -9,10 +9,6 @@ import asyncio
 EVENT_SELECTOR, DECISION, REPLY = range(3)
 
 
-
-
-
-
 async def choose_event_keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE, event_list):
     reply_keyboard = []
 
@@ -62,6 +58,8 @@ async def accept_decline_keyboard(update):
     ReplyKeyboardRemove()
 
     return
+
+
 async def event_selector(update: Update, context: ContextTypes.DEFAULT_TYPE):
     event_list = context.user_data['event_list']
     text = update.message.text.lower()

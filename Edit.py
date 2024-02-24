@@ -17,7 +17,9 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 EVENT_SELECTOR, MENU, NAME, START_TIME, END_TIME, LOCATION, DESCRIPTION_FI, DESCRIPTION_EN, PRICE, TICKET_LINK_OR_INFO, \
-    TICKET_SELL_TIME, OTHER_LINK, ACCESSIBILITY_FI, ACCESSIBILITY_EN, DC, TAGS, SUBMIT, SHOW_EVENT = range(18)
+    TICKET_SELL_TIME, OTHER_LINK, ACCESSIBILITY_FI, ACCESSIBILITY_EN, DC, TAG_ADDING, SUBMIT, SHOW_EVENT = range(18)
+
+TAG_REMOVING = 22
 
 
 async def event_to_edit_keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE, event_list):
@@ -59,7 +61,8 @@ async def edit_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
 
     # checks if its regular user
     if UserDatabase.get_user_type(update) < 2:
-        await update.message.reply_text("You're not supposed to know about this command! I will contact the cyber police immediately! \U0001F46E!")
+        await update.message.reply_text("You're not supposed to know about this command! "
+                                        "I will contact the cyber police immediately! \U0001F46E!")
         return ConversationHandler.END
 
     event_list = EventDatabase.get_events_from_backup(update.message.from_user.username)
@@ -136,9 +139,9 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         return DC
     elif choice == "TAGS":
         context.user_data["tag_adding"] = True
-        await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.TAGS])
+        await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.TAG_ADDING])
         await Tags.full_keyboard(update, context, "add", "remove")
-        return TAGS
+        return TAG_ADDING
     elif choice == "END":
         await update.message.reply_text("You can submit the event later with /event command")
         return ConversationHandler.END
@@ -483,12 +486,12 @@ async def tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if reply == "add":
         context.user_data["tag_adding"] = True
         await Tags.full_keyboard(update, context, "remove", "add")
-        return TAGS
+        return TAG_ADDING
 
     elif reply == "remove":
         await Tags.full_keyboard(update, context, "add", "remove")
         context.user_data["tag_adding"] = False
-        return TAGS
+        return TAG_ADDING
 
     elif reply == "save":
         # backup
@@ -515,7 +518,7 @@ async def tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(f"{event.tags}")
 
         await Tags.full_keyboard(update, context, "remove", "add")
-        return TAGS
+        return TAG_ADDING
 
     #removing tags
     if not context.user_data['tag_adding']:
@@ -528,7 +531,7 @@ async def tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         await update.message.reply_text(f"{event.tags}")
         await Tags.normal_keyboard(update, context, "add", "remove")
-        return TAGS
+        return TAG_ADDING
 
     await keyboard(update, context)
     return MENU

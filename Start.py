@@ -59,7 +59,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.message.from_user.id
 
     #Sets the basic values
-    new_user = User.User(user_id, update.message.from_user.username, ["#all"], 1)
+    new_user = User.User(user_id, update.message.from_user.username, [], 1)
 
     #Checks if the user is allready in the database
     context.user_data['old_user'] = UserDatabase.is_user(update)
@@ -105,9 +105,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
             ReplyKeyboardRemove()
             context.user_data['user'] = new_user
             return DATA_COLLECTION
-
-
-
 
 
 

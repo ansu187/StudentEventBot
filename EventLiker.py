@@ -31,8 +31,8 @@ def likes_reader():
     except json.JSONDecodeError:
         print("Invalid JSON data in the file!")
 
-    except Exception:
-        print("Something went wrong with the event reading from jsons")
+    #except Exception:
+     #   print("Something went wrong with the event reading from jsons")
 
     return like_list
 
@@ -46,9 +46,10 @@ def likes_writer(like_list):
     except FileNotFoundError:
         print("Something went wrong")
 
-def event_liker(user_id: int, event_id: int):
+def event_liker(user_id, event_id):
+    print(user_id)
+    #event in this file is NOT an Event.py type, it is Like.py type
 
-    #event in this file is NOT an Event type, it is Like type
     event_like_list = likes_reader()
     event_found = False
     for event in event_like_list:
@@ -59,6 +60,10 @@ def event_liker(user_id: int, event_id: int):
             like_found = False
 
             for liker in event.likers:
+                try:
+                    liker = int(liker)
+                except Exception:
+                    print("Values don't mach :(")
                 if liker == user_id:
                     like_found = True
             if like_found:

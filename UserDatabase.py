@@ -6,7 +6,8 @@ import User
 from telegram import Update
 from typing import List
 
-def user_reader(): #Reads the user list from the JSON-file!
+
+def user_reader(): #Reads the user list from the JSON-file! #better name would be get_user_list
     user_list = []
 
     if os.path.isfile(Filepaths.users_file) and os.path.getsize(Filepaths.users_file) > 0:
@@ -15,7 +16,8 @@ def user_reader(): #Reads the user list from the JSON-file!
                 data = json.load(f)
 
             for user_data in data:
-                user_object = User.User(user_data['id'], user_data['nick'], user_data['tags'], user_data['user_type'], user_data['user_lang'])
+                user_object = User.User(user_data['id'], user_data['nick'], user_data['tags'], user_data['user_type'],
+                                        user_data['user_lang'])
                 user_list.append(user_object)
 
         except FileNotFoundError:
@@ -75,7 +77,6 @@ def get_user_type(update: Update) -> int:
             return user.user_type
 
 
-
 def get_admins():
     user_list = user_reader()
     admin_list = []
@@ -91,6 +92,28 @@ def get_user_id(user_name):
             return user.id
 
     return "no user found"
+
+def delete_user(user_id):
+    user_list = user_reader()
+    for user in user_list:
+        if user.id == user_id:
+            user_list.remove(user)
+    user_writer(user_list)
+
+def get_user(update: Update):
+    user_list = user_reader()
+    current_user_id = update.message.from_user.id
+    for user in user_list:
+        if user.id == current_user_id:
+            return user
+
+    return False
+
+def get_user_info_text(update: Update):
+    user = get_user(update)
+    output_text = f"This is your current information:\n\nUser id:\t\t{user.id}\nNickname:\t\t{user.nick}\nCurrent tags:\t\t{user.tags}\n" \
+                  f"Languange:\t\t{user.user_lang}\nAccount type:\t\t{user.user_type}"
+    return output_text
 
 def is_user(update):
     user_id = update.message.from_user.id
@@ -113,3 +136,15 @@ def is_user(update):
     print(f"user found: {user_found}")
 
     return user_found
+
+def update_username(update: Update):
+    user_id = update.message.from_user.id
+    user_name = update.message.from_user.username
+    user_list = user_reader()
+    for user in user_list:
+        if user.id == user_id:
+            if user.nick != user_name:
+                user.nick = user_name
+
+    user_writer(user_list)
+    return
