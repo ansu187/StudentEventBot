@@ -1,13 +1,14 @@
-import json
+
 from telegram.ext import ContextTypes, ConversationHandler
-from telegram import Update, ReplyKeyboardMarkup, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardRemove
-from typing import List
+from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove
+
 from datetime import datetime
 
-import Event
+
 import logging
 
-import EventSaver, EventDatabase, Tags
+import EventSaver, EventDatabase, Tags, Accept
+import MessageSender
 import UserDatabase
 
 logging.basicConfig(
@@ -15,32 +16,73 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-MENU, NAME, START_TIME, END_TIME, LOCATION, DESCRIPTION_FI, DESCRIPTION_EN, PRICE, TICKET_LINK_OR_INFO, \
-    TICKET_SELL_TIME, OTHER_LINK, ACCESSIBILITY_FI, ACCESSIBILITY_EN, DC, TAGS, SUBMIT = range(16)
+EVENT_SELECTOR, MENU, NAME, START_TIME, END_TIME, LOCATION, DESCRIPTION_FI, DESCRIPTION_EN, PRICE, TICKET_LINK_OR_INFO, \
+    TICKET_SELL_TIME, OTHER_LINK, ACCESSIBILITY_FI, ACCESSIBILITY_EN, DC, TAG_ADDING, SUBMIT, SHOW_EVENT = range(18)
+
+TAG_REMOVING = 22
+
+
+async def event_to_edit_keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE, event_list):
+    reply_keyboard = []
+
+    for event in event_list:
+        button = [f"{event.name}"]
+        reply_keyboard.append(button)
+
+    reply_keyboard.append(["/cancel"])
+
+    await update.message.reply_text(
+        f"what event do you want to edit?",
+        reply_markup=ReplyKeyboardMarkup(
+            reply_keyboard, one_time_keyboard=True, input_field_placeholder="Edit events?"
+        ),
+    )
+
+    ReplyKeyboardRemove()
+    return
+
+
+async def event_selector(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    event_list = context.user_data['event_list']
+    text = update.message.text.lower()
+
+    for event in event_list:
+        event_name = event.name.lower()
+        if event_name == text:
+            context.user_data['event'] = event
+
+    await keyboard(update, context)
+    return MENU
+
 
 async def edit_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
+
+
     # checks if its regular user
-    if UserDatabase.get_user_type(update) == 1:
-        await update.message.reply_text("You're not supposed to know about this command! I will contact the cyber police immediately! \U0001F46E!")
+    if UserDatabase.get_user_type(update) < 2:
+        await update.message.reply_text("You're not supposed to know about this command! "
+                                        "I will contact the cyber police immediately! \U0001F46E!")
         return ConversationHandler.END
 
-    event_to_edit = EventDatabase.get_event_to_edit(update.message.from_user.username)
-    context.user_data['event'] = event_to_edit
+    event_list = EventDatabase.get_events_from_backup(update.message.from_user.username)
 
-    if event_to_edit == None:
+    if event_list == []:
         await update.message.reply_text("You don't have any events to edit")
         return ConversationHandler.END
 
-    if event_to_edit is not None:
-        await update.message.reply_text(EventDatabase.event_parser_all(event_to_edit))
-        await keyboard(update,context)
-        return MENU
+    await event_to_edit_keyboard(update, context, event_list)
+
+
+    context.user_data['event_list'] = event_list
+
+
+    return EVENT_SELECTOR
 
 async def keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE):
     reply_keyboard = [["NAME", "START TIME", "END TIME"], ["LOCATION", "DESCRIPTION FI", "DESCRIPTION EN"], ["PRICE",
                       "TICKET LINK OR INFO", "TICKET SELL TIME"], ["OTHER LINK",
-                      "ACCESSIBILITY FI", "ACCESSIBILITY EN"], ["DC", "TAGS", "END", "SUBMIT"]]
+                      "ACCESSIBILITY FI", "ACCESSIBILITY EN"], ["DC", "TAGS", "END", "SUBMIT"], ["SHOW EVENT"]]
 
     await update.message.reply_text(
         f"All edits will be instantly saved\nSubmit sends the event to be accepted\nWhat do you want to edit?",
@@ -54,51 +96,52 @@ async def keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    lang_code = UserDatabase.get_user_lang_code(update)
     choice = update.message.text
     if choice == "NAME":
-        await update.message.reply_text(EventSaver.user_prompts[EventSaver.NAME])
-        return EventSaver.NAME
+        await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.NAME])
+        return NAME
     elif choice == "START TIME":
-        await update.message.reply_text(EventSaver.user_prompts[EventSaver.START_TIME])
-        return EventSaver.START_TIME
+        await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.START_TIME])
+        return START_TIME
     elif choice == "END TIME":
-        await update.message.reply_text(EventSaver.user_prompts[EventSaver.END_TIME])
-        return EventSaver.END_TIME
+        await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.END_TIME])
+        return END_TIME
     elif choice == "LOCATION":
-        await update.message.reply_text(EventSaver.user_prompts[EventSaver.LOCATION])
-        return EventSaver.LOCATION
+        await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.LOCATION])
+        return LOCATION
     elif choice == "DESCRIPTION FI":
-        await update.message.reply_text(EventSaver.user_prompts[EventSaver.DESCRIPTION_FI])
-        return EventSaver.DESCRIPTION_FI
+        await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.DESCRIPTION_FI])
+        return DESCRIPTION_FI
     elif choice == "DESCRIPTION EN":
-        await update.message.reply_text(EventSaver.user_prompts[EventSaver.DESCRIPTION_EN])
-        return EventSaver.DESCRIPTION_EN
+        await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.DESCRIPTION_EN])
+        return DESCRIPTION_EN
     elif choice == "PRICE":
-        await update.message.reply_text(EventSaver.user_prompts[EventSaver.PRICE])
-        return EventSaver.PRICE
-    elif choice == "TICKET LINK":
-        await update.message.reply_text(EventSaver.user_prompts[EventSaver.TICKET_LINK_OR_INFO])
-        return EventSaver.TICKET_LINK_OR_INFO
+        await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.PRICE])
+        return PRICE
+    elif choice == "TICKET LINK OR INFO":
+        await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.TICKET_LINK_OR_INFO])
+        return TICKET_LINK_OR_INFO
     elif choice == "TICKET SELL TIME":
-        await update.message.reply_text(EventSaver.user_prompts[EventSaver.TICKET_SELL_TIME])
-        return EventSaver.TICKET_SELL_TIME
+        await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.TICKET_SELL_TIME])
+        return TICKET_SELL_TIME
     elif choice == "OTHER LINK":
-        await update.message.reply_text(EventSaver.user_prompts[EventSaver.OTHER_LINK])
-        return EventSaver.OTHER_LINK
+        await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.OTHER_LINK])
+        return OTHER_LINK
     elif choice == "ACCESSIBILITY FI":
-        await update.message.reply_text(EventSaver.user_prompts[EventSaver.ACCESSIBILITY_FI])
-        return EventSaver.ACCESSIBILITY_FI
+        await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.ACCESSIBILITY_FI])
+        return ACCESSIBILITY_FI
     elif choice == "ACCESSIBILITY EN":
-        await update.message.reply_text(EventSaver.user_prompts[EventSaver.ACCESSIBILITY_EN])
-        return EventSaver.ACCESSIBILITY_EN
+        await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.ACCESSIBILITY_EN])
+        return ACCESSIBILITY_EN
     elif choice == "DC":
-        await update.message.reply_text(EventSaver.user_prompts[EventSaver.DC])
-        return EventSaver.DC
+        await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.DC])
+        return DC
     elif choice == "TAGS":
         context.user_data["tag_adding"] = True
-        await update.message.reply_text(EventSaver.user_prompts[EventSaver.TAGS])
-        await Tags.keyboard(update,context,"add", "remove")
-        return EventSaver.TAGS
+        await update.message.reply_text(EventSaver.user_prompts[lang_code][EventSaver.TAG_ADDING])
+        await Tags.full_keyboard(update, context, "add", "remove")
+        return TAG_ADDING
     elif choice == "END":
         await update.message.reply_text("You can submit the event later with /event command")
         return ConversationHandler.END
@@ -108,9 +151,20 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
                                         "This is irreversible!")
         return SUBMIT
 
+    elif choice == "SHOW EVENT":
+        event = context.user_data['event']
+        try:
+            await update.message.reply_text(f"{EventDatabase.event_parser_all(event)}")
+        except Exception:
+            await update.message.reply_text(f"{EventDatabase.event_parser_creator_1(event)}")
+            await update.message.reply_text(f"{EventDatabase.event_parser_creator_2(event)}")
+        await keyboard(update, context)
+        return MENU
+
+
+
 
 async def name(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-
 
     user_input = update.message.text
     user_input = user_input.lower()
@@ -121,7 +175,6 @@ async def name(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     event = context.user_data['event']
 
     event.name = update.message.text
-    event.stage = START_TIME
 
     # backup
     EventDatabase.event_backup_save(event, update)
@@ -170,7 +223,8 @@ async def start_time(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         return MENU
 
     except ValueError:
-        await update.message.reply_text(f"Please enter the time in the correct format!\n\n{EventSaver.user_prompts[EventSaver.START_TIME]}")
+        await update.message.reply_text(f"Please enter the time in the correct format!\n\n"
+                                        f"{EventSaver.user_prompts[UserDatabase.get_user_lang_code(update)][EventSaver.START_TIME]}")
 
         return START_TIME
 
@@ -213,7 +267,8 @@ async def end_time(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         EventDatabase.event_backup_save(event, update)
 
     except ValueError:
-        await update.message.reply_text("Invalid time format. Please enter the time in (day.month.year hours.minutes) -format.")
+        await update.message.reply_text("Invalid time format. "
+                                        "Please enter the time in (day.month.year hours.minutes) -format.")
         return END_TIME
 
     await keyboard(update, context)
@@ -244,12 +299,7 @@ async def description_fi(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         await keyboard(update, context)
         return MENU
 
-    if len(user_input) > 240:
-        await update.message.reply_text(f"The maximum length of the event is 240 characters. "
-                                        f"Your input was {len(user_input) - 240} characters too long! "
-                                        f"Please write the Description again.")
 
-        return DESCRIPTION_FI
 
     event = context.user_data['event']
     event.description_fi = update.message.text
@@ -269,12 +319,7 @@ async def description_en(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         await keyboard(update, context)
         return MENU
 
-    if len(user_input) > 240:
-        await update.message.reply_text(f"The maximum length of the event is 240 characters. "
-                                        f"Your input was {len(user_input) - 240} characters too long! "
-                                        f"Please write the Description again.")
 
-        return DESCRIPTION_EN
 
     event = context.user_data['event']
     event.description_en = update.message.text
@@ -290,15 +335,13 @@ async def description_en(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 async def price(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user_input = update.message.text
     user_input = user_input.lower()
-    if user_input == "back":
-        await keyboard(update, context)
-        return DESCRIPTION_EN
+
 
     event = context.user_data['event']
     try:
         event.price = float(update.message.text)
     except ValueError:
-        await update.message.reply_text(f"{EventSaver.user_prompts[PRICE]}")
+        await update.message.reply_text(EventSaver.user_prompts[UserDatabase.get_user_lang_code(update)][EventSaver.PRICE])
 
         return PRICE
 
@@ -315,7 +358,6 @@ async def price(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         return MENU
 
     else:
-        event.stage = TICKET_LINK_OR_INFO
 
         await keyboard(update, context)
         return MENU
@@ -323,13 +365,16 @@ async def price(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 async def ticket_link(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user_input = update.message.text
-    user_input = user_input.lower()
-    if user_input == "back":
+    if user_input.startswith("https://"):
+        user_input = user_input[len("https://"):]
+
+    user_input_lower = user_input.lower()
+    if user_input_lower == "back":
         await keyboard(update, context)
         return MENU
 
     event = context.user_data['event']
-    event.ticket_link = update.message.text
+    event.ticket_link = user_input
 
     # backup
     event.stage = TICKET_SELL_TIME
@@ -440,13 +485,13 @@ async def tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if reply == "add":
         context.user_data["tag_adding"] = True
-        await Tags.keyboard(update, context, "remove")
-        return TAGS
+        await Tags.full_keyboard(update, context, "remove", "add")
+        return TAG_ADDING
 
     elif reply == "remove":
-        await Tags.keyboard(update, context, "add")
+        await Tags.full_keyboard(update, context, "add", "remove")
         context.user_data["tag_adding"] = False
-        return TAGS
+        return TAG_ADDING
 
     elif reply == "save":
         # backup
@@ -472,8 +517,8 @@ async def tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         await update.message.reply_text(f"{event.tags}")
 
-        await Tags.keyboard(update, context, "remove", "add")
-        return TAGS
+        await Tags.full_keyboard(update, context, "remove", "add")
+        return TAG_ADDING
 
     #removing tags
     if not context.user_data['tag_adding']:
@@ -485,8 +530,8 @@ async def tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await update.message.reply_text("You don't have that tag in your event!")
 
         await update.message.reply_text(f"{event.tags}")
-        await Tags.keyboard(update,context, "add", "remove")
-        return TAGS
+        await Tags.normal_keyboard(update, context, "add", "remove")
+        return TAG_ADDING
 
     await keyboard(update, context)
     return MENU
@@ -496,24 +541,21 @@ async def submit(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user_input = update.message.text
     user_input = user_input.lower()
 
-
     if user_input == "submit":
-        event_list = EventDatabase.events_reader("events.json")
         event = context.user_data['event']
+        event.stage = EventSaver.STAGE_SUBMITTED
+        await update.message.reply_text(EventSaver.translate_string("submitted", update))
+
         try:
-            event.id = event_list[-1].id + 1
-        except IndexError:
-            event.id = 1
+            await update.message.reply_text(EventDatabase.event_parser_all(event))
+        except Exception:
+            await update.message.reply_text(EventDatabase.event_parser_creator_1(event))
+            await update.message.reply_text(EventDatabase.event_parser_creator_2(event))
+        # EventDatabase.event_backup_delete(update, context)
+        await Accept.message_to_admins(context)
+        EventDatabase.event_backup_save(event, update)
 
-        event.stage = 99
-        event_list.append(event)
-        EventDatabase.events_writer(event_list)
-        await update.message.reply_text(
-            f"Event saved and submitted for LTKY to check it!")
-        await update.message.reply_text(EventDatabase.event_parser_all(context.user_data['event']))
-        await EventDatabase.event_backup_delete(update, context)
         return ConversationHandler.END
-
     else:
         await keyboard(update,context)
         return MENU
