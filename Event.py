@@ -12,11 +12,15 @@ class Event:
         self.id = id
         self.name = name
         self.creator = creator
-        self.start_time = start_time if isinstance(start_time, datetime) else datetime.strptime(start_time,
-                                                                                                "%Y-%m-%d %H:%M:%S") if start_time else None
-        self.end_time = end_time if isinstance(end_time, datetime) else datetime.strptime(end_time,
-                                                                                          "%Y-%m-%d %H:%M:%S") if end_time else None
-        self.ticket_sell_time = ticket_sell_time
+        self.start_time = start_time if isinstance(start_time, datetime) else datetime.strptime\
+            (start_time,"%Y-%m-%d %H:%M:%S") if start_time else None
+
+        self.end_time = end_time if isinstance(end_time, datetime) else datetime.strptime\
+            (end_time, "%Y-%m-%d %H:%M:%S") if end_time else None
+
+        self.ticket_sell_time = ticket_sell_time if isinstance(ticket_sell_time, datetime) else datetime.strptime\
+            (ticket_sell_time, "%Y-%m-%d %H:%M:%S") if ticket_sell_time else None
+
         self.location = location
         self.description_fi = description_fi
         self.description_en = description_en
@@ -30,6 +34,7 @@ class Event:
         self.tags = tags
         self.stage = stage
 
+
     def to_dict(self):
         return {
             "id": self.id,
@@ -37,7 +42,7 @@ class Event:
             "creator": self.creator,
             "start_time": self.start_time.strftime("%Y-%m-%d %H:%M:%S") if self.start_time else None,
             "end_time": self.end_time.strftime("%Y-%m-%d %H:%M:%S") if self.end_time else None,
-            "ticket_sell_time": self.ticket_sell_time,
+            "ticket_sell_time": self.ticket_sell_time.strftime("%Y-%m-%d %H:%M:%S") if self.ticket_sell_time else None,
             "location": self.location,
             "description_fi": self.description_fi,
             "description_en": self.description_en,

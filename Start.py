@@ -1,17 +1,17 @@
-from telegram.ext import CommandHandler, ContextTypes, ConversationHandler
+from telegram.ext import ContextTypes, ConversationHandler
 from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove
-import json
 
-import List
+
+import MessageSender
 import User
-import os
+
 import UserDatabase
 
 
-LANG = 0
+DATA_COLLECTION, LANG = range(2)
 
 
-async def keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def lang_keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE):
     reply_keyboard = [["finnish", "english"]]
 
     await update.message.reply_text(
@@ -44,70 +44,101 @@ async def tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
-    #Handles the argument
-    arguments = context.args
-    arguments = " ".join(arguments)
-    arguments = arguments.lower()
 
 
     #Gets user data
     user_list = UserDatabase.user_reader()
 
 
-    #sets the user type to organizer
-    if arguments == "organizer":
-        await update.message.reply_text("Welcome to organize events! You'll now have an access for creating events")
-
-
-        user_id = update.message.from_user.id
-        for user in user_list:
-            if user_id == user.id:
-                user.user_type = 2
-
-        UserDatabase.user_writer(user_list)
-
-        return ConversationHandler.END
 
 
 
     #Handles the new user
-    else:
 
-        user_id = update.message.from_user.id
 
-        #Sets the basic values
-        new_user = User.User(user_id, update.message.from_user.username, ["#all"], 1)
+    user_id = update.message.from_user.id
 
-        #Checks if the user is allready in the database
-        context.user_data['old_user'] = False
-        for user in user_list:
-            if user.id == user_id:
-                context.user_data['old_user'] = True
+    #Sets the basic values
+    new_user = User.User(user_id, update.message.from_user.username, [], 1)
 
-        if not context.user_data['old_user']:
+    #Checks if the user is allready in the database
+    context.user_data['old_user'] = UserDatabase.is_user(update)
+
+    if not context.user_data['old_user']:
+        lang = update.message.from_user.language_code
+        if lang == "fi":
             await update.message.reply_text(
-                "Welcome to use the Skinnarila Student Events bot! This bot is going to save your Telegram ID, and will send you messages about the new events.")
+                "Tervetuloa käyttämään Skinnarila Events Bottia!\n\n"
+                "TÄMÄ VERSIO ON BETA, JA ON ERITTÄIN TODENNÄKÖISTÄ ETTEI MIKÄÄN TOIMI.\n\n"
+                "Tämän botin on kirjoittanut kylteri apunaan ChatGPT 3.5\n\n\n"
+                "Onko ok, jos tallennamme Telegram ID:n, Telegram käyttäjänimen ja valitsemasi kielen. "
+                "Nämä tiedot eivät ole tallennettu tietoturvallisesti. Onko tämä ok, jos ei, botti ei toimi :(")
+
+            reply_keyboard = [["Kyllä", "Ei"]]
+
+            await update.message.reply_text(
+                f"Käykö jos tallennamme tietosi?",
+                reply_markup=ReplyKeyboardMarkup(
+                    reply_keyboard, one_time_keyboard=True, input_field_placeholder="Valintasi:"
+                ),
+            )
+            ReplyKeyboardRemove()
+            context.user_data['user'] = new_user
+            return DATA_COLLECTION
+
+        else:
+            await update.message.reply_text(
+                "Welcome to use the Skinnarila Student Events bot!\n\n"
+                "THIS VERSION IS CURRENTLY IN BETA AND THERE IS HIGH CHANGE OF NOTHING WORKING\n\n"
+                "Bot is written by kylteri with ChatGPT 3.5\n\n\n"
+                "Is it okay if we save your Telegram ID, Telegram username and the language that you choose. "
+                "This information is not saved securely. Is this okay for you, if not, the bot won't work :(")
+
+            reply_keyboard = [["Yes", "No"]]
+
+            await update.message.reply_text(
+                f"Is it okay that we save?",
+                reply_markup=ReplyKeyboardMarkup(
+                    reply_keyboard, one_time_keyboard=True, input_field_placeholder="Your choice:"
+                ),
+            )
+            ReplyKeyboardRemove()
+            context.user_data['user'] = new_user
+            return DATA_COLLECTION
 
 
-        context.user_data['user'] = new_user
 
-
-    await keyboard(update,context)
+    await lang_keyboard(update, context)
     return LANG
 
 
+async def data_collection(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_text = update.message.text
+    if user_text == "Kyllä" or user_text == "Yes":
+
+        await lang_keyboard(update,context)
+        return LANG
+
+    else:
+        await update.message.reply_text("Nothing saved, the bot will not work.")
+        return ConversationHandler.END
+
+
 async def lang(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    input = update.message.text.lower()
-    new_user = context.user_data['user']
+    text_in = update.message.text.lower()
+    try:
+        new_user = context.user_data['user']
+    except KeyError:
+        pass
     user_list = UserDatabase.user_reader()
 
     if context.user_data['old_user']:
         user_id = update.message.from_user.id
         for user in user_list:
             if user_id == user.id:
-                if input == "finnish":
+                if text_in == "finnish":
                     user.user_lang = "fi"
-                elif input == "english":
+                elif text_in == "english":
                     user.user_lang = "en"
                 UserDatabase.user_writer(user_list)
 
@@ -117,10 +148,10 @@ async def lang(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
             await update.message.reply_text("Kieli vaihdettu!")
         return ConversationHandler.END
 
-    if input == "finnish":
+    if text_in == "finnish":
         new_user.user_lang = "fi"
 
-    elif input == "english":
+    elif text_in == "english":
         new_user.user_lang = "en"
 
 
@@ -130,7 +161,6 @@ async def lang(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 
     await update.message.reply_text("Your account is now saved!\nHere are the upcoming events!")
-    await List.list(update, context)
 
     return ConversationHandler.END
 
