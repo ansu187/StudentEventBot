@@ -45,5 +45,28 @@
             "sits // sitsit"
         ],
         "stage": 99
+    },
+    {
+        "id": 3,
+        "name": "Get to know Gemmi",
+        "creator": "ansu187",
+        "start_time": "2024-08-30 21:00:00",
+        "end_time": null,
+        "ticket_sell_time": "2024-08-24 14:00:00",
+        "location": "Giggling Marlin",
+        "description_fi": "GET TO KNOW GEMMI - tapahtuman nimi sen jo kertoo eli nyt on mit\u00e4 oivin mahdollisuus p\u00e4\u00e4st\u00e4 tutustumaan siihen kuuluisaan Gemmiin!\ud83d\udd25\ud83e\udea9\n\nGiggling Marlin eli tuttavallisemmin Gemmi on enklaavilaisten kantapaikka sek\u00e4 Enklaavin yhteisty\u00f6baari. Gemmi toimiikin useiden opiskelijatapahtumien jatkopaikkana ja juuri siksi paikka kannattaa ottaa jo fuksiviikoilla haltuun!  \n\nN\u00e4m\u00e4 bileet toimivat Academic Adventure -tapahtuman virallisina jatkoina, mutta ovat avoinna kaikille opiskelijoille. Eli fuksit, tervetuloa jatkamaan seikkailuja ja vanhemmat konkarit muistelemaan menneit\u00e4!  \n\nIlmaiset bussikyydit kuljettavat bilekansaa Skinnarilasta Gemmiin ja takaisin!\n\nBUSSIT: klo 20:30, 21:00, 21:30, 22:30 ja 23:00 sek\u00e4 klo 02:00, 02:30, 03:00, 03:30, 04:00, 04:30  \n\nTapahtumaan osallistumalla sitoudut noudattamaan Enklaavin tasa-arvo ja yhdenvertaisuussuunnitelmaa sek\u00e4 LTKY:n yhdenvertaisuusjulistusta.\n\nH\u00e4irint\u00e4yhdyshenkil\u00f6t: Facebook julkaisussa",
+        "description_en": "The Giggling Marlin, or Gemmi as it's more familiarly known, is one of the largest partners of Enklaavi! \ud83d\udd25\ud83e\udea9\n\nGemmi serves as a afterparty venue for several student events, and that's exactly why it's worth getting to know the place already during the freshman weeks!  \n\nThis party is the official afterparty of the Academic Adventure event, but all students are more than welcome. So freshmen are welcome to continue their adventures and older conkers to reminisce about the past!  \n\nFree bus rides transport party people from Skinnarila to Gemmi and back! \n\nBUSES: To the event at 20:30, 21:00, 21:30, 22:30 and 23:00, and back to SkinnarIa klo 02:00, 02:30, 03:00, 03:30, 04:00, 04:30  \n\nBy attending the event, you commit to Enklaavi's equality plan and LTKY's equality declaration.\n\nHarassment contact persons in Facebook event.",
+        "ticket_link": "https://kide.app/events/77ba4f34-cdc8-4eac-9114-5ba2095a839e Liput ovelta 5\u20ac // https://kide.app/events/77ba4f34-cdc8-4eac-9114-5ba2095a839e tickets from the door 5\u20ac",
+        "other_link": "https://fb.me/e/M3M65EjS",
+        "accessibility_fi": "Mik\u00e4li sinulla on kysytt\u00e4v\u00e4\u00e4 tapahtuman esteett\u00f6myydest\u00e4 tai k\u00e4yt\u00e4nn\u00f6n asioista, ota yhteys tapahtuman j\u00e4rjest\u00e4j\u00e4\u00e4n Hanna Veteliin projekti@enklaavi.fi.",
+        "accessibility_en": "If you have any questions about the accessibility of the event or practical matters, please contact the event organizer Hanna Veteli projekti@enklaavi.fi.",
+        "price": 4.5,
+        "dc": "Haalarit tai vapaa // Overalls or free",
+        "accepted": true,
+        "tags": [
+            "bar // baari",
+            "fresher-weeks23 // fuksiviikot23"
+        ],
+        "stage": 99
     }
 ]

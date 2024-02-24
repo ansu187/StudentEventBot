@@ -9,9 +9,6 @@ import Filepaths
 TAGS, TAGS1, MENU, TIME_MENU, NEXT_WEEK, THIS_WEEK, THIS_MONTH, TODAY, LIST_BY_NUMBER = range(9)
 
 
-
-
-
 async def list(update: Update, context: ContextTypes.DEFAULT_TYPE):
     prompts = [["Mitä tapahtumia haluat nähdä?"],["What events you want to see?"]]
     user_lang = UserDatabase.get_user_lang(update)
@@ -87,7 +84,7 @@ async def time_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await list_next_week(update,context)
         return ConversationHandler.END
     elif text == "Tämä kuukausi" or text == "This month":
-        await list_next_month(update, context)
+        await list_this_month(update, context)
         return ConversationHandler.END
     elif text == "Seuraava kuukausi" or text == "Next month":
         await list_next_month(update, context)
@@ -242,13 +239,14 @@ async def send_event_list(update: Update, context: ContextTypes.DEFAULT_TYPE, ev
             [
                 InlineKeyboardButton(Button.translate_string("Link", update), callback_data=f"{event.id};{Button.CALENDER_LINK}"),
                 InlineKeyboardButton(Button.translate_string("Show more", update), callback_data=f"{event.id};{Button.MORE_INFORMATION}")],
-            #[InlineKeyboardButton(Button.translate_string("Like", update), callback_data=f"{event.id};{Button.LIKE}")]
+                [InlineKeyboardButton(Button.translate_string("Like", update), callback_data=f"{event.id};{Button.LIKE}")]
         ]
 
 
         reply_markup = InlineKeyboardMarkup(keyboard)
         await asyncio.sleep(interval)
-        await update.message.reply_text(f"{EventDatabase.get_head(event, UserDatabase.get_user_lang_code(update))}", reply_markup=reply_markup)
+        await update.message.reply_text(f"{EventDatabase.get_head(event, UserDatabase.get_user_lang_code(update))}",
+                                        reply_markup=reply_markup)
 
     return
 
@@ -261,7 +259,8 @@ def generate_event_calendar_link(event, update):
     start_str = event.start_time.strftime("%Y%m%dT%H%M%S")
     end_str = event.end_time.strftime("%Y%m%dT%H%M%S")
 
-    link = f"https://www.google.com/calendar/render?action=TEMPLATE&text={event.name.replace(' ', '+')}&dates={start_str}/{end_str}&location=&sf=true&output=xml"
+    link = f"https://www.google.com/calendar/render?action=TEMPLATE&text={event.name.replace(' ', '+')}" \
+           f"&dates={start_str}/{end_str}&location=&sf=true&output=xml"
     return link
 
 def generate_ticket_calendar_link(event, update):
@@ -282,6 +281,7 @@ def generate_ticket_calendar_link(event, update):
 
 
 async def send_new_event_to_all(update: Update, context: ContextTypes.DEFAULT_TYPE, event_id):
+
     user_list = UserDatabase.user_reader()
     prompt = ["Uusi tapahtuma lisätty:", "A new event added:"]
 
@@ -308,7 +308,7 @@ async def send_new_event_to_all(update: Update, context: ContextTypes.DEFAULT_TY
                     InlineKeyboardButton(Button.translate_string("Link", update), callback_data=f"{event_id};{Button.CALENDER_LINK}"),
                     InlineKeyboardButton(Button.translate_string("Show more", update),
                                          callback_data=f"{event_id};{Button.MORE_INFORMATION}"),
-                    #[InlineKeyboardButton(Button.translate_string("Like", update), callback_data=f"{event_id};{Button.LIKE}")]
+                    [InlineKeyboardButton(Button.translate_string("Like", update), callback_data=f"{event_id};{Button.LIKE}")]
                 ]
             ]
 
@@ -369,5 +369,3 @@ async def send_message_to_all(update: Update, context: ContextTypes.DEFAULT_TYPE
 
     end_time = datetime.now()
     await update.message.reply_text(f"All messages send in {end_time - start_time} to {user_counter} users!")
-
-

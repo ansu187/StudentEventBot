@@ -82,7 +82,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
                     InlineKeyboardButton(translate_string("Show more", update),
                                          callback_data=f"{event.id};{MORE_INFORMATION}")
                 ],
-            #[InlineKeyboardButton(translate_string("Like", update), callback_data=f"{event.id};{LIKE}")]
+                [InlineKeyboardButton(translate_string("Like", update), callback_data=f"{event.id};{LIKE}")]
             ]
 
             reply_markup = InlineKeyboardMarkup(keyboard)
@@ -122,8 +122,12 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
                                                f"{MessageSender.generate_ticket_calendar_link(event, update)}",
                                            reply_markup=reply_markup)
 
+        #likes the event
         elif button == LIKE:
-            EventLiker.event_liker(query.message.from_user.id, event.id)
+            print("This is the id and name: ")
+            print(query.from_user.id)
+            print(query.from_user.username)
+            EventLiker.event_liker(query.from_user.id, event.id)
 
         elif button == SHOW_LIKES:
             await query.message.reply_text(EventLiker.like_counter(event.id))

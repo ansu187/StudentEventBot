@@ -12,7 +12,7 @@ class Like:
     def to_dict(self):
         return {
             "id": self.id,
-            "name": self.likers
+            "likers": self.likers
         }
 
 
