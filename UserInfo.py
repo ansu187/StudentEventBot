@@ -6,7 +6,8 @@ import asyncio
 
 import Start
 
-ACTION_SELECTOR, USER_INFO, ADD_USERNAME, DELETE_USER, LANG = 0, 1, 2, 3, 4
+ACTION_SELECTOR, USER_INFO, ADD_USERNAME, DELETE_USER, LANG = range(5)
+
 
 commands = [[["Näytä käyttäjän tiedot", "Lisää käyttäjänimi", "Vaihda tagit"], ["Poista käyttäjä", "Change the language", "/cancel"]],
             [["Show account info", "Add username", "Change tags"], ["Delete account", "Vaihda kieli", "/cancel"]]]
@@ -39,15 +40,19 @@ async def action_selector(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("User not found, something went wrong and the world will burn now!")
         return ConversationHandler.END
 
-    if user_prompt == f"{commands[user_lang_code][0][0]}":
+    if user_prompt == f"{commands[user_lang_code][0][0]}": #get user info
         await update.message.reply_text(f"{UserDatabase.get_user_info_text(update)}")
         return ConversationHandler.END
 
-    elif user_prompt == f"{commands[user_lang_code][0][1]}":
+    elif user_prompt == f"{commands[user_lang_code][0][1]}": #change user name
         UserDatabase.update_username(update)
         return
+    
+    elif user_prompt == f"{commands[user_lang_code][0][2]}": #tags
+        await Tags.tags(update, context)
+        return Tags.EDIT
 
-    elif user_prompt == f"{commands[user_lang_code][1][0]}":
+    elif user_prompt == f"{commands[user_lang_code][1][0]}": #delete account
         reply_keyboard = [["Yes", "No"]]
 
         await update.message.reply_text(
@@ -60,7 +65,7 @@ async def action_selector(update: Update, context: ContextTypes.DEFAULT_TYPE):
         ReplyKeyboardRemove()
         return DELETE_USER
 
-    elif user_prompt == f"{commands[user_lang_code][1][1]}":
+    elif user_prompt == f"{commands[user_lang_code][1][1]}": #change lang
         await Start.lang_keyboard(update, context)
 
         #needed in order to make the start lang function to work, hacky shit :D

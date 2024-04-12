@@ -126,7 +126,7 @@ def events_writer(event_list):
         print("Something went wrong")
 
 
-def event_finder_by_id(id: int, file_name):
+def get_event_by_id(id: int, file_name):
     event_list = events_reader(file_name)
     for event in event_list:
         if int(event.id) == id:
@@ -156,12 +156,65 @@ def get_accepted_events():
 
 
 
+def get_events_by_tag(tag):
+    events = get_accepted_events()
+    event_list = []
+    for event in events:
+        if tag in event.tags:
+            event_list.append(event)
+
+    return event_list
+
+
+def delete_event(event_id):
+    event_list = events_reader(Filepaths.events_file)
+    updated_event_list = []
+
+    for event in event_list:
+        if event_id != event.id:
+            updated_event_list.append(event)
+
+    events_writer(updated_event_list)
+
+    return
+
+def save_changes_to_accepted_event(event_to_be_saved):
+
+    event_list = events_reader(Filepaths.events_file)
+
+    event_list_to_be_saved = []
+
+    for event in event_list:
+        if event.id == event_to_be_saved.id:
+            event_list_to_be_saved.append(event_to_be_saved)
+        else:
+            event_list_to_be_saved.append(event)
+    
+    events_writer(event_list_to_be_saved)
+
+    return
+
 
 
 def get_head(event, user_lang_code) -> str:
     prompts = [["Klo: ", "-", "Alkaa", "klo", "Päättyy", "klo", "klo: ", "Hinta: ", "Liput", "Lipunmyyntipäivä"],
                ["from", "to", "Starts", "at", "Ends", "at", "at", "Price", "Tickets: ", "Ticket sale time"]]
 
+    tag_string = ""
+    
+    for tag in event.tags:
+        try:
+            en_tag, fi_tag = tag.split("//")
+        except ValueError:
+            en_tag = tag
+            fi_tag = tag
+        if user_lang_code == 0:
+            tag_string += f"#{fi_tag.strip()} "
+        else:
+            tag_string += f"#{en_tag.strip()} "
+
+    tag_string = f"{tag_string}\n\n"
+    
 
     if "//" in event.name:
         event_name_fi, event_name_eng = event.name.split("//", 1)
@@ -186,18 +239,18 @@ def get_head(event, user_lang_code) -> str:
 
         if start_date == end_date:
             text_head = (
-                f"*{event_name[user_lang_code].upper()}* - {start_date}\n"
+                f"{tag_string}*{event_name[user_lang_code].upper()}* - {start_date}\n"
                 f"{prompts[user_lang_code][0]} {start_time} {prompts[user_lang_code][1]} {end_time}\n")
 
         if end_date != start_date:
-            text_head = (f"*{event_name[user_lang_code].upper()}*\n" \
+            text_head = (f"{tag_string}*{event_name[user_lang_code].upper()}*\n" \
                          f"{prompts[user_lang_code][2]}\t{start_date} {prompts[user_lang_code][3]} {start_time}\n"
                          f"{prompts[user_lang_code][4]}\t{end_date} {prompts[user_lang_code][5]} {end_time}\n\n")
 
 
     except AttributeError:
         text_head = (
-            f"*{event_name[user_lang_code].upper()}*\n"
+            f"{tag_string}*{event_name[user_lang_code].upper()}*\n"
             f"{start_date} {prompts[user_lang_code][6]} {start_time}->\n")
 
     return text_head
@@ -350,11 +403,28 @@ def get_event_by_tag(tag: str):
 
     return events_to_return
 
+def get_event_by_name_from_backup(event_name):
+    event_list = events_reader(Filepaths.events_backup_file)
+
+    for event in event_list:
+        if event.name == event_name:
+            return event
+    
+    return None
+
+
 
 
 def event_backup_save(event, update: Update):
-    event_list: List[Event] = events_reader(Filepaths.events_backup_file)
-    new_event_list: List[Event] = []
+
+
+    #this is to avoid backupping the event's that are allready accepted, not having this could lead into duplicate events :D #spagetti
+    if event.id != 0:
+        return
+
+
+    event_list = events_reader(Filepaths.events_backup_file)
+    new_event_list = []
 
     for e in event_list:
         if e.name == event.name:
@@ -372,8 +442,8 @@ def event_backup_save(event, update: Update):
         print("Something went wrong")
 
 def event_backup_delete(event):
-    event_list: List[Event] = events_reader(Filepaths.events_backup_file)
-    new_event_list: List[Event] = []
+    event_list = events_reader(Filepaths.events_backup_file)
+    new_event_list = []
 
     for e in event_list:
         if e.name == event.name:
@@ -390,13 +460,18 @@ def event_backup_delete(event):
 
 
 def get_events_by_creator(update: Update):
-    event_list = events_reader(Filepaths.events_file)
-    event_list_to_return = []
+
+    username = update.message.from_user.username
+
+    event_list = get_only_upcoming()
+    event_list_to_return = get_events_from_backup(username)
+
 
     for event in event_list:
-        if update.message.from_user.username == event.creator:
+        if username == event.creator:
             event_list_to_return.append(event)
 
+    
     return event_list_to_return
 
 def event_parser_creator_1(event):

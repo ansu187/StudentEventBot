@@ -130,7 +130,7 @@ async def decision(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     event = context.user_data['event']
-    text = f"There was a problem with event {event.name}\n\nUse Edit event in your menu to edit it!\n\nThe problem:"
+    text = f"There was a problem with event {event.name}\n\nUse My events in your menu to edit it!\n\nThe problem:"
 
 
     text += update.message.text

@@ -30,9 +30,7 @@ import Event
 import Tags
 
 OLD_EVENT, NAME, START_TIME, END_TIME, LOCATION, DESCRIPTION_FI, DESCRIPTION_EN, PRICE, TICKET_LINK_OR_INFO, \
-    TICKET_SELL_TIME, OTHER_LINK, ACCESSIBILITY_FI, ACCESSIBILITY_EN, DC, TAG_ADDING, SAVE_EVENT = range(16)
-
-TAG_REMOVING = 22
+    TICKET_SELL_TIME, OTHER_LINK, ACCESSIBILITY_FI, ACCESSIBILITY_EN, DC, TAGS, SAVE_EVENT = range(16)
 
 STAGE_SAVED = 50
 STAGE_SUBMITTED = 99
@@ -265,9 +263,15 @@ async def old_event(update: Update, context: ContextTypes.DEFAULT_TYPE)->int:
         await run_before_every_return(update, context)
 
         #to pop the tags keyboard :) if needed
-        if event_to_edit.stage == TAG_ADDING:
-            await add_keyboard(update,context)
-            context.user_data["tag_adding"] = True
+        if event_to_edit.stage == TAGS:
+            event_tags = []
+
+            context.user_data["tags"] = event_tags
+
+            reply_markup = InlineKeyboardMarkup(Tags.get_all_tags_keyboard(update, button_code="event_tags"))
+            await update.message.reply_text(f"Current tags: {event_tags}", reply_markup=reply_markup)
+
+
         return event_to_edit.stage
 
     elif user_input == "no" or user_input == "ei":
@@ -410,6 +414,8 @@ async def end_time(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     await update.message.reply_text(f"{user_prompts[UserDatabase.get_user_lang_code(update)][LOCATION]}")
     await run_before_every_return(update, context)
     return LOCATION
+
+
 
 
 async def location(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -704,14 +710,79 @@ async def dc(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     event.dc = update.message.text
 
     #backup
-    event.stage = TAG_ADDING
+    event.stage = TAGS
     EventDatabase.event_backup_save(event, update)
 
-    await update.message.reply_text(user_prompts[UserDatabase.get_user_lang_code(update)][TAG_ADDING])
-    await tag_adding(update, context)
-    context.user_data["tag_adding"] = True
+
+    event_tags = []
+
+    context.user_data["tags"] = event_tags
+
+    reply_markup = InlineKeyboardMarkup(Tags.get_all_tags_keyboard(update, button_code="event_tags"))
+    await update.message.reply_text(f"Current tags: {event_tags}", reply_markup=reply_markup)
+
+    #await update.message.reply_text(user_prompts[UserDatabase.get_user_lang_code(update)][TAG_ADDING])
+    #await tag_adding(update, context)
+    #context.user_data["tag_adding"] = True
     await run_before_every_return(update, context)
-    return TAG_ADDING
+    return TAGS
+
+
+async def tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    
+    query = update.callback_query
+    await query.answer()
+
+    button_pattern, tag_chosen = query.data.split(";")
+
+    if tag_chosen == "Cancel":
+        await query.edit_message_text(f"Updating tags cancelled.")
+        
+        return ConversationHandler.END
+    
+    event_tags = context.user_data["tags"]
+
+
+    if tag_chosen == "Save":
+        all_tags_in_use = Tags.get_tag_list()
+        tag_list_to_save = []
+
+        for common_tag in all_tags_in_use:
+            for event_tag in event_tags:
+                if event_tag in common_tag:
+                    tag_list_to_save.append(common_tag)
+
+        print(tag_list_to_save)
+        event = context.user_data['event']
+        event.tags = tag_list_to_save
+
+        await query.edit_message_text(f"Tags updated!")
+
+        event.stage = SAVE_EVENT
+        EventDatabase.event_backup_save(event, update)
+        await query.message.reply_text(user_prompts[UserDatabase.get_user_lang_code(update)][SAVE_EVENT])
+        await query.message.reply_text(EventDatabase.event_parser_all(context.user_data['event']))
+        await run_before_every_return(update,context)
+        return SAVE_EVENT
+      
+
+
+    
+    if tag_chosen in event_tags:
+        while tag_chosen in event_tags:
+            event_tags.remove(tag_chosen)
+
+    else:
+        event_tags.append(tag_chosen)
+
+    await query.edit_message_text(text=f"Your tags: {event_tags}", 
+                                  reply_markup=InlineKeyboardMarkup(Tags.get_all_tags_keyboard(update, button_code="event_tags")))
+    
+    
+    return TAGS
+
+    
+
 
 
 async def add_keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE):

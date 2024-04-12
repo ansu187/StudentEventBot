@@ -45,7 +45,7 @@ def user_writer(user_list): #Writes user data back to the users.json -file
         print("Something went wrong")
 
 
-def get_user_lang(update: Update) -> str | None:
+def get_user_lang(update: Update):
     try:
         current_user_id = update.message.from_user.id
     except AttributeError:
@@ -145,6 +145,15 @@ def update_username(update: Update):
         if user.id == user_id:
             if user.nick != user_name:
                 user.nick = user_name
+
+    user_writer(user_list)
+    return
+
+def update_tags(tag_list, user_id):
+    user_list = user_reader()
+    for user in user_list:
+        if user.id == user_id:
+            user.tags = tag_list
 
     user_writer(user_list)
     return
