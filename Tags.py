@@ -1,28 +1,18 @@
 from telegram.ext import ContextTypes, ConversationHandler
-from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove
+from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardButton, InlineKeyboardMarkup
 
-import UserDatabase
+import UserDatabase, User
 import json
 import Filepaths
 
-ADD_REMOVE, ADD, REMOVE, SAVE = range(4)
+SAVE = 0
+EDIT = 99
 
 
-async def normal_keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE, button: str, prompt: str):
-
-    reply_keyboard = get_tag_language_list(update)
-
-    await update.message.reply_text(
-        f"{prompt}",
-        reply_markup=ReplyKeyboardMarkup(
-            reply_keyboard, one_time_keyboard=True, input_field_placeholder="Tags"
-        ),
-    )
-
-    await close_keyboard(update, context)
 
 
-async def get_keyboard() -> []:
+def get_tag_list(): #returns all tags currently in use.
+    tag_list = []
     try:
         with open(Filepaths.tags_file, 'r') as file:
             tags_data = json.load(file)
@@ -30,115 +20,149 @@ async def get_keyboard() -> []:
     except Exception:
         print("Something went wrong")
         return None
-    reply_keyboard = data
-    return reply_keyboard
+    
+    for row in data:
+        for tag in row:
+            tag_list.append(tag)
 
-async def full_keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE, button: str, prompt: str):
-
-
-    reply_keyboard = get_keyboard()
-    if reply_keyboard == None:
-        return
-    reply_keyboard.append(["Save", "/cancel", f"{button}"])
-
-    await update.message.reply_text(
-        f"{prompt}",
-        reply_markup=ReplyKeyboardMarkup(
-            reply_keyboard, one_time_keyboard=True, input_field_placeholder="Event tags"
-        ),
-    )
-    await close_keyboard(update,context)
+    return tag_list
 
 
+def get_tag_list_language(lang_code):
+    pre_tag_list = get_tag_list()
+    fi_tag_list = []
+    en_tag_list = []
 
+    for tag in pre_tag_list:
+        en_tag, fi_tag = tag.split("//")
+        fi_tag_list.append(fi_tag.strip())
+        en_tag_list.append(en_tag.strip())
 
-
-async def close_keyboard(update, context):
-    ReplyKeyboardRemove()
-
-
-def get_tag_language_list(update):
-    user_lang = UserDatabase.get_user_lang(update)
-    try:
-        with open(Filepaths.tags_file, 'r') as file:
-            tags_data = json.load(file)
-            data = tags_data.get('tags', [])
-    except Exception:
-        print("Something went wrong")
-        return [[]]
-
-    english_tags = []
-    finnish_tags = []
-
-    for tag_list in data:
-        english_tags_list = []
-        finnish_tags_list = []
-
-        for tag in tag_list:
-            try:
-                english_tag, finnish_tag = tag.split("//")
-            except ValueError:
-                english_tag = tag
-                finnish_tag = tag
-
-            english_tags_list.append(english_tag)
-            finnish_tags_list.append(finnish_tag)
-
-        english_tags.append(english_tags_list)
-        finnish_tags.append(finnish_tags_list)
-
-    if user_lang == "fi":
-        return finnish_tags
+    if lang_code == 1:
+        return en_tag_list
     else:
-        return english_tags
+        return fi_tag_list
+
+
+def get_user_tag_list(update: Update):
+    current_user: User = UserDatabase.get_user(update)
+    user_lang = UserDatabase.get_user_lang_code(update)
+
+    tag_list = current_user.tags
+    fi_tag_list = []
+    en_tag_list = []
+
+    for tag in tag_list:
+        if tag == "#all":
+            continue
+
+        en_tag, fi_tag = tag.split(" // ")
+        fi_tag_list.append(fi_tag)
+        en_tag_list.append(en_tag)
+        
+    if user_lang == 0:
+        return fi_tag_list
+    
+    else:
+        return en_tag_list
 
 
 
-async def list_tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user_list = context.user_data["user_list"]
-    for user in user_list:
-        if user.id == update.message.from_user.id:
-            await update.message.reply_text(f"You currently have these tags:\n{user.tags}")
+def get_all_tags_keyboard(update: Update, button_code):
+    # gets all tags from tags.json
+    tag_list = get_tag_list_language(UserDatabase.get_user_lang_code(update))
+
+    keyboard = []
+    indented_keyboard = []
+
+    
+    counter = 0
+    for tag in tag_list:
+        counter += 1
+        indented_keyboard.append(InlineKeyboardButton(tag, callback_data=f"{button_code};{tag}"))
+        if counter % 3 == 0:
+            keyboard.append(indented_keyboard)
+            indented_keyboard = []
+        
+
+    keyboard.append(indented_keyboard)
+
+    keyboard.append([InlineKeyboardButton("Save", callback_data=f"{button_code};save"), 
+                     InlineKeyboardButton("Cancel", callback_data=f"{button_code};cancel")])
+
+    return(keyboard)
 
 
-async def start_tags(update: Update, context: ContextTypes.DEFAULT_TYPE): #The command takes you here
+async def tags(update: Update, context: ContextTypes.DEFAULT_TYPE): #The command takes you here
 
     if not UserDatabase.is_user(update):
         await update.message.reply_text("You have no user.")
         return
 
-    # Gets the user list from database
-    user_list = UserDatabase.user_reader()
-    context.user_data["user_list"] = user_list
+    # Gets the user tags from the database
+    user_tag_list = get_user_tag_list(update)
 
-    # Keyboard asking if you want to add or remove tags
-    reply_keyboard = [["Add", "Remove"]]
-    await update.message.reply_text(
-        "Do you want to add or remove tags?",
-        reply_markup=ReplyKeyboardMarkup(
-            reply_keyboard, one_time_keyboard=True, input_field_placeholder="Event tags"
-        ),
-    )
+    
+    reply_markup = InlineKeyboardMarkup(get_all_tags_keyboard(update, button_code="user_tags"))
+    
+    await update.message.reply_text(f"Your tags: {user_tag_list}", reply_markup=reply_markup)
 
-    await close_keyboard(update, context)
+    #stores the tag data under the specific user's id, not all in the same spot, 
+    #this fucked the tags up previously
+    context.user_data[str(update.message.from_user.id)] = user_tag_list
 
-    return ADD_REMOVE
+    print (f"the id: {update.message.from_user.id}")
+
+    return EDIT
 
 
-async def add_remove(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    # Forks into add or remove
-    choice = update.message.text
-    await list_tags(update, context)
-    if choice == "Add":
-        await normal_keyboard(update, context, "remove", "What tags do you want to add?")
-        return ADD
-    if choice == "Remove":
-        await normal_keyboard(update, context, "add", "What tags do you want to remove?")
-        return REMOVE
+async def edit_tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    
+    query = update.callback_query
+    await query.answer()
+
+    button_pattern, tag_chosen = query.data.split(";")
+
+    if tag_chosen == "cancel":
+        await query.edit_message_text(f"Updating tags cancelled.")
+        
+        return ConversationHandler.END
+    
+    user_tag_list = context.user_data[str(query.from_user.id)]
+
+
+    if tag_chosen == "save":
+        all_tags_in_use = get_tag_list()
+        tag_list_to_save = []
+
+        for common_tag in all_tags_in_use:
+            for user_tag in user_tag_list:
+                if user_tag in common_tag:
+                    tag_list_to_save.append(common_tag)
+
+        print(tag_list_to_save)
+        UserDatabase.update_tags(tag_list_to_save, query.from_user.id)
+
+        await query.edit_message_text(f"Tags updated!")
+                
+        return ConversationHandler.END
+
+
+    
+    
+
+    
+    if tag_chosen in user_tag_list:
+        while tag_chosen in user_tag_list:
+            user_tag_list.remove(tag_chosen)
 
     else:
-        ReplyKeyboardRemove()
+        user_tag_list.append(tag_chosen)
 
-        return ConversationHandler.END
+    await query.edit_message_text(text=f"Your tags: {user_tag_list}", 
+                                  reply_markup=InlineKeyboardMarkup(get_all_tags_keyboard(update, button_code="user_tags")))
+    
+    
+    return EDIT
 
 

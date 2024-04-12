@@ -33,8 +33,9 @@ def main() -> None:
             EventSaver.ACCESSIBILITY_FI: [MessageHandler(filters.TEXT & ~filters.COMMAND, EventSaver.accessibility_fi)],
             EventSaver.ACCESSIBILITY_EN: [MessageHandler(filters.TEXT & ~filters.COMMAND, EventSaver.accessibility_en)],
             EventSaver.DC: [MessageHandler(filters.TEXT & ~filters.COMMAND, EventSaver.dc)],
-            EventSaver.TAG_ADDING: [MessageHandler(filters.TEXT & ~filters.COMMAND, EventSaver.tag_adding)],
-            EventSaver.TAG_REMOVING: [MessageHandler(filters.TEXT & ~filters.COMMAND, EventSaver.tag_removing)],
+            EventSaver.TAGS:[CallbackQueryHandler(EventSaver.tags, pattern="^Tags")],
+            #EventSaver.TAG_ADDING: [MessageHandler(filters.TEXT & ~filters.COMMAND, EventSaver.tag_adding)],
+            #EventSaver.TAG_REMOVING: [MessageHandler(filters.TEXT & ~filters.COMMAND, EventSaver.tag_removing)],
             EventSaver.SAVE_EVENT: [MessageHandler(filters.TEXT & ~filters.COMMAND, EventSaver.save)],
         },
         fallbacks=[CommandHandler("cancel", EventSaver.cancel), MessageHandler(filters.COMMAND, Cancel.cancel)]
@@ -44,7 +45,8 @@ def main() -> None:
     #convhandler for editing allready created events
     edit_handler = ConversationHandler(
         entry_points=[CommandHandler("edit", Edit.edit_command),
-                      MessageHandler(filters.Regex("^(Edit event|Muokkaa tapahtumaa)$"), Edit.edit_command)],
+                      MessageHandler(filters.Regex("^(Edit event|Muokkaa tapahtumaa)$"), Edit.edit_command), 
+                      CallbackQueryHandler(Edit.edit_button, pattern="^Edit_event")], 
         states={
             Edit.EVENT_SELECTOR: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.event_selector)],
             Edit.MENU: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.menu)],
@@ -61,8 +63,9 @@ def main() -> None:
             Edit.ACCESSIBILITY_FI: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.accessibility_fi)],
             Edit.ACCESSIBILITY_EN: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.accessibility_en)],
             Edit.DC: [MessageHandler(filters.TEXT & ~filters.COMMAND,Edit.dc)],
-            Edit.TAG_ADDING: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.tags)],
+            Edit.TAGS:[CallbackQueryHandler(Edit.tags, pattern="^Edit_tags")],
             Edit.SUBMIT: [MessageHandler(filters.TEXT & ~filters.COMMAND, Edit.submit)],
+            Edit.APPLY_CHANGES: [CallbackQueryHandler(Edit.apply_changes, pattern="^Edit_event")],
         },
         fallbacks=[CommandHandler("cancel", EventSaver.cancel), MessageHandler(filters.COMMAND, Cancel.cancel)],
     )
@@ -75,6 +78,7 @@ def main() -> None:
             UserInfo.ACTION_SELECTOR: [MessageHandler(filters.TEXT & ~filters.COMMAND, UserInfo.action_selector)],
             UserInfo.DELETE_USER: [MessageHandler(filters.TEXT & ~filters.COMMAND, UserInfo.delete_user)],
             #UserInfo.USER_INFO: [MessageHandler(filters.TEXT & ~filters.COMMAND, UserInfo.)],
+            Tags.EDIT: [CallbackQueryHandler(Tags.edit_tags, pattern="^user_tags")],
             UserInfo.LANG: [MessageHandler(filters.TEXT & ~filters.COMMAND, UserInfo.change_languange)],
         },
         fallbacks=[CommandHandler("cancel", EventSaver.cancel), MessageHandler(filters.COMMAND, Cancel.cancel)]
@@ -83,19 +87,14 @@ def main() -> None:
 
     # To handle user adding tags
     tag_handler = ConversationHandler(
-        entry_points=[CommandHandler("tags", Tags.start_tags)],
+        entry_points=[CommandHandler("tags", Tags.tags)],
         states={
-            ADD_REMOVE: [MessageHandler(filters.Regex("^(Add|Remove)$"), Tags.add_remove)],
-            ADD: [MessageHandler(filters.Regex(r"^(?!all$|Save$)(#\w+)$"), Tags.add_tag),
-                  MessageHandler(filters.Regex("^(all)$"), Tags.tags_all),
-                  MessageHandler(filters.Regex("^(Save)$"), Tags.save_tag)],
-            REMOVE: [MessageHandler(filters.Regex(r"^(?!all$|Save$)(#\w+)$"), Tags.remove_tag),
-                     MessageHandler(filters.Regex("^(all)$"), Tags.tags_all),
-                     MessageHandler(filters.Regex("^(Save)$"), Tags.save_tag)],
-
+            Tags.EDIT:[CallbackQueryHandler(Tags.edit_tags, pattern="^user_tags"),]
         },
-        fallbacks=[CommandHandler("cancel", EventSaver.cancel), MessageHandler(filters.COMMAND, Cancel.cancel)],
+        fallbacks=[CommandHandler("cancel", EventSaver.cancel), MessageHandler(filters.COMMAND, Cancel.cancel)]
     )
+
+
 
     feedback_handler = ConversationHandler(
         entry_points=[CommandHandler("feedback", Feedback.feedback),
@@ -128,6 +127,8 @@ def main() -> None:
             Dev.CHANGE_USER_TYPE_1: [MessageHandler(filters.TEXT & ~filters.COMMAND, Dev.check_for_user)],
             Dev.CHANGE_USER_TYPE_2: [MessageHandler(filters.TEXT & ~filters.COMMAND, Dev.set_user_type)],
             Dev.LIST_USERS: [MessageHandler(filters.TEXT & ~filters.COMMAND, Dev.list_users)],
+            Dev.EVENT_CHOSEN: [CallbackQueryHandler(Dev.event_chosen, pattern="^Dev")],
+            Dev.DELETE_EVENT: [CallbackQueryHandler(Dev.event_delete, pattern="^Dev")],
         },
         fallbacks=[CommandHandler("cancel", EventSaver.cancel), MessageHandler(filters.COMMAND, Cancel.cancel)]
     )
@@ -158,9 +159,12 @@ def main() -> None:
 
     my_events_handler = ConversationHandler(
         entry_points=[CommandHandler("get_events", MyEvents.menu),
-                      MessageHandler(filters.Regex("^(Näytä omat tapahtumat|Show my events)$"), MyEvents.menu)],
+                      MessageHandler(filters.Regex("^(Näytä omat tapahtumat|Show my events)$"), MyEvents.menu),
+                      CallbackQueryHandler(MyEvents.choice, pattern="^My_events")],
         states={
-            MyEvents.CHOICE: [MessageHandler(filters.TEXT & ~filters.COMMAND, MyEvents.choice)],
+            MyEvents.CHOICE: [CallbackQueryHandler(MyEvents.choice, pattern="^My_events")],
+            MyEvents.OUTPUT: [CallbackQueryHandler(Tags.edit_tags, pattern="^My_events"),],
+            MyEvents.DELETE_EVENT: [CallbackQueryHandler(MyEvents.event_delete, pattern="^My_events"),],
 
         },
         fallbacks=[CommandHandler("cancel", EventSaver.cancel), MessageHandler(filters.COMMAND, Cancel.cancel)]
@@ -170,7 +174,7 @@ def main() -> None:
     message_handler = MessageHandler(filters.TEXT & ~filters.COMMAND, Dictionary.BasicHandler)
 
 
-    application.add_handler(CallbackQueryHandler(Button.button))
+    application.add_handler(CallbackQueryHandler(Button.button, pattern="^Event"))
     application.add_handler(accept_handler, 1)
     application.add_handler(list_handler, 2)
     application.add_handler(start_handler, 3)

@@ -9,8 +9,7 @@ import Filepaths
 HIDE, DESCRIPTION, MORE_INFORMATION, CALENDER_LINK, EVENT_LINK, TICKET_LINK, LIKE, SHOW_LIKES, EDIT_EVENT = range(9)
 
 
-def translate_string(string_key, update):
-    language_code = UserDatabase.get_user_lang_code(update)
+def translate_string(string_key, language_code):
 
     language_strings = {
         0: {
@@ -41,20 +40,20 @@ def translate_string(string_key, update):
 async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = update.callback_query
     await query.answer()
-    message_id_str, message_type_str = query.data.split(";")
+    button_pattern, message_id_str, message_type_str = query.data.split(";")
 
 
     try:
         message_id = int(message_id_str)
         button = int(message_type_str)
-        event = EventDatabase.event_finder_by_id(message_id, Filepaths.events_file)
+        event = EventDatabase.get_event_by_id(message_id, Filepaths.events_file)
 
         #event buttons
 
         #puts in the long message
         if button == DESCRIPTION:
             keyboard = [[
-                    InlineKeyboardButton(translate_string("Hide", update), callback_data=f"{event.id};{HIDE}")]
+                    InlineKeyboardButton(translate_string("Hide", UserDatabase.get_user_lang_code(update)), callback_data=f"Event;{event.id};{HIDE}")]
             ]
 
             reply_markup = InlineKeyboardMarkup(keyboard)
@@ -64,8 +63,8 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         elif button == MORE_INFORMATION:
             keyboard = [[
 
-                InlineKeyboardButton(translate_string("Description", update), callback_data=f"{event.id};{DESCRIPTION}"),
-                InlineKeyboardButton(translate_string("Hide", update), callback_data=f"{event.id};{HIDE}")]
+                InlineKeyboardButton(translate_string("Description", UserDatabase.get_user_lang_code(update)), callback_data=f"Event;{event.id};{DESCRIPTION}"),
+                InlineKeyboardButton(translate_string("Hide", UserDatabase.get_user_lang_code(update)), callback_data=f"Event;{event.id};{HIDE}")]
             ]
 
             reply_markup = InlineKeyboardMarkup(keyboard)
@@ -78,11 +77,11 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             #add this button
             keyboard = [
                 [
-                    InlineKeyboardButton(translate_string("Link", update), callback_data=f"{event.id};{CALENDER_LINK}"),
-                    InlineKeyboardButton(translate_string("Show more", update),
+                    InlineKeyboardButton(translate_string("Link", UserDatabase.get_user_lang_code(update)), callback_data=f"Event;{event.id};{CALENDER_LINK}"),
+                    InlineKeyboardButton(translate_string("Show more", UserDatabase.get_user_lang_code(update)),
                                          callback_data=f"{event.id};{MORE_INFORMATION}")
                 ],
-                [InlineKeyboardButton(translate_string("Like", update), callback_data=f"{event.id};{LIKE}")]
+                #[InlineKeyboardButton(translate_string("Like", UserDatabase.get_user_lang_code(update)), callback_data=f"Event;{event.id};{LIKE}")]
             ]
 
             reply_markup = InlineKeyboardMarkup(keyboard)
@@ -91,9 +90,9 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
         elif button == CALENDER_LINK:
             keyboard = [[
-                InlineKeyboardButton(translate_string("Event", update), callback_data=f"{event.id};{EVENT_LINK}")],
-                [InlineKeyboardButton(translate_string("Ticket sale", update), callback_data=f"{event.id};{TICKET_LINK}")],
-                [InlineKeyboardButton(translate_string("Hide", update), callback_data=f"{event.id};{HIDE}")]
+                InlineKeyboardButton(translate_string("Event", UserDatabase.get_user_lang_code(update)), callback_data=f"Event;{event.id};{EVENT_LINK}")],
+                [InlineKeyboardButton(translate_string("Ticket sale", UserDatabase.get_user_lang_code(update)), callback_data=f"Event;{event.id};{TICKET_LINK}")],
+                [InlineKeyboardButton(translate_string("Hide", UserDatabase.get_user_lang_code(update)), callback_data=f"Event;{event.id};{HIDE}")]
             ]
 
             reply_markup = InlineKeyboardMarkup(keyboard)
@@ -103,7 +102,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
         elif button == EVENT_LINK:
             keyboard = [
-                [InlineKeyboardButton(translate_string("Hide", update), callback_data=f"{event.id};{HIDE}")]
+                [InlineKeyboardButton(translate_string("Hide", UserDatabase.get_user_lang_code(update)), callback_data=f"Event;{event.id};{HIDE}")]
             ]
 
             reply_markup = InlineKeyboardMarkup(keyboard)
@@ -114,7 +113,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
         elif button == TICKET_LINK:
             keyboard = [
-                [InlineKeyboardButton(translate_string("Hide", update), callback_data=f"{event.id};{HIDE}")]
+                [InlineKeyboardButton(translate_string("Hide", update), callback_data=f"Event;{event.id};{HIDE}")]
             ]
 
             reply_markup = InlineKeyboardMarkup(keyboard)

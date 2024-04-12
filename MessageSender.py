@@ -1,12 +1,75 @@
+import json
 import Event, EventDatabase, User, UserDatabase, Tags, Button
 from telegram.ext import Application, CommandHandler, ConversationHandler, MessageHandler, filters, ContextTypes
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, ReplyKeyboardRemove
 from datetime import datetime, timedelta
 import asyncio
+from contextlib import suppress
 
 import Filepaths
 
 TAGS, TAGS1, MENU, TIME_MENU, NEXT_WEEK, THIS_WEEK, THIS_MONTH, TODAY, LIST_BY_NUMBER = range(9)
+
+async def tags_keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
+    user_lang_code = UserDatabase.get_user_lang_code(update)
+
+    reply_keyboard = get_tag_language_list(user_lang_code)
+
+    if user_lang_code == 0:
+        prompt = "Mitä tapahtumia haluat nähdä?"
+    else:
+        prompt = "What events do you want to see?"
+
+    await update.message.reply_text(
+        f"{prompt}",
+        reply_markup=ReplyKeyboardMarkup(
+            reply_keyboard, one_time_keyboard=True, input_field_placeholder="Tags"
+        ),
+    )
+
+    await close_keyboard(update, context)
+
+
+
+async def close_keyboard(update, context):
+    ReplyKeyboardRemove()
+
+def get_tag_language_list(user_lang_code):
+    
+    try:
+        with open(Filepaths.tags_file, 'r') as file:
+            tags_data = json.load(file)
+            data = tags_data.get('tags', [])
+    except Exception:
+        print("Something went wrong")
+        return [[]]
+
+    english_tags = []
+    finnish_tags = []
+
+    for tag_list in data:
+        english_tags_list = []
+        finnish_tags_list = []
+
+        for tag in tag_list:
+            try:
+                english_tag, finnish_tag = tag.split("//")
+            except ValueError:
+                english_tag = tag
+                finnish_tag = tag
+
+            english_tags_list.append(english_tag)
+            finnish_tags_list.append(finnish_tag)
+
+        english_tags.append(english_tags_list)
+        finnish_tags.append(finnish_tags_list)
+
+    if user_lang_code == 0:
+        return finnish_tags
+    else:
+        return english_tags
+
 
 
 async def list(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -58,8 +121,8 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     prompts = ["Millaisia tapahtumia haluat nähdä?", "What kind of events do you want to see?"]
 
     if text == "Tietyn tyyppiset tapahtumat" or text == "Events of certain type":
-        await Tags.normal_keyboard(update, context, "", prompts[UserDatabase.get_user_lang_code(update)])
-        await Tags.close_keyboard(update, context)
+        await tags_keyboard(update, context)
+        await close_keyboard(update, context)
         return TAGS
 
 
@@ -101,6 +164,7 @@ async def list_by_number(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         await update.message.reply_text("How many events do you want to see?")
     return LIST_BY_NUMBER
+
 
 async def list_by_number1(update: Update, context: ContextTypes.DEFAULT_TYPE):
     event_list = EventDatabase.get_accepted_events()
@@ -145,6 +209,8 @@ async def list_this_week(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return ConversationHandler.END
 
     return ConversationHandler.END
+
+
 async def list_this_month(update: Update, context: ContextTypes.DEFAULT_TYPE):
     event_list = EventDatabase.get_accepted_events()
     this_month = datetime.now().month
@@ -235,11 +301,12 @@ async def send_event_list(update: Update, context: ContextTypes.DEFAULT_TYPE, ev
     interval = 1 / messages_per_second
 
     for event in event_list:
+        
         keyboard = [
             [
-                InlineKeyboardButton(Button.translate_string("Link", update), callback_data=f"{event.id};{Button.CALENDER_LINK}"),
-                InlineKeyboardButton(Button.translate_string("Show more", update), callback_data=f"{event.id};{Button.MORE_INFORMATION}")],
-                [InlineKeyboardButton(Button.translate_string("Like", update), callback_data=f"{event.id};{Button.LIKE}")]
+                InlineKeyboardButton(Button.translate_string("Link", UserDatabase.get_user_lang_code(update)), callback_data=f"Event;{event.id};{Button.CALENDER_LINK}"),
+                InlineKeyboardButton(Button.translate_string("Show more", UserDatabase.get_user_lang_code(update)), callback_data=f"Event;{event.id};{Button.MORE_INFORMATION}")],
+                #[InlineKeyboardButton(Button.translate_string("Like", UserDatabase.get_user_lang_code(update)), callback_data=f"Event;{event.id};{Button.LIKE}")]
         ]
 
 
@@ -288,15 +355,24 @@ async def send_new_event_to_all(update: Update, context: ContextTypes.DEFAULT_TY
     messages_per_second = 20
     interval = 1/messages_per_second
 
-    event_fi = EventDatabase.get_head(EventDatabase.event_finder_by_id(event_id,Filepaths.events_file), 0)
-    event_en = EventDatabase.get_head(EventDatabase.event_finder_by_id(event_id,Filepaths.events_file),  1)
+    event = EventDatabase.get_event_by_id(event_id,Filepaths.events_file)
+
+    event_fi = EventDatabase.get_head(event, 0)
+    event_en = EventDatabase.get_head(event, 1)
     event_list = [event_fi, event_en]
+
+    event_tags = event.tags
 
     start_time = datetime.now()
     user_counter = 0
 
+
+    #sends the new event to all users
     for user in user_list:
         try:
+            send_message = False
+
+
             if user.user_lang == "fi":
                 user_lang_code = 0
 
@@ -305,33 +381,83 @@ async def send_new_event_to_all(update: Update, context: ContextTypes.DEFAULT_TY
 
             keyboard = [
                 [
-                    InlineKeyboardButton(Button.translate_string("Link", update), callback_data=f"{event_id};{Button.CALENDER_LINK}"),
-                    InlineKeyboardButton(Button.translate_string("Show more", update),
+                    InlineKeyboardButton(Button.translate_string("Link", user_lang_code), callback_data=f"{event_id};{Button.CALENDER_LINK}"),
+                    InlineKeyboardButton(Button.translate_string("Show more", user_lang_code),
                                          callback_data=f"{event_id};{Button.MORE_INFORMATION}"),
-                    [InlineKeyboardButton(Button.translate_string("Like", update), callback_data=f"{event_id};{Button.LIKE}")]
+                    #InlineKeyboardButton(Button.translate_string("Like", user_lang_code), callback_data=f"{event_id};{Button.LIKE}")
                 ]
             ]
 
             reply_markup = InlineKeyboardMarkup(keyboard)
 
 
+            if user.tags == [] or user.tags == "#all": #all is a legacy thing with old users
+                send_message = True
 
-            await context.bot.send_message(
-                chat_id=user.id, text=f"{prompt[user_lang_code]}\n\n{event_list[user_lang_code]}",
-                reply_markup=reply_markup)
 
-            print(f"Message sent to user {user.id}")
-            user_counter += 1
+            elif set(user.tags) & set(event_tags):
+                send_message = True
+            
 
-            await asyncio.sleep(interval)
+            elif event_tags == []:
+                send_message = True
+
+            if send_message:
+                await context.bot.send_message(
+                    chat_id=user.id, text=f"{prompt[user_lang_code]}\n\n{event_list[user_lang_code]}",
+                    reply_markup=reply_markup)
+
+                print(f"Message sent to user {user.id}")
+                user_counter += 1
+
+                await asyncio.sleep(interval)
+
         except Exception as e:
             print(f"Failed to send message to user {user.id}: {str(e)}")
+
+
+
     end_time = datetime.now()
     await update.message.reply_text(f"All messages send in {end_time - start_time} to {user_counter} users!")
 
-    event = EventDatabase.event_finder_by_id(event_id, "events.json")
+    event = EventDatabase.get_event_by_id(event_id, "events.json")
     user_id = UserDatabase.get_user_id(event.creator)
     await context.bot.send_message(chat_id=user_id, text=f"The event {event.name} was send to {user_counter} users!")
+    return
+
+
+
+
+
+
+async def list_next_wappu_week(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if update.message.from_user != "katjaimmonen":
+        return
+    
+
+
+    event_list = EventDatabase.get_event_by_tag("#wappu")
+    now = datetime.now().isocalendar()[1]
+
+    time_sorted_event_list = sorted(event_list, key=lambda event: event.start_time)
+    complete_event_list = []
+
+    for event in time_sorted_event_list:
+        if event.start_time.date().isocalendar()[1] == now:
+            complete_event_list.append(event)
+
+
+    await send_event_list(update, context, complete_event_list)
+
+    if not complete_event_list:
+        user_lang = UserDatabase.get_user_lang(update)
+        if user_lang == "fi":
+            await update.message.reply_text("Ei tapahtumia kyseisenä aikana.")
+        else:
+            await update.message.reply_text("No events at that time.")
+        return ConversationHandler.END
+
+    return
 
 
 
