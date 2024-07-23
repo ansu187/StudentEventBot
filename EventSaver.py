@@ -156,6 +156,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 async def run_before_every_return(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    return
     if UserDatabase.get_user_type(update) == 4:
         try:
             event = context.user_data['event']
@@ -718,7 +719,7 @@ async def dc(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
     context.user_data["tags"] = event_tags
 
-    reply_markup = InlineKeyboardMarkup(Tags.get_all_tags_keyboard(update, button_code="event_tags"))
+    reply_markup = InlineKeyboardMarkup(Tags.get_all_tags_keyboard(update, button_code="Tags"))
     await update.message.reply_text(f"Current tags: {event_tags}", reply_markup=reply_markup)
 
     #await update.message.reply_text(user_prompts[UserDatabase.get_user_lang_code(update)][TAG_ADDING])
@@ -735,7 +736,7 @@ async def tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     button_pattern, tag_chosen = query.data.split(";")
 
-    if tag_chosen == "Cancel":
+    if tag_chosen == "cancel":
         await query.edit_message_text(f"Updating tags cancelled.")
         
         return ConversationHandler.END
@@ -743,7 +744,7 @@ async def tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
     event_tags = context.user_data["tags"]
 
 
-    if tag_chosen == "Save":
+    if tag_chosen == "save":
         all_tags_in_use = Tags.get_tag_list()
         tag_list_to_save = []
 
@@ -776,7 +777,7 @@ async def tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
         event_tags.append(tag_chosen)
 
     await query.edit_message_text(text=f"Your tags: {event_tags}", 
-                                  reply_markup=InlineKeyboardMarkup(Tags.get_all_tags_keyboard(update, button_code="event_tags")))
+                                  reply_markup=InlineKeyboardMarkup(Tags.get_all_tags_keyboard(update, button_code="Tags")))
     
     
     return TAGS
@@ -890,8 +891,6 @@ async def tag_adding(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("You have already this tag!")
         await add_keyboard(update, context)
         return TAG_ADDING
-
-
 
 
 async def save(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:

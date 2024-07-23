@@ -88,7 +88,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             await query.edit_message_text(f"{EventDatabase.get_head(event, UserDatabase.get_user_lang_code(update))}",
                                             reply_markup=reply_markup)
 
-        elif button == CALENDER_LINK:
+        elif button == CALENDER_LINK: #goes to this to show the option if user wants to see the event date link or the ticket sale link
             keyboard = [[
                 InlineKeyboardButton(translate_string("Event", UserDatabase.get_user_lang_code(update)), callback_data=f"Event;{event.id};{EVENT_LINK}")],
                 [InlineKeyboardButton(translate_string("Ticket sale", UserDatabase.get_user_lang_code(update)), callback_data=f"Event;{event.id};{TICKET_LINK}")],
@@ -100,7 +100,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
                 text=f"{EventDatabase.get_head(event, UserDatabase.get_user_lang_code(update))}",
                 reply_markup=reply_markup)
 
-        elif button == EVENT_LINK:
+        elif button == EVENT_LINK: #sends the event link
             keyboard = [
                 [InlineKeyboardButton(translate_string("Hide", UserDatabase.get_user_lang_code(update)), callback_data=f"Event;{event.id};{HIDE}")]
             ]
@@ -111,7 +111,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
                                                f"{MessageSender.generate_event_calendar_link(event, update)}",
                                           reply_markup=reply_markup)
 
-        elif button == TICKET_LINK:
+        elif button == TICKET_LINK: #sends the ticket link, TODO this isn't shown, if there is no ticket sales
             keyboard = [
                 [InlineKeyboardButton(translate_string("Hide", update), callback_data=f"Event;{event.id};{HIDE}")]
             ]

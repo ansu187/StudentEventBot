@@ -116,6 +116,14 @@ async def time_sort_keyboard(update: Update):
     ReplyKeyboardRemove()
     return
 
+async def send_all_events(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    event_list = EventDatabase.get_accepted_events()
+    time_sorted_event_list = sorted(event_list, key=lambda event: event.start_time)
+
+    await send_event_list(update, context, time_sorted_event_list)
+    return
+
+
 async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text
     prompts = ["Millaisia tapahtumia haluat nähdä?", "What kind of events do you want to see?"]
@@ -131,10 +139,7 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return TIME_MENU
 
     elif text == "Kaikki" or text == "All":
-        event_list = EventDatabase.get_accepted_events()
-        time_sorted_event_list = sorted(event_list, key=lambda event: event.start_time)
-
-        await send_event_list(update, context, time_sorted_event_list)
+        send_all_events(update, context)
         return ConversationHandler.END
 
 
@@ -153,7 +158,10 @@ async def time_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await list_next_month(update, context)
         return ConversationHandler.END
 
-
+async def list_by_tags_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await tags_keyboard(update, context)
+    await close_keyboard(update, context)
+    return TAGS
 
 
 async def list_by_number(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -293,6 +301,10 @@ async def list_by_tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(prompts[UserDatabase.get_user_lang_code(update)])
     return ConversationHandler.END
 
+
+
+
+
 async def send_event_list(update: Update, context: ContextTypes.DEFAULT_TYPE, event_list):
 
     user_lang = UserDatabase.get_user_lang(update)
@@ -345,8 +357,6 @@ def generate_ticket_calendar_link(event, update):
     return link
 
 
-
-
 async def send_new_event_to_all(update: Update, context: ContextTypes.DEFAULT_TYPE, event_id):
 
     user_list = UserDatabase.user_reader()
@@ -381,17 +391,17 @@ async def send_new_event_to_all(update: Update, context: ContextTypes.DEFAULT_TY
 
             keyboard = [
                 [
-                    InlineKeyboardButton(Button.translate_string("Link", user_lang_code), callback_data=f"{event_id};{Button.CALENDER_LINK}"),
+                    InlineKeyboardButton(Button.translate_string("Link", user_lang_code), callback_data=f"Event;{event_id};{Button.CALENDER_LINK}"),
                     InlineKeyboardButton(Button.translate_string("Show more", user_lang_code),
-                                         callback_data=f"{event_id};{Button.MORE_INFORMATION}"),
-                    #InlineKeyboardButton(Button.translate_string("Like", user_lang_code), callback_data=f"{event_id};{Button.LIKE}")
+                                         callback_data=f"Event;{event_id};{Button.MORE_INFORMATION}"),
+                    #InlineKeyboardButton(Button.translate_string("Like", user_lang_code), callback_data=f"Event;{event_id};{Button.LIKE}")
                 ]
             ]
 
             reply_markup = InlineKeyboardMarkup(keyboard)
 
 
-            if user.tags == [] or user.tags == "#all": #all is a legacy thing with old users
+            if user.tags == [] or user.tags == ["#all"]: #all is a legacy thing with old users
                 send_message = True
 
 
@@ -423,40 +433,6 @@ async def send_new_event_to_all(update: Update, context: ContextTypes.DEFAULT_TY
     event = EventDatabase.get_event_by_id(event_id, "events.json")
     user_id = UserDatabase.get_user_id(event.creator)
     await context.bot.send_message(chat_id=user_id, text=f"The event {event.name} was send to {user_counter} users!")
-    return
-
-
-
-
-
-
-async def list_next_wappu_week(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    if update.message.from_user != "katjaimmonen":
-        return
-    
-
-
-    event_list = EventDatabase.get_event_by_tag("#wappu")
-    now = datetime.now().isocalendar()[1]
-
-    time_sorted_event_list = sorted(event_list, key=lambda event: event.start_time)
-    complete_event_list = []
-
-    for event in time_sorted_event_list:
-        if event.start_time.date().isocalendar()[1] == now:
-            complete_event_list.append(event)
-
-
-    await send_event_list(update, context, complete_event_list)
-
-    if not complete_event_list:
-        user_lang = UserDatabase.get_user_lang(update)
-        if user_lang == "fi":
-            await update.message.reply_text("Ei tapahtumia kyseisenä aikana.")
-        else:
-            await update.message.reply_text("No events at that time.")
-        return ConversationHandler.END
-
     return
 
 

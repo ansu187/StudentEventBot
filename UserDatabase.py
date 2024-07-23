@@ -100,7 +100,7 @@ def delete_user(user_id):
             user_list.remove(user)
     user_writer(user_list)
 
-def get_user(update: Update):
+def get_current_user(update: Update):
     user_list = user_reader()
     current_user_id = update.message.from_user.id
     for user in user_list:
@@ -109,8 +109,16 @@ def get_user(update: Update):
 
     return False
 
+
+def get_user_by_username(username):
+    user_list = user_reader()
+    for user in user_list:
+        if user.nick == username:
+            return user
+    return
+
 def get_user_info_text(update: Update):
-    user = get_user(update)
+    user = get_current_user(update)
     output_text = f"This is your current information:\n\nUser id:\t\t{user.id}\nNickname:\t\t{user.nick}\nCurrent tags:\t\t{user.tags}\n" \
                   f"Languange:\t\t{user.user_lang}\nAccount type:\t\t{user.user_type}"
     return output_text

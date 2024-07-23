@@ -407,11 +407,10 @@ def get_event_by_name_from_backup(event_name):
     event_list = events_reader(Filepaths.events_backup_file)
 
     for event in event_list:
-        if event.name == event_name:
+        if event.name.startswith(event_name):
             return event
     
     return None
-
 
 
 

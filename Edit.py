@@ -104,7 +104,7 @@ async def edit_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
 async def edit_keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE):
     reply_keyboard = [["Name", "Start time", "End time"], ["Location", "Description Fi", "Description En"], ["Price",
                       "Ticket link or info", "Ticket sell time"], ["Other link",
-                      "Accesibility Fi", "Accessibility En"], ["DC", "Tags", "End", "Submit"], ["Show event"]]
+                      "Accessibility Fi", "Accessibility En"], ["DC", "Tags", "End", "Submit"], ["Show event"]]
 
     try: #for events that are not yet accepted
         await update.message.reply_text(

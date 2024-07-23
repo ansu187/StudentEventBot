@@ -135,7 +135,7 @@ def main() -> None:
 
     #handles user query for events
     list_handler = ConversationHandler(
-        entry_points=[CommandHandler("list", MessageSender.list),
+        entry_points=[CommandHandler("list_events", MessageSender.list),
                       MessageHandler(filters.Regex("^(List events|Listaa tapahtumat)$"), MessageSender.list)],
         states={
             MessageSender.MENU: [MessageHandler(filters.TEXT & ~filters.COMMAND, MessageSender.menu)],
@@ -170,6 +170,14 @@ def main() -> None:
         fallbacks=[CommandHandler("cancel", EventSaver.cancel), MessageHandler(filters.COMMAND, Cancel.cancel)]
     )
 
+    list_by_tag_command = ConversationHandler(entry_points=[CommandHandler("list_by_type", MessageSender.list_by_tags_command)],
+        states={
+            MessageSender.TAGS: [MessageHandler(filters.TEXT & ~filters.COMMAND, MessageSender.list_by_tags)],
+        },
+        fallbacks=[CommandHandler("cancel", EventSaver.cancel), MessageHandler(filters.COMMAND, Cancel.cancel)]
+    )
+    
+
 
     message_handler = MessageHandler(filters.TEXT & ~filters.COMMAND, Dictionary.BasicHandler)
 
@@ -185,11 +193,15 @@ def main() -> None:
     application.add_handler(feedback_handler, 8)
     application.add_handler(my_events_handler, 10)
     application.add_handler(user_info_handler, 11)
+    application.add_handler(list_by_tag_command, 12)
 
 
     application.add_handler(CommandHandler("menu", Menu.menu), 0)
     application.add_handler(CommandHandler("accept", Accept.accept), 0)
     application.add_handler(CommandHandler("help", Help.help), 0)
+    application.add_handler(CommandHandler("list", MessageSender.send_all_events), 0)
+    application.add_handler(CommandHandler("this_week", MessageSender.list_this_week), 0)
+    application.add_handler(CommandHandler("next_week", MessageSender.list_next_week), 0)
     application.add_handler(message_handler)
 
 

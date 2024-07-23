@@ -20,11 +20,11 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
         keyboard = [
             [
                 InlineKeyboardButton(Button.translate_string("Show likes", user_lang_code),
-                                    callback_data=f"My_events;{event.id};{event.name};likes"),
+                                    callback_data=f"My_events;{event.id};{shorten_string(event.name, 20)};likes"),
                 InlineKeyboardButton(Button.translate_string("Edit event", user_lang_code),
-                                    callback_data=f"My_events;{event.id};{event.name};edit"),
+                                    callback_data=f"My_events;{event.id};{shorten_string(event.name, 20)};edit"),
                                     InlineKeyboardButton("Delete event",
-                                    callback_data=f"My_events;{event.id};{event.name};delete")]
+                                    callback_data=f"My_events;{event.id};{shorten_string(event.name, 20)};delete")]
         ]
 
         reply_markup = InlineKeyboardMarkup(keyboard)
@@ -58,9 +58,9 @@ async def choice(update: Update, context: ContextTypes.DEFAULT_TYPE):
         keyboard = [
             [
                 InlineKeyboardButton(Button.translate_string("Yes", update),
-                                    callback_data=f"My_events;{event_id};{event_name};yes"),
+                                    callback_data=f"My_events;{event_id};{shorten_string(event_name, 20)};yes"),
                                     InlineKeyboardButton(Button.translate_string("No", update),
-                                    callback_data=f"My_events;{event_id};{event_name};no")]
+                                    callback_data=f"My_events;{event_id};{shorten_string(event_name, 20)};no")]
         ]
 
         reply_markup = InlineKeyboardMarkup(keyboard)
@@ -73,9 +73,9 @@ async def choice(update: Update, context: ContextTypes.DEFAULT_TYPE):
         keyboard = [
             [
                 InlineKeyboardButton(Button.translate_string("Yes", UserDatabase.get_user_lang_code(update)),
-                                    callback_data=f"Edit_event;{event_id};{event_name};yes"),
+                                    callback_data=f"Edit_event;{event_id};{shorten_string(event_name, 20)};yes"),
                                     InlineKeyboardButton(Button.translate_string("No", UserDatabase.get_user_lang_code(update)),
-                                    callback_data=f"Edit_event;{event_id};{event_name};no")]
+                                    callback_data=f"Edit_event;{event_id};{shorten_string(event_name, 20)};no")]
         ]
 
         reply_markup = InlineKeyboardMarkup(keyboard)
@@ -153,6 +153,20 @@ async def event_to_edit_keyboard(update: Update, context: ContextTypes.DEFAULT_T
     return
 
 
+
+def shorten_string(input_string, max_byte_length):
+    byte_length = 0
+    shortened_string = ""
+    
+    for char in input_string:
+        char_byte_length = len(char.encode('utf-8'))
+        if byte_length + char_byte_length <= max_byte_length:
+            shortened_string += char
+            byte_length += char_byte_length
+        else:
+            break
+    
+    return shortened_string
 
 
 

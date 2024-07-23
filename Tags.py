@@ -45,7 +45,7 @@ def get_tag_list_language(lang_code):
 
 
 def get_user_tag_list(update: Update):
-    current_user: User = UserDatabase.get_user(update)
+    current_user: User = UserDatabase.get_current_user(update)
     user_lang = UserDatabase.get_user_lang_code(update)
 
     tag_list = current_user.tags

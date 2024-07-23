@@ -88,6 +88,7 @@ async def decision(update: Update, context: ContextTypes.DEFAULT_TYPE):
         event.accepted = True
 
         event_list = EventDatabase.events_reader(Filepaths.events_file)
+
         try:
             event.id = event_list[-1].id + 1
         except IndexError:
@@ -99,6 +100,10 @@ async def decision(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(f"Event {event.name} accepted!")
 
         message_to_user = f"Your event {event.name} has been accepted!"
+
+        admin = UserDatabase.get_user_by_username("ansu187")
+        await context.bot.send_message(chat_id=admin.id, text=MessageSender.generate_event_calendar_link(event, update))
+        
 
         await MessageSender.send_new_event_to_all(update, context, event.id)
 
