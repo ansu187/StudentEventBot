@@ -4566,26 +4566,8 @@
         "dc": "Haalarit // Overalls",
         "accepted": true,
         "tags": [
-            "bar // baari",
-            "end",
-            "student-union-basement // kellari",
-            "submit",
-            "sitsit",
-            "sits",
-            "back",
-            "haalarit // overalls",
-            "sits // sitsit",
-            "alcohol-free // alkoholiton",
-            "hobbies // harrastukset",
-            "excursion // excu",
-            "rave",
-            "international",
-            "bunkkeri lateres",
-            "help",
-            "lis\u00e4\u00e4 'chill // rento'",
-            "poista kaikki",
-            "chill // rento",
-            "bar-crawl // appro"
+            "bar-crawl // appro",
+            "Wappu24 // Wappu24"
         ],
         "stage": 99
     },
@@ -4723,25 +4705,6 @@
         "dc": "Haalarit/Vaatteet // Overalls/Clothes",
         "accepted": true,
         "tags": [
-            "bar // baari",
-            "end",
-            "student-union-basement // kellari",
-            "submit",
-            "sitsit",
-            "sits",
-            "back",
-            "haalarit // overalls",
-            "sits // sitsit",
-            "alcohol-free // alkoholiton",
-            "hobbies // harrastukset",
-            "excursion // excu",
-            "rave",
-            "international",
-            "bunkkeri lateres",
-            "help",
-            "lis\u00e4\u00e4 'chill // rento'",
-            "poista kaikki",
-            "chill // rento",
             "bar-crawl // appro"
         ],
         "stage": 99
@@ -5003,14 +4966,8 @@
         "dc": "Vapaa // Free",
         "accepted": true,
         "tags": [
-            "bar // baari",
-            "haalarit // overalls",
-            "excursion // excu",
-            "chill // rento",
             "student-union-basement // kellari",
-            "hobbies // harrastukset",
-            "alcohol-free // alkoholiton",
-            "notski"
+            "Wappu24 // Wappu24"
         ],
         "stage": 99
     },
@@ -5061,14 +5018,8 @@
         "dc": "vaellusvarusteet // Hiking equipment",
         "accepted": true,
         "tags": [
-            "bar // baari",
-            "haalarit // overalls",
-            "excursion // excu",
-            "chill // rento",
-            "student-union-basement // kellari",
             "hobbies // harrastukset",
-            "alcohol-free // alkoholiton",
-            "notski"
+            "Wappu24 // Wappu24"
         ],
         "stage": 99
     },
@@ -5231,16 +5182,8 @@
         "dc": "Haalarit // Overalls",
         "accepted": true,
         "tags": [
-            "bar // baari",
-            "haalarit // overalls",
-            "excursion // excu",
-            "chill // rento",
-            "student-union-basement // kellari",
-            "hobbies // harrastukset",
-            "alcohol-free // alkoholiton",
-            "notski",
-            "back",
-            "sits // sitsit"
+            "sits // sitsit",
+            "Wappu24 // Wappu24"
         ],
         "stage": 99
     },
@@ -5262,16 +5205,8 @@
         "dc": "Haalarit + oman killan asuste//  Overalls + accessories from your own guild",
         "accepted": true,
         "tags": [
-            "bar // baari",
-            "haalarit // overalls",
-            "excursion // excu",
-            "chill // rento",
-            "student-union-basement // kellari",
-            "hobbies // harrastukset",
-            "alcohol-free // alkoholiton",
-            "notski",
-            "back",
-            "sits // sitsit"
+            "sits // sitsit",
+            "Wappu24 // Wappu24"
         ],
         "stage": 99
     },
@@ -5293,16 +5228,8 @@
         "dc": "Vapaa (Eik\u00e4 kotioloissa edes pakollinen) // Free (Not even mandatory at home)",
         "accepted": true,
         "tags": [
-            "bar // baari",
-            "haalarit // overalls",
-            "excursion // excu",
-            "chill // rento",
-            "student-union-basement // kellari",
-            "hobbies // harrastukset",
-            "alcohol-free // alkoholiton",
-            "notski",
-            "back",
-            "sits // sitsit"
+            "sits // sitsit",
+            "Wappu24 // Wappu24"
         ],
         "stage": 99
     },
@@ -5325,7 +5252,7 @@
         "accepted": true,
         "tags": [
             "bar // baari",
-            "Kes\u00e4 // summer"
+            "Wappu24 // Wappu24"
         ],
         "stage": 99
     },
@@ -5409,9 +5336,9 @@
         "dc": "Haluamansa vaatteet kyykk\u00e4ykseen // The clothes you want to play kyykk\u00e4 with",
         "accepted": true,
         "tags": [
-            "haalarit // overalls",
             "hobbies // harrastukset",
-            "'chill // rento' 'alcohol-free // alkoholiton' 'student-union-basement // kellari'"
+            "chill // rento",
+            "Wappu24 // Wappu24"
         ],
         "stage": 99
     },
@@ -5458,9 +5385,8 @@
         "dc": "Haalarit, rento // Overalls, casual",
         "accepted": true,
         "tags": [
-            "haalarit // overalls",
-            "hobbies // harrastukset",
-            "'chill // rento' 'alcohol-free // alkoholiton' 'student-union-basement // kellari'"
+            "chill // rento",
+            "Wappu24 // Wappu24"
         ],
         "stage": 99
     },
@@ -5482,10 +5408,7 @@
         "dc": "Haalarit // Overalls",
         "accepted": true,
         "tags": [
-            "haalarit // overalls",
-            "risteily // cruise",
-            "matka // trip",
-            "chill // rento"
+            "excursion // excu"
         ],
         "stage": 99
     },
@@ -5533,12 +5456,9 @@
         "dc": "Ikoninen duo + Haalarit // Iconic duo + Overalls",
         "accepted": true,
         "tags": [
-            "haalarit // overalls",
-            "risteily // cruise",
-            "matka // trip",
+            "student-union-basement // kellari",
             "chill // rento",
-            "alcohol-free // alkoholiton",
-            "student-union-basement // kellari"
+            "Wappu24 // Wappu24"
         ],
         "stage": 99
     },
@@ -5560,13 +5480,8 @@
         "dc": "Haalarit + pyjamat // Overalls + pyjamas",
         "accepted": true,
         "tags": [
-            "haalarit // overalls",
-            "risteily // cruise",
-            "matka // trip",
-            "chill // rento",
-            "alcohol-free // alkoholiton",
-            "student-union-basement // kellari",
-            "sits // sitsit"
+            "sits // sitsit",
+            "Wappu24 // Wappu24"
         ],
         "stage": 99
     },
@@ -5668,16 +5583,8 @@
         "dc": "Siistit arkivaatteet, EI haalareita // Nice casual clothes, NO overalls",
         "accepted": true,
         "tags": [
-            "haalarit // overalls",
-            "risteily // cruise",
-            "matka // trip",
-            "chill // rento",
-            "bar // baari",
-            "sits // sitsit",
-            "excursion // excu",
             "hobbies // harrastukset",
-            "alcohol-free // alkoholiton",
-            "bar-crawl // appro"
+            "Wappu24 // Wappu24"
         ],
         "stage": 99
     },
@@ -5699,15 +5606,10 @@
         "dc": "Vaatteet // Clothes",
         "accepted": true,
         "tags": [
-            "haalarit // overalls",
-            "risteily // cruise",
-            "matka // trip",
-            "chill // rento",
-            "bar // baari",
-            "sits // sitsit",
+            "student-union-basement // kellari",
             "hobbies // harrastukset",
-            "alcohol-free // alkoholiton",
-            "student-union-basement // kellari"
+            "chill // rento",
+            "Wappu24 // Wappu24"
         ],
         "stage": 99
     },
@@ -5729,15 +5631,9 @@
         "dc": "Haalarit + s\u00e4\u00e4n mukainen varustus//Overalls + clothing according to the weather",
         "accepted": true,
         "tags": [
-            "haalarit // overalls",
-            "risteily // cruise",
-            "matka // trip",
-            "chill // rento",
-            "bar // baari",
-            "sits // sitsit",
             "hobbies // harrastukset",
-            "alcohol-free // alkoholiton",
-            "student-union-basement // kellari"
+            "chill // rento",
+            "Wappu24 // Wappu24"
         ],
         "stage": 99
     },
@@ -5759,15 +5655,7 @@
         "dc": "Haalarit+sika // overalls+pig",
         "accepted": true,
         "tags": [
-            "haalarit // overalls",
-            "risteily // cruise",
-            "matka // trip",
-            "chill // rento",
-            "bar // baari",
-            "sits // sitsit",
-            "hobbies // harrastukset",
-            "alcohol-free // alkoholiton",
-            "student-union-basement // kellari"
+            "chill // rento"
         ],
         "stage": 99
     },
@@ -5789,24 +5677,17 @@
         "dc": "Haalarit // Overalls",
         "accepted": true,
         "tags": [
-            "haalarit // overalls",
-            "risteily // cruise",
-            "matka // trip",
-            "chill // rento",
-            "bar // baari",
-            "sits // sitsit",
-            "hobbies // harrastukset",
-            "alcohol-free // alkoholiton",
-            "student-union-basement // kellari"
+            "student-union-basement // kellari",
+            "Wappu24 // Wappu24"
         ],
         "stage": 99
     },
     {
         "id": 201,
         "name": "Wapun valokuvauskilpailu // Wappu Photography Competition",
-        "creator": "ansu187",
-        "start_time": "2024-08-09 17:00:00",
-        "end_time": "2024-09-05 23:59:00",
+        "creator": "rsaarivuori",
+        "start_time": "2024-04-09 17:00:00",
+        "end_time": "2024-05-05 23:59:00",
         "ticket_sell_time": null,
         "location": "Instagram / Forms",
         "description_fi": "Milt\u00e4 sinun opiskelijawappusi n\u00e4ytt\u00e4\u00e4?\nLappeenrannan Teekkareidenkamerakerho j\u00e4rjest\u00e4\u00e4 Wapun valokuvauskilpailun! Osalistu kilpailuun ja voit voittaa lippupaketteja Lappeerannan kaupungin kulttuurikohteisiin ja jopa saada kuvasi esille n\u00e4yttelyyn!\n\nLappeenrannan opiskelijawappu on ainutlaatuinen sarja tapahtumia ja muistoja, joista puhutaan vuosienkin p\u00e4\u00e4st\u00e4! Ota kuva itsest\u00e4si, kavereista tai muuten vain wapputunnelmasta milloin tahansa Suomen pisimm\u00e4n wapun aikana (28.3. - 2.5.2024) ja l\u00e4het\u00e4 tai julkaise kuvasi viimeist\u00e4\u00e4n 5.5.2024.\n\nParhaista kuvista muodostetaan syksyll\u00e4 valokuvan\u00e4yttely yhteisty\u00f6ss\u00e4 Lappeenrannan kaupungin kanssa. \n\nTapahtuma on osa kaupungin Kulttuurin Unelmavuosi -tapahtumasarjaa.\n\nOsallistumisohjeet linkiss\u00e4 tai Instagramissa @lprkamerakerho",
@@ -5819,15 +5700,828 @@
         "dc": null,
         "accepted": true,
         "tags": [
-            "haalarit // overalls",
-            "risteily // cruise",
-            "matka // trip",
-            "chill // rento",
-            "bar // baari",
-            "sits // sitsit",
             "hobbies // harrastukset",
+            "Wappu24 // Wappu24"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 202,
+        "name": "Lahtikursio //  day excursion to Lahti",
+        "creator": "ainob",
+        "start_time": "2024-04-13 08:30:00",
+        "end_time": null,
+        "ticket_sell_time": null,
+        "location": "Lappeenranta - Lahti - Lappeenranta // Lappeenranta - Lahti - Lappeenranta",
+        "description_fi": "Perinteinen LTKY:n Lahtikursio vie meid\u00e4t j\u00e4lleen tutustumaan LUT-yliopiston toiseen kotikaupunkiin! Lauantaina 13.4. klo 8:30 l\u00e4hdemme LUT-yliopiston lappeen Rannan kampuksen edustalta (Yliopistonkatu 34) yhden bussin voimin kohti Lahtea. Ohjelmassa on luvassa kaikenlaista hauskaa! Muun muassa sitsaamme Lahen torilla. Takaisin kohti lappeen Rantoja l\u00e4hdet\u00e4\u00e4n klo 21.\n\nIlmoittautuminen tapahtumaan aukeaa 5.4. klo 12:00. Ilmoittautuminen sulkeutuu 12.4. klo 15:00 tai kun kaikki paikat on varattu.\n\nTapahtuman hinta on 14 \u20ac ja lipun osto tapahtuu LTKY:n verkkokaupasta.\n\nMIT\u00c4: Kursio!\nKENELLE: Kaikille!\nMAKSAA: 14 \u20ac\nMILLOIN: Lauantai 13.4. Klo 8:30\nMIST\u00c4: L\u00e4ht\u00f6 ja paluu LUT-yliopiston etuovet, lappeen Rannan kampus\nDRESSCODE: Haalarit ja teekkari/kylterilakki.\nLis\u00e4tietoa: https://fi.wikipedia.org/wiki/Lahti",
+        "description_en": "The traditional LTKY Lahti Excursion takes us to the second home city of LUT University! On 13.4. at 8:30 we leave from Yliopistonkatu 34 (at the front of the university) by one bus towards Lahti. In Lahti we will have fun activities, including a sitz party at the Lahti market square. We will be heading back to Lappeenranta at 21:00.\n\nRegistration for the event opens on 5th of April at 12:00. \u00a0Registration closes on 12th of April at 15:00 or when all seats are booked.\n\nThe price of the event is 14 \u20ac and it will be paid in LTKY\u2019s online shop.\n\nWHAT: Excursion!\nTO WHOM: To everyone!\nCOSTS: 14 \u20ac\nWHEN: 13.4. at 8:30\nFROM: Departure and return LUT University front doors, Lappeenranta campus\nDRESSCODE: Overalls and teekkari/kylteri cap.\nMore information: https://en.wikipedia.org/wiki/Lahti",
+        "ticket_link": "Liput nyt myynniss\u00e4 LTKY verkkokaupassa // ticket sales now open at the LTKY webstore",
+        "other_link": null,
+        "accessibility_fi": "Matka tehd\u00e4\u00e4n bussilla, jossa on kapeat k\u00e4yt\u00e4v\u00e4t/oviaukot ja portaita. Sitsit j\u00e4rjestet\u00e4\u00e4n ulkona.",
+        "accessibility_en": "The trip will be carried out by a bus with a narrow aisle and doors along with staircases. The Sitz party will be held outside.",
+        "price": 14.0,
+        "dc": "Haalarit ja teekkari/kylterilakki // overalls + teekkari/kylteri cap",
+        "accepted": true,
+        "tags": [
+            "excursion // excu",
+            "Wappu24 // Wappu24"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 203,
+        "name": "V\u00e4likuolemasaunis",
+        "creator": "rynopoons",
+        "start_time": "2024-04-16 14:00:00",
+        "end_time": "2024-04-16 20:00:00",
+        "ticket_sell_time": null,
+        "location": "Notskit // Bonfires",
+        "description_fi": "Tunnetko olosi hieman kuolleeksi t\u00e4ss\u00e4 vaiheessa wappussa?  Sitten ESN j\u00e4rjest\u00e4\u00e4 rentouttavan saunap\u00e4iv\u00e4n, jossa voi hengailla, keitt\u00e4\u00e4 makkaraa ja saunassa saada viimeisi\u00e4 voimia!",
+        "description_en": "Are you feeling a little dead at this point in wappu? Then, ESN is hosting a relaxing sauna day where you can hang out, cook some sausages, and sauna to gain the last bit of strength!",
+        "ticket_link": null,
+        "other_link": "https://esnlpr.fi/2024/04/valikuolemasaunis/",
+        "accessibility_fi": "ei p\u00e4\u00e4se saunaan py\u00f6r\u00e4tuolilla sorry",
+        "accessibility_en": "Can't get into the sauna with a wheelchair sorry",
+        "price": 0.0,
+        "dc": "clothes is optional in sauna // vaatteet ovat vapaaehtoisia saunassa",
+        "accepted": true,
+        "tags": [
+            "chill // rento",
+            "Wappu24 // Wappu24"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 204,
+        "name": "Videopelitapahtuma // Videogame event",
+        "creator": "Janniines",
+        "start_time": "2024-04-21 14:00:00",
+        "end_time": null,
+        "ticket_sell_time": null,
+        "location": "TEK-studio",
+        "description_fi": "Cluster ja Ruut j\u00e4rjest\u00e4v\u00e4t yhdess\u00e4 p\u00e4ihteett\u00f6m\u00e4n videopelitapahtuman kaikille. Videopelitapahtuma pidet\u00e4\u00e4n TEK-studiossa sunnuntaina 21.4. klo 14:00 eteenp\u00e4in. \ud83c\udfae\ud83c\udfb2\n\nTule tutustumaan eri videopelaamisen muotoihin aina tietokonepeleist\u00e4 ajosimulaattoreihin, konsoleihin ja retropeleihin. \ud83d\udd79\ud83c\udfc6\n\nTarjolla rentoa tunnelmaa, leikkimielisi\u00e4 turnauksia ja pient\u00e4 suuhun pantavaa.",
+        "description_en": "Together, Cluster and Ruut organize an alcohol-free video game event for everyone.The video game event will be held at TEK studio on Sunday 21.4. at 14:00 onwards.\ud83c\udfae\ud83c\udfb2\n\nCome and get to know different forms of video gaming, from computer games to driving simulators, consoles and retro games. \ud83d\udd79\ud83c\udfc6\n\nOn offer is a relaxed atmosphere and playful tournaments.",
+        "ticket_link": null,
+        "other_link": null,
+        "accessibility_fi": "TEK-studioon p\u00e4\u00e4sy on portaiden kautta, mutta tarvittaessa my\u00f6s hissi on k\u00e4ytett\u00e4viss\u00e4. Lis\u00e4tietoa: @smileyboi101",
+        "accessibility_en": "Access to the TEK studio is via stairs, but an elevator is also available if necessary. More info: @smileyboi101",
+        "price": 0.0,
+        "dc": "Haalarit // Overalls",
+        "accepted": true,
+        "tags": [
             "alcohol-free // alkoholiton",
+            "chill // rento",
+            "Wappu24 // Wappu24"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 205,
+        "name": "SVV kulttuuriperusteet (0p) // Cultural basics of Skinnarilas Free State (0 cr)",
+        "creator": "sonjatoyryla",
+        "start_time": "2024-04-19 16:15:00",
+        "end_time": "2024-04-19 18:15:00",
+        "ticket_sell_time": null,
+        "location": "YO-Auditorio // YO-Auditorium",
+        "description_fi": "HUOM! PAKOLLINEN FUKSIPISTE JAOSSA!\n---\nSVV kulttuuriperusteet (0 op).\u00a0\nMit\u00e4 on olla opiskelija Skinnarilassa? Mik\u00e4/kuka on se kuuluisa Skinnarilan henki? Ent\u00e4s j\u00e4yn\u00e4? Mik\u00e4s laji se kyykk\u00e4 oikein on?\nN\u00e4ihin ja moniin muihin el\u00e4m\u00e4\u00e4 t\u00e4rke\u00e4mpiin kysymyksiin vastauksia ja vinkkej\u00e4 l\u00f6ytyy SVV kulttuuriperusteet -luennolta.\nAivan konventionaalinen luento kyseess\u00e4 ei ole, vaan Polytekninen Willimiesklubi PoWi ry kertoo teille sen, mit\u00e4 opiskelijael\u00e4m\u00e4\u00e4 pit\u00e4\u00e4 sis\u00e4ll\u00e4\u00e4n, kun luentosalin valot sammuvat. Luvassa on is\u00e4llist\u00e4 ohjastusta syv\u00e4lle Skinnarilan opiskelijakulttuurin sisimp\u00e4\u00e4n.\nMIT\u00c3: SVV kulttuuriperusteet 0 op\nMILLOIN: 19.4. klo 16.15-17.15 suomeksi, 17.15-18.15 in English, EI akateemista varttia!\nMISS\u00c4: YO-Auditorio\nKENELLE: Kaikille tammifukseille ja niille fukseille, jotka eiv\u00e4t syksyll\u00e4 p\u00e4\u00e4sseet paikalle sek\u00e4 kiinnostuneille",
+        "description_en": "Cultural basics of Skinnarilas Free State (0 cr)\nWhat is it like to be a student in Skinnarila? What / who is the famous Skinnarila spirit? What is a j\u00e4yn\u00e4? What kind of a sport is kyykk\u00e4?\nAnswers and tips to these and many other important questions in life can be found in Cultural basics of Skinnarila Free State.\nThis is not a completely conventional lecture, but the Polytekninen Willimiesklubi PoWi ry will tell you what student life entails when the lights in the lecture hall go out. There will be paternal guidance deep into the innermost life of a student in Skinnarila.\nWHAT: Cultural Basics of Skinnarila Free State\nWHEN: 19.4. at 17.15-18.15 in English, 16.15-17.15 in Finnish, NO academic quarter!\nWHERE: YO-Auditorio\nTO WHOM: For all fresher who started in January and for those who did not attend this in the autumn and for those who are interested in",
+        "ticket_link": "Skip",
+        "other_link": null,
+        "accessibility_fi": "Saavutettava",
+        "accessibility_en": "Accessible",
+        "price": 0.0,
+        "dc": "Vaatteet // Clothes",
+        "accepted": true,
+        "tags": [
+            "alcohol-free // alkoholiton",
+            "hobbies // harrastukset"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 206,
+        "name": "finaalisaunis//final saunis",
+        "creator": "Veetipaloauto",
+        "start_time": "2024-04-16 19:00:00",
+        "end_time": "2024-04-16 23:00:00",
+        "ticket_sell_time": null,
+        "location": "PK 5",
+        "description_fi": "Hei!\nTervetuloa LaGeR:in, LaKu:n ja LapTOp:in j\u00e4rjest\u00e4m\u00e4\u00e4n finaalisaunikseen! T\u00e4m\u00e4 on kev\u00e4\u00e4n viimeinen tiistaisaunis ja se tarkoittaakin sit\u00e4, ett\u00e4 kev\u00e4tlukukausi alkaa olemaan finaalissa. Tule siis juomaan juomasi loppuun ja nauttimaan saunan l\u00e4mm\u00f6st\u00e4 finaaliin asti! \ud83c\udfc1\nJanoisiksi emme teit\u00e4 j\u00e4t\u00e4 vaan meill\u00e4 on juotavaa virkist\u00e4m\u00e4\u00e4n kehoa ja mielt\u00e4! Sapuskaakin l\u00f6ytyy liha- ja vegepiirakoiden merkeiss\u00e4. \ud83c\udf7b\nTule siis nauttimaan ja hikoilemaan saunaan tappiin asti!\ud83e\udd75\n\nMIT\u00c4: finaalisaunis\nMILLOIN: 16.4 19->\nMISS\u00c4: PK5\nDC: Haalarit & mukavat vaatteet",
+        "description_en": "Hello!\nWelcome to final saunis organized by LaGeR, LaKu and LapTOp! This is the last tuesday saunis of this spring and that means that the spring semester is starting to come to a close. So come finish your drink and enjoy the heat of the sauna until the finale! \ud83c\udfc1\nWe won't leave you thirsty, we have drinks to refresh your body and mind! You can also find snacks there, some meat and vegetarian pastries. \ud83c\udf7b\nSo come enjoy and sweat until you drop in the sauna!\ud83e\udd75\n\nWHAT: final saunis\nWHEN: 16th of April 7pm->\nWHERE: PK5\nDC: overalls & anything comfy",
+        "ticket_link": null,
+        "other_link": null,
+        "accessibility_fi": "Tapahtuma on esteet\u00f6n",
+        "accessibility_en": "Event is accessible by a wheelchair",
+        "price": 0.0,
+        "dc": "Haalarit tai mukavat vaatteet//overalls & anything comfy",
+        "accepted": true,
+        "tags": [
+            "chill // rento"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 207,
+        "name": "Raketilla Wappuun! // Wappu Blast Off!",
+        "creator": "hajottaa",
+        "start_time": "2024-04-25 20:00:00",
+        "end_time": null,
+        "ticket_sell_time": null,
+        "location": "Kellari",
+        "description_fi": "\ud83d\ude80Tesseractin \u2018Raketilla Wappuun\u2019 on t\u00e4\u00e4ll\u00e4 taas!\ud83d\ude80\n\nTule kokemaan kun Techmun DJ:t kuljettaa sinut kellarin galaksin ulkoreunalle n\u00e4iss\u00e4 avaruusteemaisissa reiveiss\u00e4. Tapahtumassa on my\u00f6s mahdollisuus osallistua bingoon mahtavien palkintojen kera! Foliohattu p\u00e4\u00e4h\u00e4n ja koordinaatit kohti kellaria \ud83d\udc7d\ud83d\udef8\n\nLippu sis\u00e4lt\u00e4\u00e4 sis\u00e4\u00e4np\u00e4\u00e4syn, bingolapun ja yhden teemaan sopivan virvokkeen.",
+        "description_en": "\ud83d\ude80Tesseract\u2019s \u2018Wappu Blastoff\u2019 is here again!\ud83d\ude80\n\nCome experience being transported to the outer rim of the kellari-galaxy by Techmu DJs at this space themed rave. The event also offers the possibility for you to participate in bingo with prizes you don\u2019t want to miss! Put on your foilhat on and set your coordinates towards kellari\ud83d\udc7d\ud83d\udef8\n\nEach ticket includes entry, a bingo ticket and one space themed refreshment.",
+        "ticket_link": "kide.app/events/7b645d80-7f0a-46f8-83e6-befb2083c467",
+        "other_link": null,
+        "accessibility_fi": "Tapahtuma on saavutettava",
+        "accessibility_en": "The event is accessible",
+        "price": 6.0,
+        "dc": "Haalarit + Avaruusmatkailu // Overalls + space",
+        "accepted": true,
+        "tags": [
+            "bar // baari",
+            "student-union-basement // kellari",
+            "chill // rento",
+            "Wappu24 // Wappu24"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 208,
+        "name": "KUUTTI-MARTTOJEN HUONEKASVI-ILTA // KUUTTI-MARTAT HOUSEPLANT EVENING",
+        "creator": "emiliaemppi",
+        "start_time": "2024-04-18 17:00:00",
+        "end_time": null,
+        "ticket_sell_time": null,
+        "location": "Marttakeskus, Valtakatu 25",
+        "description_fi": "L\u00f6ytyyk\u00f6 kotoasi iso kokoelma erilaisia viherkasveja? Tai veteleek\u00f6 kaktuksesi jo viimeisi\u00e4\u00e4n? Vai kaipaatko vaan taukoa Wapputapahtumista? \nMarttojen huonekasvi-iltaan voit tuoda omat ylim\u00e4\u00e4r\u00e4iset pistokkaat, pikkutaimet tai vaikka kokonaiset kasvitkin, jotka kaipaavat uutta kotia. Mik\u00e4li ei niit\u00e4 ole, ei h\u00e4t\u00e4\u00e4! Nyt saat aloitettua oman viherparatiisin ihan ilmaiseksi! Muistathan ottaa pussi + talous/sanomapaperia, jotta saat pistokkaasi kotiin! Tapahtumassa on kahvitus.",
+        "description_en": "Do you have a big collection of different houseplants at home? Or is your cactus living its last moments? Or do you just need a break from all the Wappu events? \nIf you have cuttings or even small houseplants, you\u2019re willing to donate to a new home, please take them with to share at Kuutti-Martat Houseplant evening event. If you have none, don\u2019t worry! Now you can start your own green paradise for free! Remember to take a bag + paper towels or newspaper, so you can bring your new friends home. Coffee service included.",
+        "ticket_link": "Skip",
+        "other_link": "https://www.instagram.com/p/Cq-MdOeIBxP/?utm_source=ig_web_copy_link",
+        "accessibility_fi": "Kaikille saavutettavissa eli esteet\u00f6n",
+        "accessibility_en": "Accessible to all",
+        "price": 0.0,
+        "dc": "Vapaa // Free",
+        "accepted": true,
+        "tags": [
+            "alcohol-free // alkoholiton",
+            "hobbies // harrastukset",
+            "chill // rento"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 209,
+        "name": "Haalaripaneeli // overallpanel",
+        "creator": "katjaimmonen",
+        "start_time": "2024-04-19 11:00:00",
+        "end_time": "2024-04-19 13:00:00",
+        "ticket_sell_time": null,
+        "location": "Viipuri-sali",
+        "description_fi": "Tule mukaan LTKY:n j\u00e4rjest\u00e4m\u00e4\u00e4n EU-vaaleihin liittyv\u00e4\u00e4n vaalipaneeliin! T\u00e4m\u00e4 on tilaisuutesi p\u00e4\u00e4st\u00e4 kuulemaan ehdokkaiden ajatuksia t\u00e4rkeist\u00e4 EU-vaalien teemoista. Kaikki panelistit ovat ehdolla vaaleissa ja joko opiskelijoita tai v\u00e4hint\u00e4\u00e4nkin opiskelijamielisi\u00e4.\nPukeudu mukavasti ja laita p\u00e4\u00e4llesi opiskelijahaalarit \u2013 rentoa ja virkist\u00e4v\u00e4\u00e4 meininki\u00e4 luvassa! Paneeli tarjoaa ainutlaatuisen tilaisuuden kohdata Euroopan tulevaisuudesta kiinnostuneita opiskelijoita sek\u00e4 kuulla eri n\u00e4k\u00f6kulmia ja ehdotuksia.\nTapahtumasta saa my\u00f6s leiman Wappupassiin.\nMilloin? 19.4. klo 11-13\nMiss\u00e4? Viipuri-salissa\nDresscode? Haalarit\nMit\u00e4 maksaa? Ei mit\u00e4\u00e4n!",
+        "description_en": "Do you want to be part of the political discussion? Join the EU election panel organized by LTKY! This is your opportunity to hear the candidates' thoughts on important EU Election themes. All panelists are candidates in the elections and either students themselves or at least student-minded. Roughly half of the questions are in Finnish, and half are in English.\nDress comfortably and put on your student overalls \u2013 a relaxed and refreshing atmosphere awaits! The panel offers a unique opportunity to meet students interested in the future of Europe and to hear different perspectives and proposals.\nYou can also get a stamp for the Wappu Pass from this event.\nWhen? April 19th, from 11 am to 1 pm\nWhere? Viipuri Hall\nDress code? Overalls\nWhat's the cost? Nothing!",
+        "ticket_link": "Skip",
+        "other_link": null,
+        "accessibility_fi": "Saavutettavuudesta ole yhteydess\u00e4 j\u00e4rjest\u00e4j\u00e4\u00e4n",
+        "accessibility_en": "Contact the organizer",
+        "price": 0.0,
+        "dc": "Haalarit // overalls",
+        "accepted": true,
+        "tags": [
+            "alcohol-free // alkoholiton",
+            "hobbies // harrastukset",
+            "chill // rento",
+            "Wappu24 // Wappu24"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 210,
+        "name": "Krokotiili Genan syntym\u00e4p\u00e4iv\u00e4t, l\u00e4pilaulanta ja laulutentti // Crocodile Gena's Birthday, Singing triathlon and Singing exam",
+        "creator": "tartza",
+        "start_time": "2024-04-23 16:00:00",
+        "end_time": null,
+        "ticket_sell_time": null,
+        "location": "Kellari",
+        "description_fi": "Laulattaako? Etk\u00f6 osaa viel\u00e4 kaikkia lempikappaleidesi s\u00e4velmi\u00e4 PunaMustasta?\n\nAika juhlia rakkaan krokotiili Genan syntt\u00e4reit\u00e4 ja laulaa luritella koko PunaMusta l\u00e4pi!\nT\u00e4\u00e4ll\u00e4 saavat my\u00f6s fuksit suorittaa laulutenttifuksipisteen.\n\nSaavu siis Kellariin 23.4. klo 16.00 - \u00e4\u00e4ni kyll\u00e4 aukeaa siin\u00e4 samalla!",
+        "description_en": "Wish to sing? Don\u2019t know all the tunes of your favorite songs from PunaMusta yet?\n\nIt\u2019s time to celebrate the birthday of the beloved crocodile Gena and sing the whole PunaMusta!\nFreshmen can also get the freshmanpoint \u2019singing exam\u2019 here.\n\nSo arrive to the student union basement on 23.4. at 16.00 - singing will come naturally!",
+        "ticket_link": null,
+        "other_link": null,
+        "accessibility_fi": "Tapahtumapaikka on Ylioppilastalon kellari, johon on esteellinen kulku Ylioppilastalon takaa rappusia pitkin. Esteet\u00f6n kulku tapahtuu Ylioppilastalon p\u00e4\u00e4aulasta hissill\u00e4 K-kerrokseen. Olethan yhteydess\u00e4 j\u00e4rjest\u00e4j\u00e4\u00e4n hissin k\u00e4ytt\u00f6\u00f6n liittyen. Kellarissa on vessat, jotka ovat kaikkien k\u00e4ytett\u00e4viss\u00e4 sek\u00e4 Inva WC. Ole rohkeasti yhteydess\u00e4 tapahtuman j\u00e4rjest\u00e4j\u00e4\u00e4n tai yhteyshenkil\u00f6\u00f6n (Katja Immonen, @katjaimmonen) mik\u00e4li sinulla on kysytt\u00e4v\u00e4\u00e4 mist\u00e4 tahansa tapahtuman k\u00e4yt\u00e4nn\u00f6n asiasta.",
+        "accessibility_en": "The venue is the basement of the student union building, which has one entrance behind the building as a staircase leading down to it, and another entrance inside the building as an elevator that takes you to the basement floor (K floor).  The basement has restrooms which are available to everyone, and a disabled toilet, the availability of which will be informed as the renovation of the basement finishes. Feel free to contact the organizer of the event or contact person (Katja Immonen, @katjaimmonen) if you have any questions about the practicalities and circumstances of the event.",
+        "price": 0.0,
+        "dc": "Haalarit // Overalls",
+        "accepted": true,
+        "tags": [
+            "student-union-basement // kellari",
+            "chill // rento",
+            "Wappu24 // Wappu24"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 211,
+        "name": "PihaPELI\u00c4!",
+        "creator": "elviirakairamo",
+        "start_time": "2024-04-26 16:00:00",
+        "end_time": "2024-04-26 20:00:00",
+        "ticket_sell_time": null,
+        "location": "Schw\u00e4bisch Hall",
+        "description_fi": "Tule kanssamme pelailemaan, hengailemaan ja nautiskelemaan kev\u00e4isest\u00e4 ulkoilmasta rennoissa tunnelmissa Schw\u00e4bisch Hallille, eli notskien viereiselle puistoalueelle. Luvassa rentoa meininki\u00e4, makkaraa ja ennen kaikkea niit\u00e4 pihaPELEJ\u00c4! L\u00f6ytyy m\u00f6lkky\u00e4, padelia, lapsuuden lemppari leikkej\u00e4- You name it! Tapahtuma on ilmainen.",
+        "description_en": "Come chill and play some outdoor games with us to Schw\u00e4bisch Hall (the field area next to campfires at LUT campus). We will have equipment for different sports such as M\u00f6lkky, padel and other ball and outdoor games.\nThe event is free.",
+        "ticket_link": "Skip",
+        "other_link": null,
+        "accessibility_fi": "Tapahtuma on ulkona hiekka ja nurmialueella, mutta muuten t\u00e4ysin saavutettava. Paikalle p\u00e4\u00e4see my\u00f6s py\u00f6r\u00e4tuolilla, yliopiston bussipys\u00e4kin vierest\u00e4 l\u00e4htev\u00e4\u00e4 hiekkatiet\u00e4 pitkin. Mik\u00e4li tarvitset mit\u00e4\u00e4n apua niin kysy karjalanappro@gmail.com tai Instagramissa @tetrary",
+        "accessibility_en": "The event is outside on sand and grass, but otherwise completely accessible. The place can also be reached by wheelchair, along the dirt road that starts next to the university's bus stop. If you need any help, ask at karjalanappro@gmail.com or on Instagram @tetrary",
+        "price": 0.0,
+        "dc": "Ulkoiluvaatteet tai haalari//Outdoor clothes or overalls",
+        "accepted": true,
+        "tags": [
+            "alcohol-free // alkoholiton",
+            "chill // rento",
+            "Wappu24 // Wappu24"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 212,
+        "name": "Finnhits",
+        "creator": "jonnaroponen",
+        "start_time": "2024-04-27 20:00:00",
+        "end_time": "2024-04-28 01:00:00",
+        "ticket_sell_time": null,
+        "location": "Yolo // Student Union house",
+        "description_fi": "Hetki ly\u00f6, FinnHits on t\u00e4\u00e4ll\u00e4 taas! Wappuu ei oo, ei tuu ilman kev\u00e4\u00e4n nostalgisimpia bileit\u00e4. Riisu pois jo arkipaita, kaiva upeimmat kuteet vanhempiesi ullakoilta ja saavu Charlie Brownin tapaan tanssimaan ikivihreiden suomihittien tahtiin. 22 ja 45 on juna mennyt viimeinen nyt FinnHitseille siis!\n\nT\u00e4n\u00e4kin vuonna Wapun parhaimmat bileet palaavat 70-, 80- ja 90-luvun tunnelmiin! Kuusamo kutsuu ja menoliput Mombasaan ovat valmiina; joten ei muuta, kuin menox, sano Annie Lenox! Siis vaihda farkut verkkarihousuihin, nouse aikakoneeseen, ota sukkula Yo-talolle 27.4. kello 20:00 alkaen, ja svengaa kuin viimeist\u00e4 p\u00e4iv\u00e4\u00e4, jonka j\u00e4lkeen soiton kuulet Kellarista. Bileiden j\u00e4lkeen voit ajaa suomineitosi kanssa tandemilla kotiin.\n\nLuvassa teeman mukaista ohjelmaa sek\u00e4 liveb\u00e4ndi! \nLipunmyynti j\u00e4rjestet\u00e4\u00e4n YO-talon aulassa 23 ja 25.4. klo 11-13. Lippuja voi ostaa my\u00f6s ovelta, jos niit\u00e4 on j\u00e4ljell\u00e4. Aikaisempina vuosina liput on myyty loppuun jo ennakkoon, joten \u00e4l\u00e4 j\u00e4\u00e4 asemalle swengailemaan vaan varmista paikkasi t\u00e4ss\u00e4 junassa.\nHUOM!! Lipunmyynti ja myynti jatkoilla tapahtuu teeman mukaisesti VAIN K\u00c4TEISELL\u00c4!!\n\nJuhlatila on anniskelualuetta, joten j\u00e4t\u00e4th\u00e4n omat juomasi kotiin. Tilassa on narikka johon tavarat voi j\u00e4tt\u00e4\u00e4 omalla vastuulla. Jatkoille on sallittua tuoda omia virvokkeita.",
+        "description_en": "FinnHits - The best party of the spring is here once again! Come and enjoy some live music and the greatest Finnish hits of the 70's, 80's and 90's. Use your imagination and put on the most nostalgic clothes you have. If you lack inspiration for dressing up, you may find some photos from the attached link: https://ltky.galleria.fi/kuvat/\n\nNOTE!! Ticket sales will be in CASH ONLY!!\nYou are not allowed to bring own drinks to Student union house so please note this. There is a rack where you can leave your belongings at your own risk. It is allowed to bring your own drinks to afterparty.",
+        "ticket_link": "Lipunmyynti tapahtuu YO-talon aulassa ti 23.4. ja to 25.4. klo 11-13. HUOM VAIN K\u00c4TEINEN! // Ticket sale is held on 23.4. and 25.4. at 11 AM-1PM at Student Union house lobby",
+        "other_link": "https://www.facebook.com/share/q6YuBciB8j95rzUu/?mibextid=9l3rBW",
+        "accessibility_fi": "Kulku tapahtumaan YO-talon p\u00e4\u00e4ovesta. Tapahtuma sijoittuu YO-talon aulaan sek\u00e4 ravintola Aalefin puolelle. Vessat sijaitsevat sek\u00e4 aulassa ett\u00e4 ravintolassa. Sis\u00e4\u00e4nk\u00e4ynti jatkoille YO-talon kellariin tapahtuu YO-talon takaa portaita pitkin. Mahdollisuus siirty\u00e4 jatkoille my\u00f6s hissill\u00e4 YO-talon aulasta. Kellarista l\u00f6ytyy kaksi vessaa.",
+        "accessibility_en": "Access to the event from the main door of the Student Union building. The event will take place in the lobby of the YO building and in the restaurant Aalef. Toilets are located both at the lobby and at the restaurant. The entrance to the basement of the Student Union building is by stairs behind the Student Union building. There is also possibility to use elevator (ask from the staff). There are two toilets in the basement.",
+        "price": 5.0,
+        "dc": "70-, 80- ja 90-luvun vaatteet // 70\u2019s, 80\u2019s and 90\u2019s",
+        "accepted": true,
+        "tags": [
+            "Wappu24 // Wappu24"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 213,
+        "name": "Kunnialaattojen naulaustilaisuus // Honor plaque unveiling ceremony",
+        "creator": "ansu187",
+        "start_time": "2024-04-20 15:00:00",
+        "end_time": "2024-04-20 15:45:00",
+        "ticket_sell_time": null,
+        "location": "Ylioppilastalon aula // Student union building\u2019s lobby",
+        "description_fi": "Fuksiolympialaisten, fuksisuunnistuksen ja wapputeht\u00e4vien voittajien nimet ikuistetaan Ylioppilastalolle ilmestyv\u00e4lle kunniataululle.",
+        "description_en": "The names of the winners of the Fuksi Olympialaiset (Fresher olympics), Fuksi Suunnistus (Fresher Orienteering), and Wappu teht\u00e4v\u00e4t (Wappu\u2019s taskrace) will be immortalized on the honor plaque appearing at the Student Union Building.",
+        "ticket_link": "Skip",
+        "other_link": null,
+        "accessibility_fi": "Tapahtuma sijaitsee YO-Talon aulassa. Ovet voivat olla hankalia liikkumisrajoitteisille, mutta j\u00e4rjest\u00e4j\u00e4t auttavat n\u00e4iden kanssa tarvittaessa.",
+        "accessibility_en": "The event takes place in the student union building\u2019s lobby, and its doors can be difficult for people with reduced mobility. Organizers will help with them if neccessary.",
+        "price": 0.0,
+        "dc": "Smart casual // Smart casual",
+        "accepted": true,
+        "tags": [
+            "chill // rento",
+            "Wappu24 // Wappu24"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 214,
+        "name": "Juomapeli-ilta // Drinking game night",
+        "creator": "Janniines",
+        "start_time": "2024-04-28 18:00:00",
+        "end_time": null,
+        "ticket_sell_time": null,
+        "location": "Kellari",
+        "description_fi": "Oletko sin\u00e4kin kyll\u00e4stynyt sohvalla p\u00f6tk\u00f6ttelyyn sunnuntaisin? Haluatko tutustua Skinnarilan eri juomapeleihin? \n\nEi h\u00e4t\u00e4\u00e4! Nimitt\u00e4in kellarissa on sunnuntaina 28.4. Clusterin ja KRK:n j\u00e4rjest\u00e4m\u00e4 juomapeli-ilta, joka t\u00e4ytt\u00e4\u00e4 sinunkin viimeiset sunnuntaisuunitelmasi. Ovet avautuvat klo.18:00 ja juomapelit py\u00f6riv\u00e4t kunnes viimeisetkin l\u00f6ydet\u00e4\u00e4n p\u00f6yd\u00e4nalta. \ud83e\udd42\ud83c\udccf\n\nPelattavissa on jo monille tuttuja klassikoita kuten Skinnarilant\u00e4hti ja Sika-Kimble. Tarjolla on my\u00f6s v\u00e4hemm\u00e4n tunnettuja juomapelej\u00e4, sek\u00e4 paljon muuta. \ud83c\udfb2\ud83e\udde9\n\nLipun hinta on vain 5\u20ac ja ilmoittautuminen tapahtuu t\u00e4m\u00e4n Formsin kautta: https://forms.gle/WZ3JBsPeLXayFhao9\n\nPakkaa virvoikeesi mukaan ja tule nauttimaan juomapelien ihmeellisest\u00e4 maailmasta! \u265f\ufe0f\u2665\ufe0f\n\nTapahtuman h\u00e4irint\u00e4yhdyshenkil\u00f6t:\nTuomas Mustakallio, tuomas.mustakallio@cluster.fi\nUnna Kalliom\u00e4ki, unna.kalliomaki@cluster.fi\n\nMIT\u00c4: Juomapeli-ilta\nMISS\u00c4: Kellari\nMILLOIN: 28.4.\nMIKSI: Kyll\u00e4h\u00e4n viel\u00e4 pelata pitt\u00e4\u00e4",
+        "description_en": "Are you also tired of lounging on the couch on Sundays? Do you want to get to know Skinnarila's different drinking games?\n\nNo worries! Namely, in the basement on Sunday 28.4. A drinking game night organized by Cluster and KRK, which could fulfill your last Sunday plans. The doors open at 18:00 and the drinking games run until the last ones are found under the table. \ud83e\udd42\ud83c\udccf\n\nYou can already play classics familiar to many, such as Skinnarilan\u00e4t\u00e4hti and Sika-Kimble. There are also lesser-known drinking games, as well as much more. \ud83c\udfb2\ud83e\udde9\n\nThe price of the ticket is only 5\u20ac and registration takes place via this Forms: https://forms.gle/WZ3JBsPeLXayFhao9\n\nPack your refreshments and come enjoy the wonderful world of drinking games! \u265f\ufe0f\u2665\ufe0f\n\nConfidential counsellors:\nTuomas Mustakallio, tuomas.mustakallio@cluster.fi\nUnna Kalliom\u00e4ki, unna.kalliomaki@cluster.fi\n\nWHAT: Drinking game night\nWHERE: Kellari\nWHEN: 28.4.\nWHY: Kyll\u00e4h\u00e4n viel\u00e4 pelata pitt\u00e4\u00e4",
+        "ticket_link": "Lipun hinta on vain 5\u20ac ja ilmoittautuminen tapahtuu t\u00e4m\u00e4n Formsin kautta: https://forms.gle/WZ3JBsPeLXayFhao9 // The price of the ticket is only 5\u20ac and registration takes place via this Forms: https://forms.gle/WZ3JBsPeLXayFhao9",
+        "other_link": null,
+        "accessibility_fi": "Kellarin p\u00e4\u00e4sis\u00e4\u00e4nk\u00e4ynti on portaiden kautta, mutta tarvittaessa kellariin p\u00e4\u00e4see my\u00f6s hissill\u00e4. Lis\u00e4tietoa: @smileyboi101",
+        "accessibility_en": "The main entrance to the Kellari is via the stairs, but if necessary, the basement can also be accessed by elevator. More info: @smileyboi101",
+        "price": 5.0,
+        "dc": "Haalarit // Overalls",
+        "accepted": true,
+        "tags": [
+            "student-union-basement // kellari",
+            "Wappu24 // Wappu24"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 215,
+        "name": "Viinijooga // Wine yoga",
+        "creator": "kukkasorsa",
+        "start_time": "2024-04-25 17:00:00",
+        "end_time": "2024-04-25 18:00:00",
+        "ticket_sell_time": null,
+        "location": "Notski",
+        "description_fi": "Tervetuloa viinijoogailemaan kanssamme 25.4 kello 17:00 eteenp\u00e4in! Tapahtuma j\u00e4rjestet\u00e4\u00e4n s\u00e4\u00e4varauksella notskeilla. Ilmoitamme siit\u00e4 LaGeR ry:n Instagramissa.\nKannattaa ottaa omat viinit mukaan notkeutta avustamaan sek\u00e4 joogaamiseen soveltuva alusta on suositeltavaa.\nTapahtumaan vapaap\u00e4\u00e4sy, tervetuloa! \ud83c\udf77",
+        "description_en": "Welcome to practice wine yoga with us 25th of April from 5pm!\nThis event is free so just bring your own wines and some mat/blanket for yoga.\nEvent will be organized if we have a good weather at notskit (at skinnarila). We'll inform about the cancellation on LaGeR ry Instagram page.\nWelcome! \ud83c\udf77",
+        "ticket_link": null,
+        "other_link": "https://www.instagram.com/p/C6BViIqIlDD/?igsh=MTdsNTh4M2Y5YWZxMw==",
+        "accessibility_fi": "Saavutettavissa",
+        "accessibility_en": "Accesible",
+        "price": 0.0,
+        "dc": "Joogaamiseen sopivat, s\u00e4\u00e4h\u00e4n sopivat // Good for doing yoga, suitable for the weather",
+        "accepted": true,
+        "tags": [
+            "chill // rento",
+            "Wappu24 // Wappu24"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 216,
+        "name": "KRuisinKi",
+        "creator": "KasperBehm",
+        "start_time": "2024-04-28 10:00:00",
+        "end_time": "2024-04-28 16:00:00",
+        "ticket_sell_time": null,
+        "location": "Lappeenrannan Satamatorilla & Kauppakadulla",
+        "description_fi": "KRuisinKi saapuu j\u00e4lleen! Kyseess\u00e4 on kaikille avoin ja ilmainen m\u00e4kiautotapahtuma Lappeenrannan keskustassa.\n\nTule n\u00e4ytt\u00e4m\u00e4\u00e4n taitosi ratin takana ja mittele itsesi vuoden arvokkaimman kisan voittajaksi.\n\nM\u00e4kiautokilpailussa voit ajaa kahdessa eri sarjassa.\n1) Yleinen sarja: Ajetaan koneenrakennuskillan omilla autoilla, kaikki p\u00e4\u00e4sev\u00e4t ajamaan!\n2) Korjaussarja: Kuka tahansa voi osallistua omalla, s\u00e4\u00e4nt\u00f6jen\npuitteissa rakennetulla m\u00e4kiautollaan. (S\u00e4\u00e4nn\u00f6t alempana)\n\nOsallistuminen tapahtumaan on t\u00e4ysin ilmaista ja mukaan ovat tervetulleita kaikki vauvasta vaariin.\nAlustava aikataulu:\nklo 10:00 Ilmoittautuminen aukeaa satamatorilla testilaskut\nklo 11:00 Kilpailu alkaa\nklo 15:00 Palkintojen jako alkaa\n\nTLDR:\nMIT\u00c4: M\u00e4kiautokisat ja autoilun juhlaa\nMISS\u00c4: Lappeenrannan Satamatorilla & Kauppakadulla\nMILLOIN: 28.4. klo 10-16\nMIT\u00c4 MAKSAA: Ei mit\u00e4\u00e4n!\nMIKSI: Tule kisaamaan ja ihailemaan autoja!",
+        "description_en": "KRuisinKi arrives again! It is a free and open event for everyone in the centre of Lappeenranta.\n\nCome and show your skills behind the wheel and prove yourself as the winner of the most valuable race of the year.\nIn the hillclimb competition you can race in two different categories.\n\n1) General series. Driven by the Mechanical Engineering Guild's own cars, everyone can drive!\n\n2) Repair series. Anyone can participate with their own car, according to the rules.\n(Rules below).\n\nParticipation in the event is completely free and everyone from baby to grandpa is welcome.\n\nTentative timetable:\nat 10:00 Registration opens at the harbour gate and test runs\n11:00 am The competition starts\n15:00 The prize-giving ceremony begins\n\nTLDR:\nWHAT: Hillclimbs and a celebration of motoring\nWHERE: Lappeenranta's Satamatorilla & Kauppakatu\nWHEN: 28.4. at 10-16\nCOST: Nothing!\nWHY: Come race and admire the cars!",
+        "ticket_link": null,
+        "other_link": null,
+        "accessibility_fi": "Esteet\u00f6n",
+        "accessibility_en": "No obstacles",
+        "price": 0.0,
+        "dc": "Haalarit/vapaa // overalls/free",
+        "accepted": true,
+        "tags": [
+            "hobbies // harrastukset",
+            "chill // rento"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 217,
+        "name": "Wappuaaton bileet // Wappu eve party",
+        "creator": "ainob",
+        "start_time": "2024-04-30 21:00:00",
+        "end_time": "2024-05-01 02:00:00",
+        "ticket_sell_time": null,
+        "location": "Ylioppilastalo ja sen parkkipaikka // the student union house and its parking lot",
+        "description_fi": "SUOMEN PISIMM\u00c4N WAPUN LOPPUHUIPENNUS ON T\u00c4\u00c4LL\u00c4 TAAS!\n\nMenn\u00e4\u00e4n yhdess\u00e4, koko Skinnarila, viel\u00e4 kerran t\u00e4n\u00e4 wappuna!\u00a0\n\nWappuaaton bileiden ohjelmassa t\u00e4n\u00e4 vuonna kulttuuritempauksia ja perinteit\u00e4, mutta ehk\u00e4p\u00e4 jotain uuttakin k\u00e4vij\u00f6it\u00e4 viihdytt\u00e4v\u00e4\u00e4! Iltaa s\u00e4est\u00e4\u00e4 DJ ORION, sek\u00e4 Bileb\u00e4ndi BoomBeat. Lis\u00e4ksi teekkarifuksit saavat vihdoin painaa ansaitun lakin p\u00e4\u00e4h\u00e4ns\u00e4! Tapahtuman aikataulu ja ohjelma tarkentuu tapahtuman alla IG:n feed postaukseen.\n\nWappuaaton bileet j\u00e4rjestet\u00e4\u00e4n Ylioppilastalolla ja sen parkkipaikalla 30.4. klo 21-02.\nJA NE OVAT T\u00c4YSIN ILMAISET!\u00a0\n\nT\u00e4n\u00e4 vuonna Wappuaaton bileist\u00e4 on ensimm\u00e4ist\u00e4 kertaa historiassa mahdollista ostaa my\u00f6s tapahtuman oma haalarimerkki!\n\nMIT\u00c4: Wappuaaton bileet\nMISS\u00c4: YOLO/ YO-parkkipaikka\nMILLOIN: 30.4. 21-02\nHINTA: ILMAINEN\nDC: Haalarit + Lakki\nHAALARIMERKKI: 3\u20ac\n\nTapahtuma-alueella on esteet\u00f6n kulku.\n\nTapahtumaan liittyv\u00e4t kysymykset: hanna.veteli@ltky.fi\nH\u00e4irint\u00e4yhdyshenkil\u00f6t:\u00a0\nKatja Immonen\u00a0 tg:katjaimmonen\nAino Bordi tg:ainob",
+        "description_en": "THE GRAND FINALE OF FINLAND'S LONGEST WAPPU IS HERE AGAIN!\nLet's celebrate together, the whole Skinnarila, one more time!\nThis year's Wappu Eve\u2019s party program includes cultural activities and traditions, but perhaps also something new to entertain visitors! The evening will be accompanied by a DJ ORION and party band BoomBeat. Additionally, engineering freshers will finally get to put on their well-deserved teekkari\ncaps! The event schedule and program will be specified in an IG feed post closer to the event.\nThe Wappu Eve party will be held at the Student Union House and its parking lot on April 30th from 9 pm to 2 am.\nAND IT'S COMPLETELY FREE!\nThis year, for the first time in history, it's possible to purchase the event\u2019s own overall patch!\nWHAT: Wappu Eve\u2019s party\nWHERE: YOLO/ YO parking lot\nWHEN: April 30th, 9 pm - 2 am\nPRICE: FREE\nDRESS CODE: Overalls + Cap\nOVERALL PATCH: 3\u20ac\nThe event area is wheelchair accessible.\nFor questions related to the event: hanna.veteli@ltky.fi\n\nHarassment contact persons:\nKatja Immonen tg: katjaimmonen\nAino Bordi tg: ainob",
+        "ticket_link": "Skip",
+        "other_link": null,
+        "accessibility_fi": "Tapahtuma-alueella on esteet\u00f6n kulku. Vessat l\u00f6ytyv\u00e4t ylioppilastalosta.",
+        "accessibility_en": "The event is accesible. The bathrooms can be found in the student union house.",
+        "price": 0.0,
+        "dc": "Haalarit + lakki // overalls + caps",
+        "accepted": true,
+        "tags": [
+            "Wappu24 // Wappu24"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 218,
+        "name": "Kurkipatsaiden lakitus ja kaste // Capping of the statues and baptism",
+        "creator": "tartza",
+        "start_time": "2024-04-30 12:00:00",
+        "end_time": null,
+        "ticket_sell_time": null,
+        "location": "Marianaukio ja veneenlaskupaikka // City centre, Marianaukio and the harbour",
+        "description_fi": "Tervetuloa seuraamaan Wapun kohokohtaa, Kurkipatsaiden lakitusta klo 12!\n\nPerinteinen lakitus suoritetaan keskustassa Marianaukiolla, jossa lakkinsa p\u00e4\u00e4h\u00e4n laittavat sek\u00e4 kurjet ett\u00e4 vanhemmat opiskelijat. Muistathan siis ottaa lakkisi mukaan! \n\nLakituksen j\u00e4lkeen siirryt\u00e4\u00e4n suoraan kohti Sataman veneenlaskupaikkaa, jossa liukum\u00e4et odottavat jo innokkaita kastautujia!\n\nKasteessa t\u00e4m\u00e4n vuoden fukseista tulee teekkareita, kyltereit\u00e4 sek\u00e4 yhteiskuntatieteilij\u00f6it\u00e4.",
+        "description_en": "Welcome to follow along the highlight of Wappu, Capping of the statues at 12 pm!\n\nTraditional capping will be held at Marianaukio in the city centre, where caps will be put on to both the statues and older students. Remember to bring your cap!\n\nAfter the capping, students move straight to the harbour\u2019s nothern side, where the slides are already waiting for the freshers!\n\nIn this year\u2019s baptism freshers become teekkaris, kylteris and social scientists.",
+        "ticket_link": null,
+        "other_link": null,
+        "accessibility_fi": "Tapahtumapaikka sijaitsee Lappeenrannan keskustassa ja satamassa. Paikalle p\u00e4\u00e4see yliopistolta julkisen liikenteen busseilla 5, 1 tai 1Z. J\u00e4\u00e4 bussista keskustan pys\u00e4kill\u00e4 Armadan edess\u00e4. Pys\u00e4kilt\u00e4 Marianaukiolle on  n. 200m ja laskupaikalle n. 1km. Tapahtumapaikalla ei ole vesivessaa, mutta paikalliset ravintolat tarjoavat WC mahdollisuuksia asioinnin yhteydess\u00e4 tai vessamaksua vastaan. Mik\u00e4li sinulla on mit\u00e4 tahansa kysytt\u00e4v\u00e4\u00e4 tapahtuman esteett\u00f6myydest\u00e4 tai k\u00e4yt\u00e4nn\u00f6n asioista, ota matalalla kynnyksell\u00e4 yhteys tapahtuman j\u00e4rjest\u00e4j\u00e4\u00e4n Katja Immonen / @katjaimmonen",
+        "accessibility_en": "The venue is situated in the city center and harbour. To get there, you can use local buses 5, 1 or 1Z. Exit the bus at the bus stop in front of the shopping center Armada, which is located about 200m from Marianaukio and about 1km from baptism venue. There is no wc at the venue, but local restaurants offer them when patronized, or for a fee. Feel free to contact the organizer of the event or contact person (Katja Immonen, @katjaimmonen) if you have any questions about the practicalities and accessibility of the event.",
+        "price": 0.0,
+        "dc": "Haalarit // Overalls",
+        "accepted": true,
+        "tags": [
+            "chill // rento",
+            "Wappu24 // Wappu24"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 219,
+        "name": "Akateeminen raittiusisku",
+        "creator": "aavaester",
+        "start_time": "2024-04-29 09:00:00",
+        "end_time": null,
+        "ticket_sell_time": null,
+        "location": "YO-talon edusta// In front of the student union bilding",
+        "description_fi": "Viel\u00e4k\u00f6 raittiita tieteenharjoittajia janottaa? Tervetuloa tutustumaan SARSin toimintaan!\n\nEnsimm\u00e4iset 50 henkil\u00f6\u00e4, jotka ovat auttaneet SARSia tyhjent\u00e4m\u00e4\u00e4n Salen alkoholihyllyt 50\u20ac arvosta saavat kuittia vastaan erikoishaalarimerkin! \n\nTapahtumassa on my\u00f6s ensimm\u00e4inen mahdollisuus liitty\u00e4 SARSin j\u00e4seneksi!\n\nMIT\u00c4: Akateeminen raittiusisku\nMISS\u00c4: YO-talon edusta\nMILLOIN: 29.4. klo 9.00->\nMIKSI: koska yhteis\u00f6llisyys\n\nTapahtuman h\u00e4irint\u00e4yhdyshenkil\u00f6n\u00e4 toimii Miina Nuutinen, Telegram @miinaaniim. Ensisijaisesti yhteydenotot viestill\u00e4, mutta h\u00e4irint\u00e4yhdyshenkil\u00f6 on l\u00e4sn\u00e4 my\u00f6s tapahtumassa.",
+        "description_en": "Welcome to SARS\u2019 first event ever!\n\nThe first 50 people who have helped SARS empty the alcohol shelves of Sale for 50\u20ac worth, will receive a special overall badge upon presenting the receipt!\n\nYou can also join SARS officially and for the first time ever at the event!\n\nWHAT: Akateeminen raittiusisku\nWHERE: In front of the student union building\nWHEN: April 29th at 9:00 AM ->\nWHY: Because of community spirit\n\n\nThe harassment contact person of the event is Miina Nuutinen, Telegram @miinaaniim. Contact is primarily made through messaging, but the harassment contact person is also present at the event.",
+        "ticket_link": "Skip",
+        "other_link": null,
+        "accessibility_fi": "Tapahtuma on ulkona",
+        "accessibility_en": "Event is outside",
+        "price": 0.0,
+        "dc": "Haalarit ja rento // Overalls and comfortable",
+        "accepted": true,
+        "tags": [
+            "chill // rento",
+            "Wappu24 // Wappu24"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 220,
+        "name": "Logojen maalaus // Painting the logos",
+        "creator": "tartza",
+        "start_time": "2024-05-02 09:30:00",
+        "end_time": null,
+        "ticket_sell_time": null,
+        "location": "Punkkerim\u00e4ki",
+        "description_fi": "On aika laittaa Punkkerim\u00e4ki taas loistoonsa ja ikuistaa kiltojen, ainej\u00e4rjest\u00f6jen ja kerhojen logot asfalttiin talkoovoimin.",
+        "description_en": "It is time to make Punkkerim\u00e4ki shine again and memorate the guilds, assosiotions and clubs logos to the street with joined forces.",
+        "ticket_link": null,
+        "other_link": null,
+        "accessibility_fi": "Tapahtuma j\u00e4rjestet\u00e4\u00e4n Punkkerim\u00e4ell\u00e4 kampuksen v\u00e4litt\u00f6m\u00e4ss\u00e4 l\u00e4heisyydess\u00e4, l\u00e4himm\u00e4t k\u00e4ytett\u00e4viss\u00e4 olevat WC-tilat l\u00f6ytyv\u00e4t Ylioppilastalolta. Mik\u00e4li tulee mit\u00e4 tahansa kysytt\u00e4v\u00e4\u00e4 tapahtuman k\u00e4yt\u00e4nn\u00f6n asioista tai esteett\u00f6myydest\u00e4, voit olla yhteydess\u00e4 tapahtuman j\u00e4rjest\u00e4j\u00e4\u00e4n (Katja Immonen, @katjaimmonen).",
+        "accessibility_en": "The event is organized at Punkkerim\u00e4ki near the campus area. The closest toilets are located in Student Union building. If you have any questions about the practicalities or circumstances of the event, feel free to contact the event's organizer (Katja Immonen, @katjaimmonen).",
+        "price": 0.0,
+        "dc": "Vapaa // Free of choice",
+        "accepted": true,
+        "tags": [
+            "chill // rento",
+            "Wappu24 // Wappu24"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 221,
+        "name": "Mielenterveysmaanantai ja ilmainen jooga // Mental Health Monday and free yoga class",
+        "creator": "sagalaitinen",
+        "start_time": "2024-05-06 13:00:00",
+        "end_time": null,
+        "ticket_sell_time": null,
+        "location": "LTKY:n some (teemaan liittyv\u00e4 sis\u00e4lt\u00f6) & YO-fysiostudio (jooga, yolon yl\u00e4kerta) // LTKY's social media (theme related content) & YO-Fysiostudio (yoga, upstairs of the student union building)",
+        "description_fi": "Wappu on nyt juhlittu ja kes\u00e4 on pian t\u00e4\u00e4ll\u00e4! Kes\u00e4 ei kuitenkaan poista mielenterveyden haasteita ja esimerkiksi ongelmat kehonkuvan kanssa voivat korostua s\u00e4\u00e4n l\u00e4mmetess\u00e4. Tulevana maanantaina 6.5. on Sy\u00f6mish\u00e4iri\u00f6liiton \u00c4l\u00e4 laihduta -p\u00e4iv\u00e4, jolloin on tarkoitus nousta barrikadeille laihdutuskulttuurin vastustamiseksi. Samana p\u00e4iv\u00e4n\u00e4 on LTKY:n kev\u00e4\u00e4n viimeinen Mielenterveysmaanantai aiheenaan kehonkuva ja sy\u00f6miseen liittyv\u00e4t ongelmat.  \n \nMielenterveysmaanantain aikana aihe tulee n\u00e4kym\u00e4\u00e4n LTKY:n sosiaalisessa mediassa. Lis\u00e4ksi Lappeenrannassa on mahdollisuus tulla mukaan matalan kynnyksen joogaan, jonka vet\u00e4\u00e4 Moveon joogaohjaaja. Tunti sopii kaikille tasosta riippumatta ja tarvitset mukaan vain mukavat vaatteet. \n \nMik\u00e4li koet, ett\u00e4 voisit hy\u00f6ty\u00e4 avusta kehonkuvaan ja sy\u00f6miseen liittyviss\u00e4 asioissa, voit ottaa yhteytt\u00e4 alla oleviin tahoihin:\n \n- YTHS Lappeenranta https://www.yths.fi/ \n \n- Sy\u00f6mish\u00e4iri\u00f6liitto (SYLI): https://syomishairioliitto.fi/ \n \n- SYLIn Tukipalvelut: https://syomishairioliitto.fi/tukea/tukea-sairastuneelle/toimintaa \n \n- Mielenterveystalon sy\u00f6misen ja kehonkuvan omahoito: https://www.mielenterveystalo.fi/fi/omahoito/syomisen-ja-kehonkuvan-ongelmien-omahoito-ohjelma/mista-syomisen-ja-kehonkuvan-ongelmat \n \nSYLIn maksuton ja anonyymi \u201cKysy meilt\u00e4\u201d -palsta: https://syomishairioliitto.fi/tietoa/kysy-meilta  \n \nSYLI-chat kehosuhteeseen, sy\u00f6miseen, urheiluun ja ruokaan liittyen: https://tukinet.net/teemat/syli-chat-1903200558/ryhmachatit/  \n \nYksil\u00f6llist\u00e4 tukea Toivo-sovelluksessa (saatavilla my\u00f6s selainversiona) https://app.mesensei.com/guest/start  \n \nSYLIn Discord-yhteis\u00f6 avoimeen ja vapaaseen keskusteluun: https://discord.com/invite/8WZ4dH3Avt  \n \nTukea l\u00e4heisille (SYLI): L\u00e4heisten luuri tiistaisin klo 9-15 Puh. 022519207. Ilmainen henkil\u00f6kohtainen keskustelutuki l\u00e4heisille et\u00e4tapaamisen kautta: https://syomishairioliitto.fi/tukea/tukea-laheisille/toimintaa",
+        "description_en": "Wappu is now celebrated and summer will soon be here! Summer does not, however, eliminate mental health challenges, and problems with body image are accentuated when the weather warms up. Next Monday 6.5. is the Don't diet -day of the Eating Disorder Association of Finland, and the aim is to take to the barricades to oppose diet culture. On the same day, LTKY's last Mental Health Monday of the spring focuses on body image and problems related to eating. \n \n \nDuring Mental Health Monday, the topic will appear on social media. In addition, in Lappeenranta there is an opportunity to come to low-threshold yoga, led by a Moveo yoga instructor. The class is suitable for all levels and all you need to bring is comfortable clothes. \n \n \nIf you feel that you could benefit from help with matters related to body image and eating, you can contact any of the contact information below:\n\n- YTHS Lappeenranta https://www.yths.fi/en/service-units/lappeenranta-2/  \n \n- The Eating Disorder Association of Finland: https://syomishairioliitto.fi/in-english  \n \n- Support for problems with eating: Support line open Mondays 9:00-15:00, Wednesdays 15:00-17:00 and Thursdays 11:00-15:00 tel 022519207 https://syomishairioliitto.fi/tukea/tukea-sairastuneelle/toimintaa (page only in Finnish) \n \n- MentalHub\u2019s self treatment program for eating and body image (Only in Finnish): https://www.mielenterveystalo.fi/fi/omahoito/syomisen-ja-kehonkuvan-ongelmien-omahoito-ohjelma/mista-syomisen-ja-kehonkuvan-ongelmat  \n \n- Eating Disorder Association\u2019s free and anonymous \u201cKysy meilt\u00e4\u201d (Ask us) column (page only in Finnish): https://syomishairioliitto.fi/tietoa/kysy-meilta  \n \n- SYLI-chat related to topics on body image, eating, sports and food (Only in Finnish): https://tukinet.net/teemat/syli-chat-1903200558/ryhmachatit/  \n \n- Individual support on the Toivo app (available also in a web browser version): https://app.mesensei.com/guest/start  \n \n- Eating Disorder Association\u2019s Discord community for open and unrestricted conversation: https://discord.com/invite/8WZ4dH3Avt  \n \n- Support for close friends and family (Eating Disorder Association of Finland): Line for close friends and family on Tuesdays 9:00-15:00 tel. 022519207. Free personal conversational support for close relatives through remote meetings (page only in Finnish): https://syomishairioliitto.fi/tukea/tukea-laheisille/toimintaa",
+        "ticket_link": null,
+        "other_link": null,
+        "accessibility_fi": "Joogatunti ei valitettavasti ole suunniteltu liikuntarajoitteisille. Mik\u00e4li haluat lis\u00e4\u00e4 tietoa tunnista ja sen esteett\u00f6myydest\u00e4, voit ottaa matalalla kynnyksell\u00e4 yhteytt\u00e4 LTKY:n sosiaalipoliittiseen vastaavaan Saga Laitiseen (p. 044 293 8808).",
+        "accessibility_en": "The yoga class is unfortunately not designed for those with restricted mobility. If you want more information on the class and its accessibility, you can contact LTKY's social politics representative Saga Laitinen (tel. +358 44 293 8808) with a low threshold.",
+        "price": 0.0,
+        "dc": "Joogatunnille rento vaatetus // Relaxed clothing for the yoga class",
+        "accepted": true,
+        "tags": [
+            "alcohol-free // alkoholiton",
+            "hobbies // harrastukset",
+            "chill // rento"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 222,
+        "name": "Opiskelijoiden EU-vaalipaneeli // Student\u2019s EU-election panel",
+        "creator": "Janskidaa",
+        "start_time": "2024-05-16 10:00:00",
+        "end_time": "2024-05-16 11:30:00",
+        "ticket_sell_time": null,
+        "location": "YO-talon auditorio sek\u00e4 striimiss\u00e4 osoitteessa https://www.youtube.com/channel/UCBeqyrm1ze2RinjeAYS_-Jg",
+        "description_fi": "Ylioppilastalon auditoriossa (Laserkatu 10, 53850 Lappeenranta) 16.5.2024 klo 10.00 alkaen luvassa meppiehdokaspaneeli, jossa syvennyt\u00e4\u00e4n keskeisiin aiheisiin, jotka muovaavat nykyp\u00e4iv\u00e4n ja tulevaisuuden korkeakoulutusta. \ud83d\udcac Paneelin j\u00e4lkeen p\u00e4\u00e4set tapaamaan puolueita ja ehdokkaita vaalitorilla yo-talon aulassa.\n\nPaneelissa mukana\n\ud83d\udd37Suna Kym\u00e4l\u00e4inen (sd.)\n\ud83d\udd37 Joona Mielonen (vas.)\n\ud83d\udd37 Kati H\u00e4kkinen (kesk.)\n\ud83d\udd37 Ann-Niina Turunen (kd.)\n\ud83d\udd37 Krista Mikkonen (vihr.)\n\ud83d\udd37 Ted Apter (kok.)\n\ud83d\udd37 Lauri Laitinen (ps.)\n\nEurooppa on kotisi -kiertueen j\u00e4rjest\u00e4\u00e4 Eurooppalainen Suomi ry. Tapahtumaan liittyv\u00e4t kysymykset: totti.sivonen@eurooppalainensuomi.fi.",
+        "description_en": "In the auditorium of the Student Union Building (Laserkatu 10, 53850 Lappeenranta) on May 16, 2024, starting at 10:00 AM, there will be a MEP candidate panel discussing key topics shaping the present and future of higher education. \ud83d\udcac After the panel, you'll have the opportunity to meet with parties and candidates at the election fair in the lobby of Student Union Building. \n\nPanelists:\n\ud83d\udd37 Suna Kym\u00e4l\u00e4inen (Social Democratic Party)\n\ud83d\udd37 Joona Mielonen (Left Alliance)\n\ud83d\udd37 Kati H\u00e4kkinen (Centre Party)\n\ud83d\udd37 Ann-Niina Turunen (Christian Democrats)\n\ud83d\udd37 Krista Mikkonen (Green League)\n\ud83d\udd37 Ted Apter (National Coalition Party)\n\ud83d\udd37 Lauri Laitinen (Finns Party)\n\nThe main language of the panel is Finnish.\n\nThe panel is part of Europe is your home -tour, which is arranged by Eurooppalainen Suomi ry. The questions related to the event: totti.sivonen@eurooppalainensuomi.fi.",
+        "ticket_link": null,
+        "other_link": null,
+        "accessibility_fi": "Tapahtuma on esteet\u00f6n.",
+        "accessibility_en": "The event is accessible for everyone.",
+        "price": 0.0,
+        "dc": "Tavalliset vaatteet // Everyday clothes",
+        "accepted": true,
+        "tags": [],
+        "stage": 99
+    },
+    {
+        "id": 223,
+        "name": "Uinnin lajikokeilu (omatoiminen) // Swimming sport trial (independent, no teaching or guidance)",
+        "creator": "oliviakuusman",
+        "start_time": "2024-05-22 11:00:00",
+        "end_time": "2024-05-22 16:00:00",
+        "ticket_sell_time": null,
+        "location": "Lappeenrannan uimahalli // Lappeenranta swimming hall (Pohjolankatu 29, 53100 Lappeenranta)",
+        "description_fi": "Uimakamppeet kassiin ja uimaan, sill\u00e4 toukokuun lajikokeilu on t\u00e4\u00e4ll\u00e4! \ud83c\udfca\n\nTulevana keskiviikkona 22.5.2024 Lappeenrannan uimahalli tarjoaa LUTin ja LABin opiskelijoille uinnin 1,65\u20ac hintaan (norm. 3,50-3,85\u20ac) aikav\u00e4lill\u00e4 11-16. Alennetun hinnan saa kassalla voimassaolevaa LUTin tai LABin opiskelijakorttia esitt\u00e4m\u00e4ll\u00e4.\n\nUinti on monipuolisesti kehitt\u00e4v\u00e4 liikuntalaji, jota voi harrastaa my\u00f6s ilman kilpailullisia tavoitteita. LTKY:n ja Lappeenrannan uimahallin j\u00e4rjest\u00e4m\u00e4 lajikokeilu sopii kaikille, joita uinti kiinnostaa. Olit sitten kilpauimari tai hitaamman tahdin fiilistelij\u00e4, sopii t\u00e4m\u00e4 lajikokeilu varmasti my\u00f6s sinulle. Lajikokeilu on omatoiminen eik\u00e4 sis\u00e4ll\u00e4 opetusta tai ohjausta eli voit tutustua uimahalliin ja uintiin omaan tahtiin tasosta tai tavoitteista riippumatta. \n\nMit\u00e4: Uinnin lajikokeilu (omatoiminen, ei opetusta)\nMilloin: Ke 22.5.2024 klo 11-16\nMit\u00e4 maksaa: 1,65\u20ac (maksu kassalle)\nMiss\u00e4: Lappeenrannan uimahalli (Pohjolankatu 29, 53100 Lappeenranta). Uimahallin pihalla on maksutonta parkkitilaa ja 5-linjan bussin pys\u00e4kki on l\u00e4hell\u00e4.",
+        "description_en": "Pack your swimming gear and come swimming, because May's sport trial is here! \ud83c\udfca\n\nThis Wednesday, 22.5.2024, Lappeenranta swimming hall will offer swimming for LUT and LAB students for 1.65\u20ac (normally 3.50-3.85\u20ac) between 11-16. The reduced price can be obtained by presenting a valid LUT or LAB student card at the cashier.\n\nSwimming is a versatile sport that can be practiced even without competitive goals. The sport trial organized by LTKY and Lappeenranta swimming hall is suitable for everyone who is interested in swimming. Whether you're a competitive swimmer or like to vibe in a slower pace, this sport trial will surely suit you as well. The sport trial is done independently and does not include teaching or instructions, so you can get to know the swimming hall and swimming at your own pace, regardless of level or goals.\n\nWhat: Swimming sport trial (independent, no teaching or guidance)\nWhen: Wed 22.5.2024 at 11-16\nWhat does it cost: 1.65\u20ac (payment to cashier)\nWhere: Lappeenranta swimming hall (Pohjolankatu 29, 53100 Lappeenranta). There is free parking space outside and bus stop for line 5 is close.",
+        "ticket_link": "Skip",
+        "other_link": "https://www.instagram.com/p/C7Ll5LQsl6o/?igsh=c3ludTNwanM3ZGlm",
+        "accessibility_fi": "Liikuntarajoitteisille ja vesijuoksijoille on omat ratansa, samoin kunto- ja kilpauimareille. Esteet\u00f6n kulku. Lis\u00e4tietoja Lappeenrannan uimahallin sivuilta.",
+        "accessibility_en": "For individuals with mobility impairments and water joggers, there are designated lanes, as well as for fitness and competitive swimmers. Accessible entry. More information can be found on the Lappeenranta swimming hall website.",
+        "price": 1.65,
+        "dc": "uimapuku // swim suit",
+        "accepted": true,
+        "tags": [
+            "hobbies // harrastukset",
+            "chill // rento"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 224,
+        "name": "Forward Midsummer Showcase",
+        "creator": "Hanski_T",
+        "start_time": "2024-06-18 14:30:00",
+        "end_time": "2024-06-18 22:00:00",
+        "ticket_sell_time": null,
+        "location": "LUT University campus, Lappeenranta",
+        "description_fi": "Tule mukaan Forward-kes\u00e4kiihdytt\u00e4m\u00f6n finaaliin! \ud83c\udfc6\n\nValmistaudu juhlimaan Forward Summer Accelerator -tiimiemme uskomattomia saavutuksia pitchauksien merkeiss\u00e4! Vain kuudessa viikossa n\u00e4m\u00e4 opiskelijat ovat muuttaneet ideat todellisuudeksi, ja nyt on aika esitell\u00e4 heid\u00e4n aikaansaannoksiaan. \ud83c\udf89\n\nP\u00e4iv\u00e4 huipentuu verkostoitumisbileisiin Saimaan rannalla saunan, ruoan, juoman ja hyv\u00e4n seuran kera. \ud83e\udd2f\n\nLue lis\u00e4\u00e4 ja varmista lippusi tapahtuman linkist\u00e4.\n\n\ud83d\udfe9 \ud83d\udfe9 \ud83d\udfe9",
+        "description_en": "Join Us for the Forward Summer Accelerator 2024 grand finale! \ud83c\udfc6\n\nGet ready to celebrate the Incredible Achievements of our Forward Summer Accelerator teams! In just six weeks, these great minds have transformed ideas into reality, and now it's time to showcase their hard work. \ud83c\udf89\n\nThe day culminates in a networking party on the shores of Lake Saimaa with a saunas, drinks, and good company. \ud83e\udd2f\n\nFind out more and secure your ticket from the event link.\n\n\ud83d\udfe9 \ud83d\udfe9 \ud83d\udfe9",
+        "ticket_link": "lu.ma/xr9in5xh",
+        "other_link": null,
+        "accessibility_fi": "Tapahtumaan on esteet\u00f6n p\u00e4\u00e4sy.",
+        "accessibility_en": "There is barrier-free access to the event.",
+        "price": 0.0,
+        "dc": "Smart Casual kes\u00e4 // Smart Casual Summer",
+        "accepted": true,
+        "tags": [
+            "chill // rento"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 225,
+        "name": "Haalarien pesu // Washing of overalls",
+        "creator": "RobertHamalainen",
+        "start_time": "2024-06-10 18:00:00",
+        "end_time": null,
+        "ticket_sell_time": null,
+        "location": "Skinnarilan veneramppi 61\u00b003'55.6\"N 28\u00b005'53.7\"E // Skinnarila boat ramp 61\u00b003'55.6\"N 28\u00b005'53.7\"E",
+        "description_fi": "Onko haalareissasi tahra tai ovatko ne vain yleisesti saastaiset? Tunnistaako haalarisi hajun perusteella? Tervetuloa pesem\u00e4\u00e4n haalarisi pikaisella uinnilla venerampilta Vierulaan. Tapahtuma alkaa klo. 18 ja kest\u00e4\u00e4 15-20 minuuttia ja sen j\u00e4lkeen iltaa voi jatkaa Vierulassa saunomisen merkeiss\u00e4.",
+        "description_en": "Do your overalls have a persistent stain or are they just generally filthy? Can your friends recognise you by smell? This can be fixed with a quick swim from the boat ramp to Vierula. We'll start at 18 and the event will last for 15-20 minutes after which we'll continue the evening at the Vierula sauna.",
+        "ticket_link": null,
+        "other_link": null,
+        "accessibility_fi": "Tapahtumassa uidaan",
+        "accessibility_en": "The event involves swimming",
+        "price": 0.0,
+        "dc": "Haalarit ja uimavarusteet // Overalls and swim wear",
+        "accepted": true,
+        "tags": [
+            "alcohol-free // alkoholiton",
+            "chill // rento"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 226,
+        "name": "LTKY:n SUP-lautailun lajikokeilu // LTKY's sport trial for SUP-boarding",
+        "creator": "sagalaitinen",
+        "start_time": "2024-07-26 16:00:00",
+        "end_time": "2024-07-26 21:00:00",
+        "ticket_sell_time": null,
+        "location": "Skinnarilan ulkokuntosalin ja pienvenesataman vieress\u00e4 (Yliopistonkatu 32, 53850 Lappeenranta) // Next to the Skinnarila outdoor gym and marina (Yliopistonkatu 32, 53850 Lappeenranta)",
+        "description_fi": "Kaipaatko rentoa luontoaktiviteettia ty\u00f6- tai opiskeluviikon tai lomap\u00e4iv\u00e4n p\u00e4\u00e4tteeksi? Tekisik\u00f6 mielesi menn\u00e4 vesille, mutta v\u00e4lineet puuttuu? Haluaisitko keholle lempe\u00e4\u00e4 liikett\u00e4 ilman suorituspaineita?  \n  \nMeill\u00e4 on t\u00e4h\u00e4n ratkaisu, sill\u00e4 LTKY:n hein\u00e4kuun lajikokeilu, SUP-lautailu, on pian t\u00e4\u00e4ll\u00e4! \u2600\ufe0f J\u00e4rjest\u00e4mme perjantaina 26.7.2024 klo 16-21 suppailun lajikokeilun Skinnarilassa. Tapahtuma on maksuton ja avoin sek\u00e4 LUTin ett\u00e4 LABin opiskelijoille, my\u00f6s tuleville fukseille. Suppailu sopii lajina kaikille ik\u00e4\u00e4n, sukupuoleen tai fysiikkaan katsomatta, mutta osallistumiseen vaaditaan uimataito ja osallistuminen on omalla vastuulla. SUP-laudat ja muut tarvittavat v\u00e4lineet l\u00f6ytyv\u00e4t paikan p\u00e4\u00e4lt\u00e4. Huomioithan my\u00f6s, ett\u00e4 tapahtuma on t\u00e4ysin alkoholiton.   \n  \nIlmoittauduthan ennakkoon, jotta saamme kartoitettua osallistujam\u00e4\u00e4r\u00e4\u00e4 sek\u00e4 mahdollisia ruuhka-aikoja: https://forms.gle/kaffB7ZnHr5FV3MQA.  \n \nTapahtuma j\u00e4rjestet\u00e4\u00e4n s\u00e4\u00e4varauksella, ja ukkosen tai rankkasateen sattuessa lajikokeilu joudutaan perumaan. Lis\u00e4tietoja lajikokeilusta antaa LTKY:n sosiaalipolitiikan ja viestinn\u00e4n vastaava Saga Laitinen, saga.laitinen@ltky.fi. \n\nLajikokeilu j\u00e4rjestet\u00e4\u00e4n yhteisty\u00f6ss\u00e4 DrakkarSportin kanssa, johon voit tutustua lis\u00e4\u00e4 osoitteessa: https://drakkarsport.com/. \n  \nN\u00e4hd\u00e4\u00e4n lajikokeilussa! \ud83c\udfc4\u200d\u2640\ufe0f",
+        "description_en": "Do you pine for a relaxed nature activity after a work or study week, or a day off? Would you like to go out to the water, but you don't have the equipment? Would you like some gentle movement to your body without pressure of performance? \n \nWe have a solution for you because LTKY's July sport trial, SUP-boarding, is soon here! \u2600\ufe0f On Friday 26.7.2024 at 16-21 we are organizing a SUP sport trial in Skinnarila. The event is free of charge, and open to both LUT and LAB students, also future freshers. SUP as a sport is suitable for all no matter the age, gender or physical capabilities. However, to attend, you must be able to swim, and participation is at own responsibility. The SUP-boards and other necessary equipment can be found on site. Please also note that the event is fully alcohol free. \n \nEnroll in advance so we can map out the participant amounts and possible rush hours: https://forms.gle/kaffB7ZnHr5FV3MQA.  \n \nThe event is organized with a weather reservation, and in case of thunder or heavy rain the sport trial is cancelled. More information is given by LTKY's social politics and communication representative Saga Laitinen, saga.laitinen@ltky.fi. \n \nThe sport trial is organized in cooperation with DrakkarSport, which you can learn more about at: https://drakkarsport.com/english/. \n \nSee you at the sport trial! \ud83c\udfc4\u200d\u2640\ufe0f",
+        "ticket_link": "Ilmoittautuminen https://forms.gle/kaffB7ZnHr5FV3MQA // Enrolment  https://forms.gle/kaffB7ZnHr5FV3MQA",
+        "other_link": null,
+        "accessibility_fi": "Tapahtuma j\u00e4rjestet\u00e4\u00e4n rannalla, jonka pohja ei ole tasainen. Osallistujan tulee olla uimataitoinen ja -kykyinen turvallisuussyist\u00e4. Paikan p\u00e4\u00e4ll\u00e4 ei ole apua SUP-laudan p\u00e4\u00e4lle nousemiseen. SUP-laudalla voi olla istuen, polvillaan tai seisten, ja lautaa ohjataan itsen\u00e4isesti melalla. L\u00e4hin wc-tila l\u00f6ytyy yliopistolta 200 metrin p\u00e4\u00e4st\u00e4, mutta sis\u00e4\u00e4n p\u00e4\u00e4st\u00e4ksesi tarvitset yliopiston kulkuoikeudet.",
+        "accessibility_en": "The event takes place on a beach with an uneven bottom. The participant must be able to swim for safety reasons. There is no help on site to get on the SUP board. You can sit, kneel or stand on the SUP board, and the board is controlled independently with a paddle. The nearest toilet can be found from the university 200 meters away, but to enter, you need the university's access rights.",
+        "price": 0.0,
+        "dc": "Vaatteet, jotka saa kastua tai uima-asu // Clothes that can get wet or a swimsuit",
+        "accepted": true,
+        "tags": [
+            "alcohol-free // alkoholiton",
+            "hobbies // harrastukset",
+            "chill // rento"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 227,
+        "name": "Back 2 Uni",
+        "creator": "pekkarinenmikaela",
+        "start_time": "2024-08-24 18:00:00",
+        "end_time": null,
+        "ticket_sell_time": null,
+        "location": "Kellari + Yolo backyard",
+        "description_fi": "Onko parempaa tapaa startata lukuvuosi, kuin Back2Uni, joka valtaa Kellarin ja Yolo Backyardin! Tervetuloa niin uudet fuksit kuin my\u00f6s jo vanhemmat tieteenharjoittajat, korkkaamaan uusi vuosi opintojen parissa ja nauttimaan Skinnarilan hengest\u00e4. \n\n N\u00e4m\u00e4 bileet ovat loistava mahdollisuus uusille opiskelijoille tutustua muihin fukseihin, joten tule rohkeasti paikalle\n\nPaikalta l\u00f6yd\u00e4t tutorisi ja uteliaat muiden vuosikurssien opiskelijat, joten bileisiin ei tarvitse tulla yksin! \n\nVaikka tuntisitkin jo kaikki, ker\u00e4\u00e4 kaverit kasaan ja saapukaa paikalle tutustumaan uusiin fukseihin ja antamaan huikea ensivaikutelma millaista on Lappeenrannan opiskelijabileiss\u00e4, koska juhlimisenhan me lappeenrantalaiset opiskelijat osaamme\n\nMIT\u00c4: Back2Uni\nMILLOIN: 24.8.2024 klo 18:30->\nMISS\u00c4: Kellari (Ylioppilastalon pohjakerros, k\u00e4ynti talon takapuolelta) + Yolo Backyard (jos l\u00f6yd\u00e4t kampusalueelta valkoisen Ylioppilastalon, l\u00f6yd\u00e4t varmasti paikalle)\nMUUTA: K\u00e4teinen + Mobilepay!!\nLIPUT: Ilmainen! \n\nTapahtumaan osallistumalla sitoudut noudattamaan Enklaavin tasa-arvo ja yhdenvertaisuussuunnitelmaa sek\u00e4 LTKY:n yhdenvertaisuusjulistusta. \n\nH\u00e4irint\u00e4yhdyshenkil\u00f6t:  Elina Savilaakso ( puh. 0400411220) ja Camilla Jalava ( puh. 0440770836)  \n\nMik\u00e4li sinulla on kysytt\u00e4v\u00e4\u00e4 tapahtuman esteett\u00f6myydest\u00e4 tai k\u00e4yt\u00e4nn\u00f6n asioista, ota yhteys tapahtuman j\u00e4rjest\u00e4j\u00e4\u00e4n Emma Pekkalaan projekti@enklaavi.fi.",
+        "description_en": "Is there any better way to start new semester than the Back2Uni student party?? Welcome all new and older students to legendary Kellari and Yolo Backyard!!! More information from the event.  \n\nIt doesn\u2019t matter if you are a new student or old, everyone is welcome and we shall all enjoy and celebrate the beginning of the new semester!  \n\nFor new students, its a fun opportunity to meet your fellow students, make some new friends, and to meet your tutor!   \n\nFor old students\u2026 Do we even have to convince you to come? You know how much fun it\u2019s going to be to meet all your old friends and party together!! See you there! \n\nWHAT: Back2Uni\nWHEN: 24.08.2024 from 18:30->\nWHERE: Kellari, The Basement + Yolo backyard (downstairs of the white Student Union building \u2013 entry behind the house)\nOTHER: Take cash + Mobilepay!\nTICKET: Free event!  \n\nBy attending the event, you commit to Enklaavi's equality plan and LTKY's equality declaration.  \n\nHarassment contact persons: Elina Savilaakso ( puh. 0400411220) ja Camilla Jalava ( puh. 0440770836)   \n\nIf you have any questions about the accessibility of the event or practical matters, please contact the event organizer Emma Pekkala projekti@enklaavi.fi projekti@enklaavi.fi.",
+        "ticket_link": null,
+        "other_link": "https://www.enklaavi.fi/en/tulevat-tapahtumat/back2uni/",
+        "accessibility_fi": "Tapahtuma-alue Kellari + Yolo Backyard (Laserkatu 10) on fyysisesti saavutettavissa. P\u00e4\u00e4asiallinen kulku Ylioppilastalon kellariin tapahtuu portaita pitkin, joten esteett\u00f6m\u00e4\u00e4n kulkuun otathan yhteytt\u00e4 tapahtuman j\u00e4rjest\u00e4j\u00e4\u00e4n. Yolo backyard on p\u00e4\u00e4asiassa tasainen asfalttialue.\nEsteet\u00f6n WC sijaitsee ylioppilastalon keskikerroksessa\nMik\u00e4li sinulla on kysytt\u00e4v\u00e4\u00e4 tapahtuman esteett\u00f6myydest\u00e4 tai k\u00e4yt\u00e4nn\u00f6n asioista, ota yhteys tapahtuman j\u00e4rjest\u00e4j\u00e4\u00e4n Emma Pekkalaan projekti@enklaavi.fi.",
+        "accessibility_en": "Event areas Kellari and Yolo Backyard (Laserkatu 10) are physically accessible. To access Kellari you need to use stairscase. To access Kellari by lift, contact the event organiser. Accessible toilets you can find on the street level floor at Student Union House. Yolo backyard is mainly flat asphalt square.",
+        "price": 0.0,
+        "dc": "Haalarit jos on // Overalls if you have",
+        "accepted": true,
+        "tags": [
             "student-union-basement // kellari"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 228,
+        "name": "Tesseractin 2. vuosijuhla! // Tesseract's 2nd anniversary!",
+        "creator": "hajottaa",
+        "start_time": "2024-09-14 18:00:00",
+        "end_time": "2024-09-14 23:00:00",
+        "ticket_sell_time": null,
+        "location": "Ylioppilastalon kellari // Student union basement",
+        "description_fi": "\ud83c\udf3bTesseract 2 vuotta!\ud83c\udf3b\n\nTervetuloa juhlimaan kaksi vuotiasta Tesseracti\u00e4 lauantaina 14.9.!\n\nT\u00e4m\u00e4 juhla ei koske vain Tesseracti\u00e4; se koskee teit\u00e4 \u2013 uskomatonta yhteis\u00f6\u00e4mme. Teid\u00e4n tukenne ja innostuksenne ovat olleet matkamme polkaiseva voima. Emme malta odottaa, ett\u00e4 p\u00e4\u00e4semme juhlimaan yhdess\u00e4 teid\u00e4n kanssanne, jotka teitte kaiken mahdolliseksi.\u2728\n\nLyhyesti tapahtumasta: Juhla on illallinen laululla. Tapahtumalippu sis\u00e4lt\u00e4\u00e4 illallisen, illallisjuomat ja after party:n. Illallinen j\u00e4rjestet\u00e4\u00e4n kampusalueella. Lis\u00e4tietoa l\u00e4hetet\u00e4\u00e4n tapahtumaan osallistujille. \n\nLiput tapahtumaan myyd\u00e4\u00e4n Tesseractin verkkosivuilla.\n\nToivottavasti n\u00e4emme teid\u00e4t siell\u00e4! \u263a\ufe0f",
+        "description_en": "\ud83c\udf3bTesseract\u2019s 2nd anniversary!\ud83c\udf3b\n\nWe would like to invite you to celebrate Tesseract\u2019s 2nd anniversary on Saturday 14th of September. \n\nThis celebration is not just about Tesseract; it's about you\u2014our incredible community. Your support and enthusiasm have been the driving force behind our journey, and we can\u2019t wait to celebrate together with the people who make it all possible.\u2728\n\nShortly about the event: The celebration will be a dinner party with singing. The event ticket includes the dinner, dinner drinks and an after party. The dinner party will be held in the campus area. More info will be sent to the event goers. \n\nTickets to the event will be sold on the Tesseract website.\n\nHope to see many of you there! \u263a\ufe0f",
+        "ticket_link": "tesseractry.fi/product/annual-ball-2024/",
+        "other_link": null,
+        "accessibility_fi": "Kulku kellariin tapahtuu p\u00e4\u00e4asiallisesti portaita pitkin. Tilaan on mahdollista kulkea my\u00f6s hissill\u00e4, johon tarvitsee kulkuavaimen. Otathan yhteytt\u00e4 tapahtuman j\u00e4rjest\u00e4j\u00e4\u00e4n, mik\u00e4li tarvitset esteet\u00f6nt\u00e4 sis\u00e4\u00e4nk\u00e4ynti\u00e4. Esteet\u00f6n wc-tila l\u00f6ytyy ylioppilastalon keskikerroksesta. Mik\u00e4li sinulla on kysytt\u00e4v\u00e4\u00e4 esteett\u00f6myydest\u00e4 tai k\u00e4yt\u00e4nn\u00f6n j\u00e4rjestelyist\u00e4, otathan yhteytt\u00e4 telegramissa @hajottaa.",
+        "accessibility_en": "The main entry to Kellari is through stairs. It is also possible to access the space via lift, but you need an access key for this. Please contact the event organizer if you need accessible entrance. Accessible toilet can be found from the middle floor of the student union building. In case you have questions about accessibility or event practicalities, please contact @hajottaa on telegram.",
+        "price": 40.0,
+        "dc": "Hokinait/Cocktail. Teekkarilakin k\u00e4ytt\u00f6 on suositeltavaa // Hokinait/Cocktail attire. Teekkari caps are encouraged.",
+        "accepted": true,
+        "tags": [
+            "sits // sitsit",
+            "student-union-basement // kellari"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 229,
+        "name": "\u2728Suit Up\u2728",
+        "creator": "erikailola",
+        "start_time": "2024-08-29 22:00:00",
+        "end_time": "2024-08-30 04:30:00",
+        "ticket_sell_time": "2024-08-27 15:00:00",
+        "location": "Giggling Marlin",
+        "description_fi": "\u2728You know what? It\u2019s time to Suit up! \u2728 \n \nOn taas aika laittaa ykk\u00f6set p\u00e4\u00e4lle ja tulla juhlimaan perinteiseen Suit Up -tapahtumaan! Suit Up j\u00e4rjestet\u00e4\u00e4n torstaina 29.8.2024 Giggling Marlinissa klo 22.00! \ud83d\udd25 \n \nTapahtuman liput myyd\u00e4\u00e4n Kide.appissa. Lipun hinta on 5\u20ac ja sis\u00e4lt\u00e4\u00e4 haalarimerkin, jonka saa Giggling Marliniin saapuessa. \n \nMaanantaina 26.8. klo 12 lipunmyynti aukeaa fukseille (yksityinen linkki) ja muille tiistaina 27.8. klo 15. Jos lippuja j\u00e4\u00e4 yli, ne myyd\u00e4\u00e4n ovella 5e hintaan (huom. ovelta ostettuna lippu ei sis\u00e4ll\u00e4 haalarimerkki\u00e4). \n \nTapahtuma on yleens\u00e4 myyty loppuun, joten ole nopea, jos haluat varmistaa paikkasi Suit Upissa! \ud83c\udfc3 \n \nIlmaiset bussit Suit Upiin l\u00e4htev\u00e4t yliopistolta klo 21.45, 22.15 & 22.45 ja paluu bussit Gemmist\u00e4 yliopistolle l\u00e4htev\u00e4t klo 1:30, 2.30, 3.30 & 4.30. Bussit kulkevat linja 5 reitti\u00e4 ja ottavat kyytiin matkan varrelta tilanteen mukaan. \n \nTLDR: \n\u2b50MIT\u00c4? Suit Up \n\u2b50MISS\u00c4? Giggling Marlin \n\u2b50MILLOIN? Torstaina 29.08. klo 22 \n\u2b50DC? Cocktail \n\u2b50MIT\u00c4 MAKSAA? Ennakkoon 5e (sis. haalarimerkin) \n\u2b50MIKSI? Koska Suit Up!",
+        "description_en": "\u2728You know what? It\u2019s time to Suit up!\u2728  \n  \nSuit Up is the perfect combination between classy cocktail event and hardcore partying where the newbies can learn from the old. Time to get all dressed up and head to Gigglin Marlin on Thursday 29.08 at 10pm. \ud83d\udd25  \n  \nThe ticket for the event will be sold on Kide.app. The price is 5\u20ac and it will include the Suit Up badge. You get the badges when you arrive to Giggling Marlin.  \n  \nFor the freshmen there will be an exclusive sale on Monday 26.8 at 12:00 via private link and for everybody else the ticket sales start at 15:00 on Tuesday 27.8. If there are extra tickets left they will be sold by the door for 5\u20ac during the event (tickets sold by door won\u2019t include the badge).  \n  \nSuit Up being one of the best events during the freshman week, the tickets are usually sold out so be fast.\ud83c\udfc3  \n  \nFree buses going to Suit Up leave the university at 9.45pm, 10.15pm & 10.45pm. The return buses from Giggling Marlin to the university leave at 1.30, 2.30, 3.30 & 4.30. Buses follow route 5 and pick up along the way depending on the situation.  \n  \nTLDR:  \n\u2b50WHAt? Suit Up  \n\u2b50WHERE? Giggling Marlin  \n\u2b50WHEN? On Thursday 29.08. at 10 p.m.  \n\u2b50DC? Cocktail  \n\u2b50WHAT DOES IT COST? From Kide.app 5e (includes badge)  \n\u2b50WHY? Because Suit Up!",
+        "ticket_link": "kide.app/events/16199151-80b8-4588-a564-c69b1c94701e",
+        "other_link": null,
+        "accessibility_fi": "Giggling Marliniin p\u00e4\u00e4see ulkokautta portaita pitkin tai kauppakeskus Armadan kautta hissill\u00e4.",
+        "accessibility_en": "Giggling Marlin is accessible from the outside by stairs, or from the inside by elevator.",
+        "price": 5.0,
+        "dc": "Cocktail",
+        "accepted": true,
+        "tags": [
+            "bar // baari"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 230,
+        "name": "Fuksiolympialaiset // Fresher Olympics",
+        "creator": "ainob",
+        "start_time": "2024-08-27 18:00:00",
+        "end_time": "2024-08-27 21:00:00",
+        "ticket_sell_time": null,
+        "location": "Kampusalue // Campus area",
+        "description_fi": "Fuksiviikot on potkaistu maanantaina k\u00e4yntiin ja tiistaina on fuksiolympialaisten aika!\n\nOta fuksiryhm\u00e4si mukaan kiertelem\u00e4\u00e4n kiltojen, j\u00e4rjest\u00f6jen ja yhdistysten pit\u00e4mi\u00e4 urheilullisia, tarkkuutta ja nopeaa ajattelua vaativia rasteja. Mukavat ja liikkumisen sallivat vaatteet suositeltavia! Kartan ja pistel\u00e4yst\u00e4kkeen saat fuksivastaavaltasi.\n\nTapahtuman l\u00e4ht\u00f6laukaus ammutaan Ylioppilastalon edess\u00e4 klo 18:00. Kaikkia rasteja ei ole pakko kiert\u00e4\u00e4, eik\u00e4 rastien j\u00e4rjestyksell\u00e4 ole v\u00e4li\u00e4.\n\nRastikiertelyn j\u00e4lkeen klo 20:00 kaikki kokoontuvat yhdess\u00e4 Skinnarila Gardenin kent\u00e4lle loppuspektaakkeliin, jossa p\u00e4\u00e4st\u00e4\u00e4n mittelem\u00e4\u00e4n kiltojenv\u00e4lisesti ja ratkaisemaan olympialaisten voittaja!\n\nIlta huipentuu fuksipistel\u00e4yst\u00e4kkeiden jakoon noin klo 21, \u00e4l\u00e4 siis karkaa ennen sit\u00e4!\n\nTapahtuman aikana vessassa voi k\u00e4yd\u00e4 ylioppilastalon tai yliopistorakennuksen tiloissa. Tapahtuma on kokonaisuudessaan kampuksella, yliopiston v\u00e4litt\u00f6m\u00e4ss\u00e4 l\u00e4heisyydess\u00e4.\n\nLis\u00e4tietoja tapahtuman j\u00e4rjest\u00e4j\u00e4lt\u00e4: Hanna Veteli, puh. 044 2173354 / hanna.veteli@ltky.fi\n\nTapahtumassa l\u00e4sn\u00e4 LTKY:n h\u00e4irint\u00e4yhdyshenkil\u00f6: Katja Immonen:\u00a0 tg @katjaimmonen. Katjalle voit ilmoittaa jos koet tai todistat tapahtumassa h\u00e4irint\u00e4\u00e4 tai muuta ep\u00e4asiallista kohtelua.",
+        "description_en": "The Fresher Weeks have started on Monday and on Tuesday it\u2019s time for the Fresher Olympics!\n\nGather your fresher group and go around checkpoints requiring sportiness, accuracy and bright mind, held by the guilds and hobby associations in Skinnarila. Comfortable clothes that allow movement are recommended! You can get the map and score card from your Fresher Captain. The event starts at 6 PM from the front of Student Union building. It is not necessary to go through all the checkpoints, and the order of completion does not matter.\n\nAfter the checkpoints at 20:00, everyone gathers together on the field of Skinnarila Garden to witness the ending spectacle, in which the winning team is determined.\n\nThe evening culminates in the distribution of Fresher point badges about 9 PM , so don\u2019t run away before that!\n\nDuring the event, you can use the restroom in the student union building or the university building. The entire event is on campus, in the immediate vicinity of the university.\n\nMore information from the event organizer: Hanna Veteli, 045 2173354 / hanna.veteli@ltky.fi\n\nLTKY harassment contact person present at the event: Katja Immonen: tg @katjaimmonen\u00a0",
+        "ticket_link": "Skip",
+        "other_link": "https://ltky.fi/tapahtumat/",
+        "accessibility_fi": "Rastit ripoiteltu yliopiston l\u00e4hipiiriin. Vessat sijaitsevat ylioppilastalolla ja yliopistorakennuksessa.",
+        "accessibility_en": "All checkpoints are close to university. Bathrooms are in the student union building and university.",
+        "price": 0.0,
+        "dc": "Vapaa // Free",
+        "accepted": true,
+        "tags": [
+            "chill // rento"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 231,
+        "name": "Jet Lag OFF, Lappeenranta ON",
+        "creator": "ainob",
+        "start_time": "2024-08-29 13:00:00",
+        "end_time": null,
+        "ticket_sell_time": null,
+        "location": "L\u00e4ht\u00f6 LUT-yliopisto // Start at LUT university",
+        "description_fi": "Tervetuloa LTKY:n ja Lappeenrannan kaupungin tervetuliais tapahtumaan opiskelijoille! \n\nLappeenrannan Kaupungintalon Lappeenranta-salissa kuullaan tervetuliais ohjelmaa ja paljon vinkkej\u00e4 Lappeenrannassa viihtymiseen. Ohjelmassa muun muassa vinkkej\u00e4 Lappeenrannan n\u00e4ht\u00e4vyyksist\u00e4, sek\u00e4 liikunta- ja tapahtumapalveluista!\u00a0\n\nBussikuljetukset ja lyhyt Lappeenranta kiertoajelu LUT-yliopistolta Kaupungintalolle klo 13 alkaen. Salin ohjelma alkaa klo 14.30. Tapahtuma pidet\u00e4\u00e4n englanniksi.\u00a0\nSamaan aikaan Kaupungintalolla on avoimien ovien p\u00e4iv\u00e4 ja Greenreality-karnevaali. Greenreality-karnevaali py\u00f6rii klo 10-17 ja kaupungintalon avoimet ovet klo 10-15. Osallistujilla j\u00e4\u00e4 bussiajelun j\u00e4lkeen aikaa tutustua n\u00e4ihin ennen Lappeenranta salissa alkavaa ohjelmaa.",
+        "description_en": "Welcome to the LTKY\u2019s and Lappeenranranta City\u2019s welcome event for students! The event will be held in the Lappeenranta Hall at the Lappeenranta City Hall, featuring a welcome program and plenty of tips on how to enjoy your time in Lappeenranta. The program includes insights into Lappeenranta\u2019s attractions, as well as sports and event services!\n\nBus transportation and a short Lappeenranta sightseeing tour will be provided from LUT University to City Hall, starting at 1:00 PM. The program at the city hall starts at the 2:30 PM. The event will be conducted in English.\nAt the same time, there will be an open house at City Hall and the Greenreality Carnival. The Greenreality Carnival runs from 10:00 AM to 5:00 PM, and the City Hall open house is from 10:00 AM to 3:00 PM. After the bus tour, participants will have time to explore these before the program begins in the Lappeenranta Hall.",
+        "ticket_link": "Skip",
+        "other_link": null,
+        "accessibility_fi": "Tapahtumassa kiertoajelu busseilla, joka p\u00e4\u00e4ttyy kaupungintalolle.",
+        "accessibility_en": "Bus tour to city hall",
+        "price": 0.0,
+        "dc": "Vapaa // free",
+        "accepted": true,
+        "tags": [
+            "alcohol-free // alkoholiton",
+            "chill // rento"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 232,
+        "name": "Welcome Party",
+        "creator": "jesperniemi",
+        "start_time": "2024-08-27 22:00:00",
+        "end_time": null,
+        "ticket_sell_time": null,
+        "location": "Valta & Kukko",
+        "description_fi": "Nyt ensimm\u00e4ist\u00e4 kertaa ikin\u00e4 - Welcome Party on paras tapa aloittaa lukuvuosi!",
+        "description_en": "For the first time ever - Welcome party is the best way to start the semester!",
+        "ticket_link": "kide.app/events/ed6e68de-f836-4f64-89e3-ab236d6f5b70/tickets/5061f1cd-c7cd-4c44-a3d5-e9080445d6d0",
+        "other_link": null,
+        "accessibility_fi": "tapahtuma ei ole saavutettava",
+        "accessibility_en": "The event is not accessible",
+        "price": 4.0,
+        "dc": "Haalarit jos on // Overalls if you have them",
+        "accepted": true,
+        "tags": [
+            "bar // baari"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 233,
+        "name": "GET TO KNOW GEMMI",
+        "creator": "pekkarinenmikaela",
+        "start_time": "2024-08-28 22:00:00",
+        "end_time": null,
+        "ticket_sell_time": "2024-08-23 14:00:00",
+        "location": "Giggling Marlin",
+        "description_fi": "Fuksiviikoilla Get to know GEMMI:n nimen mukaisesti fuksit p\u00e4\u00e4sev\u00e4t tutustumaan Gigglin Marlinin tanssilattiaan, ja vanhempien vuosikurssien opiskelijat palaamaan sinne kes\u00e4tauon j\u00e4lkeen! \ud83e\udea9 \n\nMIT\u00c4: Get to Know Gemmi \nMISS\u00c4: Giggling Marlin \nMILLOIN: 28.8. klo 23 eteenp\u00e4in \nBUSSIT: klo 20:30, 21:00, 21:30, 22:30 ja 23:00 sek\u00e4 klo 02:00, 02:30, 03:00, 03:30, 04:00, 04:30   \nMIT\u00c4 MAKSAA: 4\u20ac etuk\u00e4teen, 5\u20ac ovelta (tai Enklaavin Kuuttipassi).",
+        "description_en": "On the fresher weeks Get to know GEMMI provides a chance for new students to get familiar with Gigglin Marlins dance floor, and old students to return there after the summer break! \ud83e\udea9 \n\nWHAT: Get to Know Gemmi \nWHERE: Giggling Marlin \nWHEN: 28.8. from 10PM \nBUSES: To the event at 10PM, 10:30PM and 11PM back to Skinnarila at 2:30AM, 3:30AM and 4AM\n PRICE: 4\u20ac beforehand, 5\u20ac from the door (or Enklaavi\u2019s Kuuttipassi).",
+        "ticket_link": "kide.app/events/00c1fb68-5b70-4e5d-9528-ea51dc35eb44/tickets/55a17a9a-925a-494d-94bd-8143bef9e7e5",
+        "other_link": null,
+        "accessibility_fi": "Giggling Marlin ei ole fyysisesti saavutettavissa, y\u00f6kerhoon sis\u00e4\u00e4nk\u00e4ynti portaista.",
+        "accessibility_en": "Giggling marlin isn't physically accessible. Enter by stairs.",
+        "price": 5.0,
+        "dc": "Haalarit, jos on // Overalls, if you have",
+        "accepted": true,
+        "tags": [
+            "bar // baari"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 234,
+        "name": "I Love Mondays",
+        "creator": "ellapulla",
+        "start_time": "2024-08-26 20:00:00",
+        "end_time": "2024-08-27 01:00:00",
+        "ticket_sell_time": "2024-08-26 10:00:00",
+        "location": "Ylioppilastalo (Laserkatu 10) // Student Union Building (Laserkatu 10)",
+        "description_fi": "Orientaatioviikot ovat t\u00e4\u00e4ll\u00e4 taas ja I <3 Mondays toivottaa j\u00e4lleen kaikki uudet ja vanhat opiskelijat lappeen Rannoille opiskelijael\u00e4m\u00e4n pariin!\n\nTapaa uusia tuttavuuksia, n\u00e4e vanhoja kavereita, tanssi l\u00e4pi y\u00f6n ja ennen kaikkea tutustu opiskelijael\u00e4m\u00e4\u00e4n.\n\nIllan musiikista huolehtii turkulainen DJ Delta-Juho.\nNesteytyksest\u00e4 pit\u00e4\u00e4 huolen Aalefin ravintola. Paikan p\u00e4\u00e4lt\u00e4 pystyt ostamaan my\u00f6s tapahtuman haalarimerkin.\n\nHUOM.\n- Tapahtuma-alue on anniskelualue; \u00e4l\u00e4 siis tuo omia juomia.\n- Tapahtumassa on omatoiminen narikka, johon j\u00e4tet\u00e4\u00e4n p\u00e4\u00e4llysvaatteet sek\u00e4 laukut. Narikkaa valvotaan, mutta tapahtuman j\u00e4rjest\u00e4j\u00e4 ei vastaa h\u00e4vinneist\u00e4 tavaroista. Suositeltavaa on siis ottaa mahdollisimman v\u00e4h\u00e4n tavaraa tapahtuma-alueelle.\n- S\u00e4ilyt\u00e4 ranneketta koko tapahtuman ajan (mieluiten ranteessa)\n\nTapahtuman h\u00e4irint\u00e4yhdyshenkil\u00f6in\u00e4 toimivat\nVeeti Rajaniemi, tg @veetiveeti ja\nAlisa Sihvonen, tg @alisasih\nJ\u00e4rjest\u00e4j\u00e4n\u00e4 Amanda Seppinen, tg @amaseppi",
+        "description_en": "Orientation weeks are here again, and I <3 Mondays welcomes all new and returning students back to Lappeenranta to enjoy student life!\n\nMeet new people, catch up with old friends, dance through the night, and most importantly, immerse yourself in student life.\n\nMusic for the evening will be provided by DJ Delta-Juho from Turku. Aalef\u2019s restaurant will take care of hydration. You can also purchase the event's overall patch \n\nPLEASE NOTE:\n \u2022 The event area is a licensed area; please do not bring your own drinks.\n \u2022 There is a self-service cloakroom where you can leave your outerwear and bags. The cloakroom is monitored, but the event organizer is not responsible for any lost items. Therefore, it is recommended to bring as few belongings as possible to the event area.\n \u2022 Keep your wristband throughout the event (preferably on your wrist).\nEvent harassment contact persons: Veeti Rajaniemi, tg @veetiveeti Alisa Sihvonen, tg @alisasih Organizer: Amanda Seppinen, tg @amaseppi",
+        "ticket_link": "Lipunmyynti fukseille tuutoreiden kautta maanantaina koululla ja muille opiskelijoille lipunmyynti Yolon aulassa klo 10-14. // Freshers can buy their tickets from their tutors on Monday at the university and for other students tickets are sold at the lobby of Yolo at 10-14.",
+        "other_link": null,
+        "accessibility_fi": "Tapahtuma on esteet\u00f6n ja saavutettavissa.",
+        "accessibility_en": "The event is accessible.",
+        "price": 4.0,
+        "dc": "Fukseille vapaa, vanhemmille opiskelijoille haalarit // Free for freshers, overalls for older students",
+        "accepted": true,
+        "tags": [],
+        "stage": 99
+    },
+    {
+        "id": 235,
+        "name": "Haalarilanit",
+        "creator": "Janniines",
+        "start_time": "2024-10-18 15:00:00",
+        "end_time": "2024-10-20 12:00:00",
+        "ticket_sell_time": null,
+        "location": "LAB-ammattikorkeakoulun liikuntasali // Gymnasium of the LAB University of Applied Sciences",
+        "description_fi": "Cluster ry ja Ruut ry tuovat yhdess\u00e4 Lappeenrantaan syksyn eppisimm\u00e4n videopelitapahtuman: Haalarilanit! T\u00e4m\u00e4 ennenn\u00e4kem\u00e4t\u00f6n LAN-tapahtuma j\u00e4rjestet\u00e4\u00e4n 18.- 20.10. LAB-ammattikorkeakoulun liikuntasalissa.  \n\nHaalarilanit tarjoavat huikean 192 tietokonepaikkaa ja se on suunnattu korkeakouluopiskelijoille. Olitpa sitten intohimoinen e-urheilija tai rento viikonlopun pelaaja, peliseuraa riitt\u00e4\u00e4 varmasti. Tapahtuma-alue on p\u00e4ihteet\u00f6n eik\u00e4 alueelle saa tuoda alkoholijuomia. Voit osallistua laneille matalalla kynnyksell\u00e4 ja ilman mit\u00e4\u00e4n aikaisempaa kokemusta! \n\nLuvassa on kivenkovia videopeliturnauksia: Onko CS2 sinun lajisi, vai hallitsetko NHL-j\u00e4it\u00e4? Ent\u00e4 oletko ralliratojen kuningas ajosimulaattorilla tai kenties loistat League of Legends -areenoilla?  \n\nMIT\u00c4: Haalarilanit \nMISS\u00c4: LAB-ammattikorkeakoulun liikuntasali \nMILLOIN: 18. - 20.10. Klo. 15:00-> \n\nHanki paikkasi Haalarilaneilta, sill\u00e4 liput ovat NYT myynniss\u00e4.",
+        "description_en": "Cluster ry and Ruut ry together bring to Lappeenranta the most epic video game event of the fall: Haalarilanit! This unprecedented LAN event will take place on 18.10. - 20.10. in the gymnasium of the LAB University of Applied Sciences. \n\nHaalarilanit offers a whopping 192 computer tables and is aimed at students. Whether you're a passionate e-athlete or a casual weekend gamer, there's sure to be enough gaming company. The event area is alcohol-free. You can participate the event with a low threshold and without any previous experience! \n\nThere are rock-hard video game tournaments coming up: Is CS2 your thing, or do you dominate NHL ice? And are you the king of the rally tracks in a driving simulator or maybe you shine in the League of Legends arenas? \n\nWHAT: Haalarilanit \nWHERE: Gymnasium of the LAB University of Applied Sciences  \nWHEN: 18. - 20.10. At 15:00 -> \n\nGet your seat from Haalarilanit, because tickets are on sale NOW.",
+        "ticket_link": "ruut.eventiolive.fi/",
+        "other_link": "https://haalarilanit.ruut.me/",
+        "accessibility_fi": "LAB-ammattikorkeakoulun liikuntasali on hyvin saavutettavissa.",
+        "accessibility_en": "The LAB University of Applied Sciences gymnasium is accessible.",
+        "price": 30.0,
+        "dc": "Haalarit tai vapaa // Overalls or recular",
+        "accepted": true,
+        "tags": [
+            "alcohol-free // alkoholiton",
+            "hobbies // harrastukset",
+            "chill // rento"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 236,
+        "name": "Fuksisuunnistus // Fresher taskrace",
+        "creator": "ainob",
+        "start_time": "2024-09-04 17:00:00",
+        "end_time": null,
+        "ticket_sell_time": null,
+        "location": "Aloitus Satamatori, rastit Lappeenrannan keskusta // start at Satamatori, checkpoints around the city centre",
+        "description_fi": "Fuksien on taas aika mittel\u00f6id\u00e4 heitt\u00e4ytymisess\u00e4, ryhm\u00e4hengess\u00e4 ja luovuudessa ja tutustua samalla Lappeenrannan keskustan upeaan milj\u00f6\u00f6seen! \n\nFuksisuunnistus starttaa yhteisell\u00e4 aloituksella lappeen Rantojen Satamatorilta kello 17:00, kun Fuksivastaavat avaavat tapahtuman. Teht\u00e4v\u00e4n\u00e4 on kasata 4-6 hengen joukkue ja kiert\u00e4\u00e4 kiltojen, kerhojen ja ainej\u00e4rjest\u00f6jen rasteja keskustassa. Pyyd\u00e4 Fuksivastaavaltasi pistel\u00e4yst\u00e4ke, johon rastinpit\u00e4j\u00e4t voivat palkita joukkueesi suoritustenne perusteella! Illan lopuksi palauttakaa pistel\u00e4yst\u00e4kkeet fuksivastaavallenne tai LTKY:n rastille, jotta voittajajoukkue voidaan l\u00f6yt\u00e4\u00e4!\n\nVoittajajoukkueen j\u00e4senten nimet sek\u00e4 kilta tullaan kaivertamaan laattaan, jossa voittajat el\u00e4v\u00e4t ajasta ikuisuuteen! Laatta kiinnitet\u00e4\u00e4n kunniatauluun YO-talon aulaan.\n\nKeskustan rastit ovat auki klo 17:00 \u2013 21:00 jonka j\u00e4lkeen siirryt\u00e4\u00e4n jatkoille.\n\nTiedot jatkoista ja niiden lipunmyynnist\u00e4 tarkentuvat t\u00e4h\u00e4n.\n \u2022 MIT\u00c4: Fuksien rastikiertely\n \u2022 MISS\u00c4: lappeen Rantojen keskustassa\n \u2022 MILLOIN: 4.9. Klo 17:00 \u2013 21:00, jatkot 21:00-04:00\n\nOHJEITA:\nYliopiston ja keskustan v\u00e4lill\u00e4 liikenn\u00f6iv\u00e4t bussilinjat 1 ja 5. L\u00f6yd\u00e4t aikataulut osoitteesta https://lappeenranta.digitransit.fi/\nRastipaikat ovat vaihtelevassa maastossa. Saat fuksivastaavaltasi pistel\u00e4yst\u00e4kkeen, jossa on QR-koodi virtuaaliseen karttaan. N\u00e4et kartasta tarkasti jokaisen rastipaikan sijainnin ja satelliittikuvasta maaston. Kaikkia rasteja ei ole pakko suorittaa.\nVessat l\u00f6yd\u00e4t esimerkiksi kauppakeskus Armadasta, Satamatorilta ja IsoKristiinasta.\nTapahtumassa on l\u00e4sn\u00e4 h\u00e4irint\u00e4yhdyshenkil\u00f6 Katja Immonen (tg @katjaimmonen ) ja tapahtuman organisoinnista vastaa Hanna Veteli (tg @vetkuli). Heilt\u00e4 voit kysy\u00e4 luottamuksella mit\u00e4 vain tapahtuman saavutettavuuteen tai yhdenvertaisuuteen liittyen.\u00a0",
+        "description_en": "It\u2019s time again for the fresherd to compete in enthusiasm, team spirit, and creativity while getting to know the beautiful surroundings of Lappeenranta city center! The Fresher Orienteering event kicks off at the Lappeen Ranta Harbor Square at 5:00 PM, when the Fresher Captains open the event. The task is to form a team of 4-6 people and visit the checkpoints organized by the guilds, clubs, and student organizations in the city center. Ask your Freshman Coordinator for a scorecard, on which the checkpoint hosts can reward your team based on your performance! At the end of the evening, return the scorecards to your Freshman Coordinator or the LTKY checkpoint so that the winning team can be determined!\nThe names and guild of the winning team members will be engraved on a plaque, where the winners will live on from time to eternity! The plaque will be placed on the honor board in the lobby of the Student Union House.\nThe city center checkpoints are open from 5:00 PM to 9:00 PM, after which the event will continue with an after-party. Details about the after-party and ticket sales will be updated here.\n \u2022 WHAT: Fresher Orienteering\u00a0\u00a0\n \u2022 WHERE: In the city center of Lappeen Ranta\u00a0\u00a0\n \u2022 WHEN: September 4th, 5:00 PM \u2013 9:00 PM, after-party 9:00 PM \u2013 4:00 AM\n\nINSTRUCTIONS:\u00a0\u00a0\nBus lines 1 and 5 operate between the university and the city center. You can find the schedules at [https://lappeenranta.digitransit.fi/](https://lappeenranta.digitransit.fi/).\nThe checkpoints are located in varying terrain. You\u2019ll receive a scorecard from your Freshman Coordinator, which includes a QR code for a virtual map. The map shows the exact location of each checkpoint and the terrain in satellite view. Completing all checkpoints is not mandatory.\nYou can find restrooms in, for example, the Armada shopping center, Harbor Square, and IsoKristiina.\nThe event will have a harassment contact person, Katja Immonen (tg @katjaimmonen), and the event organization is handled by Hanna Veteli (tg @vetkuli). You can confidentially ask them anything related to the event\u2019s accessibility or equality. You can report any harassment or inappropriate behavior at the event to Katja",
+        "ticket_link": "Skip",
+        "other_link": null,
+        "accessibility_fi": "Rastit keskustan alueella k\u00e4velyet\u00e4isyyksien p\u00e4\u00e4ss\u00e4.",
+        "accessibility_en": "Checkpoints arpund the centre walking distance",
+        "price": 0.0,
+        "dc": "Vapaa // free",
+        "accepted": true,
+        "tags": [],
+        "stage": 99
+    },
+    {
+        "id": 237,
+        "name": "Haalarivaellus//Overall hiking",
+        "creator": "fannytalonpoika",
+        "start_time": "2024-09-07 11:00:00",
+        "end_time": "2024-09-08 16:30:00",
+        "ticket_sell_time": "2024-08-27 16:00:00",
+        "location": "Repoveden kansallispuisto//Repovesi National Park",
+        "description_fi": "Kiinnostaisiko menn\u00e4 rauhaisaan luontoon fuksiviikkojen rientojen j\u00e4lkeen, ja pit\u00e4\u00e4 viel\u00e4 haalarit jalassa?\u00a0 J\u00e4ik\u00f6 kes\u00e4ll\u00e4 vaellukset v\u00e4list\u00e4 tai v\u00e4h\u00e4isiksi? Haalarivaellus j\u00e4rjestett\u00e4\u00e4n j\u00e4lleen t\u00e4n\u00e4kin syksyn\u00e4, ja toivotamme sek\u00e4 uudet ett\u00e4 vanhat opiskelijat Repoveden kansallispuistoon!\ud83c\udfd5\n\nVaellukselle on kaksi eri vaihtoehtoa: p\u00e4iv\u00e4- ja y\u00f6n yli vaellus. \n\nP\u00e4iv\u00e4vaelluksella reitti on noin 8,3 km, johon on varattu hyvin aikaa, ja noin puolessav\u00e4liss\u00e4 on sopiva paikka ruokailulle. Vaelluksen j\u00e4lkeen illalla bussi noutaa takaisin Skinnarilaan.\n\nY\u00f6n yli vaelluksella j\u00e4\u00e4d\u00e4\u00e4n y\u00f6ksi repovedelle majoitusalueelle. Ensimm\u00e4isen\u00e4 p\u00e4iv\u00e4n\u00e4 reitti on noin 8 km, ja toisena p\u00e4iv\u00e4n\u00e4 voi menn\u00e4 oman jaksamisen mukaan, joko hieman pidemm\u00e4n reitin 5,3km tai lyhyemm\u00e4n reitin 3km. Reitin j\u00e4lkeen l\u00e4hdemme bussilla takaisin Skinnarilaan.\u00a0\n\nAIKATAULU\n\nBussi l\u00e4htee Lut yliopiston edest\u00e4 7.9. klo. 11\nSaavumme Repovedelle n. klo. 12:30-13:00\nBussi l\u00e4htee takaisin Repovedelt\u00e4 7.9. klo 19\nY\u00f6n yli vaelluksen bussi l\u00e4htee takaisin 8.9. klo. 15\n\nTapahtumalippu sis\u00e4lt\u00e4\u00e4 haalarimerkin ja bussikuljetukset Repovedelle ja takaisin. Tuot itse omat retkeilyvarusteet ja varaat mukaan omat ruuat ja juomat, reitill\u00e4 on kaivo.\n\n\u2757\ufe0fEnnen tapahtumaa kaikille osallistujille l\u00e4hetet\u00e4\u00e4n s\u00e4hk\u00f6postilla lis\u00e4tietoja tapatumasta sek\u00e4 alueen kartta\u2757\ufe0f\n\nTLDR\n\nMiss\u00e4: Repoveden kansallispuisto\nMilloin: 7.- 8.9.2024\nDC: Retkeilyvarusteet ja haalarit\nMiksi: Koska kuka ei haluaisi l\u00e4hte\u00e4 mets\u00e4\u00e4n haalareissa\nMIT\u00c4 MAKSAA: j\u00e4senelle 15\u20ac ja ei-j\u00e4senelle 17\u20ac\nLiput tulevat myyntiin 27.8. Kello 16:00",
+        "description_en": "Would you be interested in escaping to peaceful nature after the bustling activities of freshman week, while still wearing your student overalls? Did you miss out on hiking during the summer or only get a taste of it? The overall hike is happening again this fall, and we warmly welcome both old and new students to Repovesi National Park! \ud83c\udfd5\nThere are two options for the hike: a day hike and an overnight hike. The day hike is approximately 8.3 km, with plenty of time allotted, and there's a suitable spot for a meal about halfway through. After the hike, a bus will pick us up in the evening and take us back to Skinnarila.\nFor the overnight hike, we will stay overnight at a camping area in Repovesi. On the first day, the route will be about 8 km, and on the second day, you can choose either a slightly longer route of 5.3 km or a shorter route of 3 km. After the hike, we will take a bus back to Skinnarila.\nSCHEDULE\n \u2022 The bus departs from in front of LUT University on September 7th at 11:00 AM.\n \u2022 We will arrive at Repovesi around 12:30\u20131:00 PM.\n \u2022 The bus departs back from Repovesi on September 7th at 7:00 PM\n \u2022 For the overnight hike, the bus departs back on September 8th at 3:00 PM.\n\nThe event ticket includes a badge and bus transportation to and from Repovesi. You need to bring your own camping gear and pack your own food and drinks. There is a well along the route.\nNote: Additional information and a map of the area will be sent by email to all participants before the event!\n\u203c\ufe0fTicket sale will start on Tuesday 27.8. at 16:00\u203c\ufe0f\nTLDR\nWhere: Repovesi National Park\nWhen: September 7-8, 2024\nDress code: Hiking gear and overalls\nPrice: LAKOSTE member 15\u20ac, non member 17\u20ac\nWhy: Because who wouldn\u2019t want to go into the forest in overalls?",
+        "ticket_link": "kide.app/events/2aaca408-6926-43e0-8e2b-aa2a89e685a3",
+        "other_link": null,
+        "accessibility_fi": "Tapahtuma ei ole esteet\u00f6n.",
+        "accessibility_en": "Event is not accessible.",
+        "price": 17.0,
+        "dc": "Haalarit ja vaellus varusteet. Tarkemmat ohjeet saat s\u00e4hk\u00f6postilla l\u00e4hemp\u00e4n\u00e4 tapahtumaa!//Overalls and hiking gear. More info for participant via email closer to the event!",
+        "accepted": true,
+        "tags": [
+            "chill // rento"
         ],
         "stage": 99
     }

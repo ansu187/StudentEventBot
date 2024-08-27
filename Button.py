@@ -79,7 +79,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
                 [
                     InlineKeyboardButton(translate_string("Link", UserDatabase.get_user_lang_code(update)), callback_data=f"Event;{event.id};{CALENDER_LINK}"),
                     InlineKeyboardButton(translate_string("Show more", UserDatabase.get_user_lang_code(update)),
-                                         callback_data=f"{event.id};{MORE_INFORMATION}")
+                                         callback_data=f"Event;{event.id};{MORE_INFORMATION}")
                 ],
                 #[InlineKeyboardButton(translate_string("Like", UserDatabase.get_user_lang_code(update)), callback_data=f"Event;{event.id};{LIKE}")]
             ]
