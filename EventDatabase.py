@@ -330,7 +330,7 @@ def get_body(event, user_lang_code):
     if ticket_sell_time is not None:
         text_body += f"\n\n{prompts[user_lang_code][9]} {ticket_sell_time}\n\n"
     if event.other_link is not None:
-        text_body += f"{prompts[user_lang_code][10]} {event.other_link}\n\n"
+        text_body += f"\n{prompts[user_lang_code][10]} {event.other_link}\n\n"
 
     return text_body
 

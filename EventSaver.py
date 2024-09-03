@@ -516,6 +516,8 @@ async def ticket_link(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
     # stage 8
     user_input = update.message.text
 
+
+    #To not to slice it up at the first //
     if user_input.startswith("https://"):
         user_input = user_input[len("https://"):]
 
@@ -530,7 +532,7 @@ async def ticket_link(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
 
     event = context.user_data['event']
 
-    if user_input == "skip":
+    if user_input_lower == "skip":
         event.ticket_link = None
     else:
         event.ticket_link = user_input
