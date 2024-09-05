@@ -13,6 +13,8 @@ ADD_REMOVE, ADD, REMOVE = range(3)
 
 def main() -> None:
     application = Application.builder().token(Secrets.TOKEN).build()
+    jobqueue = application.job_queue
+
 
     # Conversation handler for handling the creation of events
     event_handler = ConversationHandler(
