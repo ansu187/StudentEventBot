@@ -359,11 +359,13 @@ def generate_ticket_calendar_link(event, update):
 
 async def new_event_job_creator(context: ContextTypes.DEFAULT_TYPE):
 
+    event_id = context.job.data
+
+    event = EventDatabase.get_event_by_id(event_id,Filepaths.events_file)
+
     user_list = UserDatabase.user_reader()
     prompt = ["Uusi tapahtuma lisätty:", "A new event added:"]
 
-    event = context.user_data["event_to_send"]
-    current_user = context.user_data["current_user"]
 
     event_fi = EventDatabase.get_head(event, 0)
     event_en = EventDatabase.get_head(event, 1)
@@ -425,7 +427,7 @@ async def new_event_job_creator(context: ContextTypes.DEFAULT_TYPE):
     
 
     end_time = datetime.now()
-    await context.bot.send_message(chat_id=current_user, text=f"All messages send in {end_time - start_time} to {user_counter} users!")
+    await context.bot.send_message(chat_id=context.job.chat_id, text=f"All messages send in {end_time - start_time} to {user_counter} users!")
 
     user_id = UserDatabase.get_user_id(event.creator)
     await context.bot.send_message(chat_id=user_id, text=f"The event {event.name} was send to {user_counter} users!")
@@ -434,12 +436,7 @@ async def new_event_job_creator(context: ContextTypes.DEFAULT_TYPE):
 
 
 async def send_new_event_to_all(update: Update, context: ContextTypes.DEFAULT_TYPE, event_id):
-    event = EventDatabase.get_event_by_id(event_id,Filepaths.events_file)
-    context.user_data["event_to_send"] = event
-    context.user_data["current_user"] = update.message.chat_id
-
-    context.job_queue.run_once(new_event_job_creator, 0)
-
+    context.job_queue.run_once(new_event_job_creator, 0, data=event_id, chat_id=update.message.chat_id)
     return
 
 
@@ -447,8 +444,8 @@ async def send_new_event_to_all(update: Update, context: ContextTypes.DEFAULT_TY
 
 async def new_message_job_creator(context: ContextTypes):
 
-    message = context.user_data["message_to_all"]
-    current_user = context.user_data["current_user"]
+    message = context.job.data
+    
 
     message_fi, message_en = message.split("//")
     prompt = [message_fi, message_en]
@@ -477,13 +474,13 @@ async def new_message_job_creator(context: ContextTypes):
 
 
     end_time = datetime.now()
-    await context.bot.send_message(chat_id=current_user, text=f"All messages send in {end_time - start_time} to {user_counter} users!")
+    await context.bot.send_message(chat_id=context.job.chat_id, text=f"All messages send in {end_time - start_time} to {user_counter} users!")
 
 
 async def send_message_to_all(update: Update, context: ContextTypes.DEFAULT_TYPE, message):
-    context.user_data["message_to_all"] = message
-    context.user_data["current_user"] = update.message.chat_id
+    context.user_data['message_to_all'] = message
+    context.user_data['current_user'] = update.message.chat_id
 
-    context.job_queue.run_once(new_message_job_creator, 0)
+    context.job_queue.run_once(new_message_job_creator, 0, data=message, chat_id=update.message.chat_id)
 
     return
