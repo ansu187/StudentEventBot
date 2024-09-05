@@ -357,15 +357,13 @@ def generate_ticket_calendar_link(event, update):
     return link
 
 
-async def send_new_event_to_all(update: Update, context: ContextTypes.DEFAULT_TYPE, event_id):
+async def new_event_job_creator(context: ContextTypes.DEFAULT_TYPE):
 
     user_list = UserDatabase.user_reader()
     prompt = ["Uusi tapahtuma lisätty:", "A new event added:"]
 
-    messages_per_second = 20
-    interval = 1/messages_per_second
-
-    event = EventDatabase.get_event_by_id(event_id,Filepaths.events_file)
+    event = context.user_data["event_to_send"]
+    current_user = context.user_data["current_user"]
 
     event_fi = EventDatabase.get_head(event, 0)
     event_en = EventDatabase.get_head(event, 1)
@@ -420,32 +418,42 @@ async def send_new_event_to_all(update: Update, context: ContextTypes.DEFAULT_TY
                 print(f"Message sent to user {user.id}")
                 user_counter += 1
 
-                await asyncio.sleep(interval)
-
         except Exception as e:
             print(f"Failed to send message to user {user.id}: {str(e)}")
 
 
+    
 
     end_time = datetime.now()
-    await update.message.reply_text(f"All messages send in {end_time - start_time} to {user_counter} users!")
+    await context.bot.send_message(chat_id=current_user, text=f"All messages send in {end_time - start_time} to {user_counter} users!")
 
-    event = EventDatabase.get_event_by_id(event_id, "events.json")
     user_id = UserDatabase.get_user_id(event.creator)
     await context.bot.send_message(chat_id=user_id, text=f"The event {event.name} was send to {user_counter} users!")
+    
+
+
+
+async def send_new_event_to_all(update: Update, context: ContextTypes.DEFAULT_TYPE, event_id):
+    event = EventDatabase.get_event_by_id(event_id,Filepaths.events_file)
+    context.user_data["event_to_send"] = event
+    context.user_data["current_user"] = update.message.chat_id
+
+    context.job_queue.run_once(new_event_job_creator, 0)
+
     return
 
 
 
-async def send_message_to_all(update: Update, context: ContextTypes.DEFAULT_TYPE, message):
+
+async def new_message_job_creator(context: ContextTypes):
+
+    message = context.user_data["message_to_all"]
+    current_user = context.user_data["current_user"]
 
     message_fi, message_en = message.split("//")
     prompt = [message_fi, message_en]
 
     user_list = UserDatabase.user_reader()
-
-    messages_per_second = 20
-    interval = 1/messages_per_second
 
 
     start_time = datetime.now()
@@ -464,10 +472,18 @@ async def send_message_to_all(update: Update, context: ContextTypes.DEFAULT_TYPE
             print(f"Message sent to user {user.id}")
             user_counter += 1
 
-            await asyncio.sleep(interval)
         except Exception as e:
             print(f"Failed to send message to user {user.id}: {str(e)}")
 
 
     end_time = datetime.now()
-    await update.message.reply_text(f"All messages send in {end_time - start_time} to {user_counter} users!")
+    await context.bot.send_message(chat_id=current_user, text=f"All messages send in {end_time - start_time} to {user_counter} users!")
+
+
+async def send_message_to_all(update: Update, context: ContextTypes.DEFAULT_TYPE, message):
+    context.user_data["message_to_all"] = message
+    context.user_data["current_user"] = update.message.chat_id
+
+    context.job_queue.run_once(new_message_job_creator, 0)
+
+    return
