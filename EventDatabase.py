@@ -346,11 +346,11 @@ def get_tail(event, user_lang_code):
 
 
 def event_parser_compact(event, user_lang_code):
-    return f"{get_head(event, user_lang_code)} {get_body(event, user_lang_code)}"
+    return f"{get_head(event, user_lang_code)}\n{get_body(event, user_lang_code)}"
 
 def event_parser_normal(event, user_lang_code) -> str:
 
-    return f"{get_head(event, user_lang_code)}{get_body(event, user_lang_code)}{get_tail(event, user_lang_code)}"
+    return f"{get_head(event, user_lang_code)}\n{get_body(event, user_lang_code)}\n{get_tail(event, user_lang_code)}"
 
 
 

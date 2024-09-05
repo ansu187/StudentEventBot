@@ -763,8 +763,8 @@ async def tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         event.stage = SAVE_EVENT
         EventDatabase.event_backup_save(event, update)
-        await query.message.reply_text(user_prompts[UserDatabase.get_user_lang_code(update)][SAVE_EVENT])
         await query.message.reply_text(EventDatabase.event_parser_all(context.user_data['event']))
+        await query.message.reply_text(user_prompts[UserDatabase.get_user_lang_code(update)][SAVE_EVENT])
         await run_before_every_return(update,context)
         return SAVE_EVENT
       
@@ -908,12 +908,11 @@ async def save(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     choice = text.lower()
 
     if choice == "submit":
-        #event_list = EventDatabase.events_reader("events.json")
+        
         event = context.user_data['event']
 
         event.stage = STAGE_SUBMITTED
-        #event_list.append(event)
-        #EventDatabase.events_writer(event_list)
+        
 
         await update.message.reply_text(translate_string("submitted", update))
         try:
@@ -923,7 +922,7 @@ async def save(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
             await update.message.reply_text(EventDatabase.event_parser_creator_2(event))
 
 
-        #EventDatabase.event_backup_delete(update, context)
+        
         EventDatabase.event_backup_save(event, update)
         await Accept.message_to_admins(context)
         await run_before_every_return(update, context)

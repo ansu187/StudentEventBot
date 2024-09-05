@@ -30,18 +30,22 @@ async def choose_event_keyboard(update: Update, context: ContextTypes.DEFAULT_TY
 async def accept(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not UserDatabase.is_user(update):
         await update.message.reply_text("You have no user.")
-        return
+        return ConversationHandler.END
 
     if UserDatabase.get_user_type(update) < 3:
         await update.message.reply_text("You have no authorization to accept events!")
-        return
-
-    event_list = EventDatabase.get_unaccepted_events()
-    if not event_list:
         return ConversationHandler.END
 
+    event_list = EventDatabase.get_unaccepted_events()
+
+
+    if not event_list:
+        await update.message.reply_text("There are no unaccpeted events.")
+        return ConversationHandler.END
+
+    
+    
     await choose_event_keyboard(update, context, event_list)
-    context.user_data['event_list'] = event_list
 
     return EVENT_SELECTOR
 
@@ -61,7 +65,7 @@ async def accept_decline_keyboard(update):
 
 
 async def event_selector(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    event_list = context.user_data['event_list']
+    event_list = EventDatabase.get_unaccepted_events()
     text = update.message.text.lower()
     for event in event_list:
         event_name = event.name.lower()
