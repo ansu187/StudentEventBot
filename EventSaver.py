@@ -269,7 +269,7 @@ async def old_event(update: Update, context: ContextTypes.DEFAULT_TYPE)->int:
 
             context.user_data["tags"] = event_tags
 
-            reply_markup = InlineKeyboardMarkup(Tags.get_all_tags_keyboard(update, button_code="event_tags"))
+            reply_markup = InlineKeyboardMarkup(Tags.get_all_tags_keyboard(update, button_code="Tags"))
             await update.message.reply_text(f"Current tags: {event_tags}", reply_markup=reply_markup)
 
 

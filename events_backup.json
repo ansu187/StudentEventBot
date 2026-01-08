@@ -44,28 +44,6 @@
     },
     {
         "id": 0,
-        "name": "Jee",
-        "creator": "ansu187",
-        "start_time": "2024-09-18 12:00:00",
-        "end_time": null,
-        "ticket_sell_time": null,
-        "location": "Kellari",
-        "description_fi": "Jee",
-        "description_en": "Yes",
-        "ticket_link": "Skip",
-        "other_link": null,
-        "accessibility_fi": "On",
-        "accessibility_en": "On",
-        "price": 0.0,
-        "dc": "Yes\u00e5",
-        "accepted": false,
-        "tags": [
-            "alcohol-free // alkoholiton"
-        ],
-        "stage": 15
-    },
-    {
-        "id": 0,
         "name": "Jeee",
         "creator": "ansu187",
         "start_time": "2024-09-18 12:00:00",
@@ -84,6 +62,29 @@
         "tags": [
             "alcohol-free // alkoholiton",
             "sits // sitsit",
+            "bar // baari"
+        ],
+        "stage": 99
+    },
+    {
+        "id": 0,
+        "name": "Ksks",
+        "creator": "ansu187",
+        "start_time": "2026-09-18 14:30:00",
+        "end_time": null,
+        "ticket_sell_time": null,
+        "location": "Jeee\u00e5",
+        "description_fi": "On",
+        "description_en": "On",
+        "ticket_link": null,
+        "other_link": null,
+        "accessibility_fi": "On",
+        "accessibility_en": "On",
+        "price": 0.0,
+        "dc": "Ei tarvita // on joo",
+        "accepted": false,
+        "tags": [
+            "alcohol-free // alkoholiton",
             "bar // baari"
         ],
         "stage": 99

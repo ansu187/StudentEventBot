@@ -299,6 +299,9 @@ async def remove_tag(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def check_for_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_list = UserDatabase.user_reader()
     text = update.message.text
+
+    if text.startswith("@"):
+        text = text[1:]
     text = text.lower()
 
     users_to_remove = []
@@ -319,7 +322,13 @@ async def check_for_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         user = context.user_data['user']
     except KeyError:
-        await update.message.reply_text(f"User {text} not found.")
+        await update.message.reply_text(f"Inserted username is not saved to the bot's database. Ask them to say /start to the bot "
+                                        f"and then try again!")
+        return ConversationHandler.END
+    
+    if user_nick != text:
+        await update.message.reply_text(f"Inserted username is not saved to the bot's database. Ask them to say /start to the bot "
+                                        f"and then try again!")
         return ConversationHandler.END
 
     await update.message.reply_text(f"{user.nick} is currently {USER_TYPE[user.user_type]}\n\n")

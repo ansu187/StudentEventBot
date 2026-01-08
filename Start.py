@@ -69,8 +69,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if lang == "fi":
             await update.message.reply_text(
                 "Tervetuloa käyttämään Skinnarila Events Bottia!\n\n"
-                "TÄMÄ VERSIO ON BETA, JA ON ERITTÄIN TODENNÄKÖISTÄ ETTEI MIKÄÄN TOIMI.\n\n"
-                "Tämän botin on kirjoittanut kylteri apunaan ChatGPT 3.5\n\n\n"
+                "TÄMÄ VERSIO ON edelleen BETA, JA ON ERITTÄIN TODENNÄKÖISTÄ ETTEI MIKÄÄN TOIMI.\n\n"
+                "Tämän botin on kirjoittanut kylteri apunaan ChatGPT 3.5, kelaa miten pitkä aika siitä on!\n\n\n"
                 "Onko ok, jos tallennamme Telegram ID:n, Telegram käyttäjänimen ja valitsemasi kielen. "
                 "Nämä tiedot eivät ole tallennettu tietoturvallisesti. Onko tämä ok, jos ei, botti ei toimi :(")
 
@@ -89,8 +89,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         else:
             await update.message.reply_text(
                 "Welcome to use the Skinnarila Student Events bot!\n\n"
-                "THIS VERSION IS CURRENTLY IN BETA AND THERE IS HIGH CHANGE OF NOTHING WORKING\n\n"
-                "Bot is written by kylteri with ChatGPT 3.5\n\n\n"
+                "THIS VERSION IS CURRENTLY still IN BETA AND THERE IS HIGH CHANGE OF NOTHING WORKING\n\n"
+                "Bot is written by kylteri with ChatGPT 3.5, think how long time ago that was!\n\n\n"
                 "Is it okay if we save your Telegram ID, Telegram username and the language that you choose. "
                 "This information is not saved securely. Is this okay for you, if not, the bot won't work :(")
 
@@ -114,7 +114,9 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def data_collection(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_text = update.message.text
-    if user_text == "Kyllä" or user_text == "Yes":
+    user_text = user_text.lower()
+
+    if user_text == "kyllä" or user_text == "yes":
 
         await lang_keyboard(update,context)
         return LANG
