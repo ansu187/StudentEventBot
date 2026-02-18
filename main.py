@@ -7,11 +7,46 @@ import Feedback
 import EventSaver
 import Start, Tags, MessageSender, Accept, Help, Edit, Dev, Menu, Cancel, Dictionary, Button, MyEvents, UserInfo
 import Secrets
+import Filepaths
+import logging
 
 # Event states
 ADD_REMOVE, ADD, REMOVE = range(3)
 
+def setup_logging() -> None:
+    logger = logging.getLogger()
+    logger.setLevel(logging.ERROR)
+
+    formatter = logging.Formatter(
+        "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    )
+
+    has_file_handler = False
+    for handler in logger.handlers:
+        if isinstance(handler, logging.FileHandler):
+            has_file_handler = True
+            break
+
+    if not has_file_handler:
+        file_handler = logging.FileHandler(Filepaths.log_file, encoding="utf-8")
+        file_handler.setLevel(logging.ERROR)
+        file_handler.setFormatter(formatter)
+        logger.addHandler(file_handler)
+
+    if not any(isinstance(h, logging.StreamHandler) for h in logger.handlers):
+        stream_handler = logging.StreamHandler()
+        stream_handler.setLevel(logging.ERROR)
+        stream_handler.setFormatter(formatter)
+        logger.addHandler(stream_handler)
+
+
+async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
+    logging.getLogger(__name__).error(
+        "Unhandled exception while handling update: %r", update, exc_info=context.error
+    )
+
 def main() -> None:
+    setup_logging()
     application = Application.builder().token(Secrets.TOKEN).build()
     jobqueue = application.job_queue
 
@@ -19,7 +54,9 @@ def main() -> None:
     # Conversation handler for handling the creation of events
     event_handler = ConversationHandler(
         entry_points=[CommandHandler("event", EventSaver.event_command),
-                      MessageHandler(filters.Regex("^(Luo tapahtuma|Create event)$"), EventSaver.event_command)],
+                      MessageHandler(filters.Regex("^(Luo tapahtuma|Create event)$"), EventSaver.event_command),
+                      MessageHandler(filters.Regex("^(Lähetä tapahtuma hyväksyttäväksi|Submit event for approval)$"),
+                                     EventSaver.submit_saved_event)],
         states={
             EventSaver.OLD_EVENT: [MessageHandler(filters.TEXT & ~filters.COMMAND, EventSaver.old_event)],
             EventSaver.NAME: [MessageHandler(filters.TEXT & ~filters.COMMAND, EventSaver.name)],
@@ -205,6 +242,7 @@ def main() -> None:
     application.add_handler(CommandHandler("this_week", MessageSender.list_this_week), 0)
     application.add_handler(CommandHandler("next_week", MessageSender.list_next_week), 0)
     application.add_handler(message_handler)
+    application.add_error_handler(error_handler)
 
 
 

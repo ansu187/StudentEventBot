@@ -156,7 +156,6 @@ async def lang(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     elif text_in == "english":
         new_user.user_lang = "en"
 
-
     user_list.append(new_user)
 
     UserDatabase.user_writer(user_list)

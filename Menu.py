@@ -4,6 +4,7 @@ from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import ContextTypes
 
 import UserDatabase
+import EventDatabase
 
 
 
@@ -15,11 +16,19 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
 
     user_lang = UserDatabase.get_user_lang(update)
+    username = update.message.from_user.username
+    has_saved_event = False
+    if username:
+        has_saved_event = EventDatabase.has_saved_event(username)
+
     if user_lang == "fi":
         lang_code = 0
         reply_keyboard = [["Listaa tapahtumat"], ["Anna palautetta", "Käyttäjän asetukset", "Change language"]]
         if UserDatabase.get_user_type(update) >= 2:
-            reply_keyboard.append(["Luo tapahtuma", "Näytä omat tapahtumat"])
+            row = ["Luo tapahtuma", "Näytä omat tapahtumat"]
+            if has_saved_event:
+                row.append("Lähetä tapahtuma hyväksyttäväksi")
+            reply_keyboard.append(row)
         if UserDatabase.get_user_type(update) == 3:
             reply_keyboard.append(["Hyväksy tapahtumia"])
         if UserDatabase.get_user_type(update) >= 4:
@@ -29,7 +38,10 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
         lang_code = 1
         reply_keyboard = [["List events"], ["Give feedback", "User settings", "Vaihda kieli"]]
         if UserDatabase.get_user_type(update) >= 2:
-            reply_keyboard.append(["Create event", "Show my events"])
+            row = ["Create event", "Show my events"]
+            if has_saved_event:
+                row.append("Submit event for approval")
+            reply_keyboard.append(row)
         if UserDatabase.get_user_type(update) == 3:
             reply_keyboard.append(["Accept events", "Delete events"])
         if UserDatabase.get_user_type(update) >= 4:

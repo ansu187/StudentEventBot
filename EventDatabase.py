@@ -26,11 +26,15 @@ import EventSaver
 import Filepaths
 
 import UserDatabase
+import Tags
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
 )
 logger = logging.getLogger(__name__)
+
+def _normalize_tag_input(tag: str) -> str:
+    return tag.lstrip("#").strip()
 
 
 def get_only_upcoming():
@@ -203,11 +207,7 @@ def get_head(event, user_lang_code) -> str:
     tag_string = ""
     
     for tag in event.tags:
-        try:
-            en_tag, fi_tag = tag.split("//")
-        except ValueError:
-            en_tag = tag
-            fi_tag = tag
+        en_tag, fi_tag = Tags.split_tag(tag)
         if user_lang_code == 0:
             tag_string += f"#{fi_tag.strip()} "
         else:
@@ -391,23 +391,40 @@ def get_event_to_edit(user_name: str):
 
     return None
 
+def get_saved_event_by_creator(user_name: str):
+    event_list = events_reader(Filepaths.events_backup_file)
+    saved_event = None
+
+    for event in event_list:
+        if user_name == event.creator and event.stage in (EventSaver.SAVE_EVENT, EventSaver.STAGE_SAVED):
+            saved_event = event
+
+    return saved_event
+
+def has_saved_event(user_name: str) -> bool:
+    return get_saved_event_by_creator(user_name) is not None
+
 def get_event_by_tag(tag: str):
     event_list = get_accepted_events()
     events_to_return = []
+    normalized_tag = _normalize_tag_input(tag)
     for event in event_list:
         try:
-            if any(tag in event_tag or f"#{tag}" in event_tag for event_tag in event.tags):
-                events_to_return.append(event)
+            for event_tag in event.tags:
+                en_tag, fi_tag = Tags.split_tag(event_tag)
+                if normalized_tag == en_tag or normalized_tag == fi_tag:
+                    events_to_return.append(event)
+                    break
         except TypeError:
             pass
 
     return events_to_return
 
-def get_event_by_name_from_backup(event_name):
+def get_event_by_name_from_backup(event_name, creator=None):
     event_list = events_reader(Filepaths.events_backup_file)
 
     for event in event_list:
-        if event.name.startswith(event_name):
+        if event.name == event_name and (creator is None or event.creator == creator):
             return event
     
     return None
@@ -426,7 +443,7 @@ def event_backup_save(event, update: Update):
     new_event_list = []
 
     for e in event_list:
-        if e.name == event.name:
+        if e.name == event.name and e.creator == event.creator:
             continue  # Skip the event with the same name
         new_event_list.append(e)
 
@@ -441,11 +458,13 @@ def event_backup_save(event, update: Update):
         print("Something went wrong")
 
 def event_backup_delete(event):
+    if event is None:
+        return
     event_list = events_reader(Filepaths.events_backup_file)
     new_event_list = []
 
     for e in event_list:
-        if e.name == event.name:
+        if e.name == event.name and e.creator == event.creator:
             continue  # Skip the event with the same creator
         new_event_list.append(e)
 

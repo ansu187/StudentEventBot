@@ -11,6 +11,7 @@ if current_platform == "Darwin":  # macOS
     tags_file = "tags.json"
     feedback_file = "feedback.txt"
     likes_file = "likes.json"
+    log_file = "bot.log"
 
 
 elif current_platform == "Linux":  # Linux server
@@ -20,6 +21,7 @@ elif current_platform == "Linux":  # Linux server
     tags_file = "/database/tags.json"
     feedback_file = "/database/feedback.txt"
     likes_file = "/database/likes.json"
+    log_file = "/database/bot.log"
 
 
 else:

@@ -176,12 +176,12 @@ async def run_before_every_return(update: Update, context: ContextTypes.DEFAULT_
 
 async def want_to_edit_keyboard(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if UserDatabase.get_user_lang(update) == "fi":
-        reply_keyboard = [["Kyllä", "Ei"]]
-        prompt = "Haluatko jatkaa tapahtuman editoimista? Jos et, luonnos poistetaan."
+        reply_keyboard = [["Jatka luonnosta", "Luo uusi tapahtuma"], ["Poista luonnos"]]
+        prompt = "Haluatko jatkaa luonnosta vai luoda uuden tapahtuman?"
 
     else:
-        reply_keyboard = [["Yes", "No"]]
-        prompt = "Do you want to continue editing the event? If not, the draft will be deleted."
+        reply_keyboard = [["Continue draft", "Create new event"], ["Delete draft"]]
+        prompt = "Do you want to continue the draft or create a new event?"
 
 
 
@@ -208,6 +208,33 @@ async def create_event_object(update: Update, context: ContextTypes.DEFAULT_TYPE
     except IndexError:
         context.user_data["event"] = Event.Event(0, update.message.from_user.username)
 
+
+async def submit_saved_event(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    username = update.message.from_user.username
+    if not username:
+        prompt = [
+            "Käyttäjänimeä ei löytynyt.",
+            "Username not found.",
+        ]
+        await update.message.reply_text(prompt[UserDatabase.get_user_lang_code(update)])
+        return ConversationHandler.END
+
+    event = EventDatabase.get_saved_event_by_creator(username)
+    if not event:
+        await update.message.reply_text(translate_string("unsaved event", update))
+        return ConversationHandler.END
+
+    context.user_data["event"] = event
+
+    try:
+        await update.message.reply_text(EventDatabase.event_parser_all(event))
+    except Exception:
+        await update.message.reply_text(EventDatabase.event_parser_creator_1(event))
+        await update.message.reply_text(EventDatabase.event_parser_creator_2(event))
+
+    await update.message.reply_text(user_prompts[UserDatabase.get_user_lang_code(update)][SAVE_EVENT])
+    await run_before_every_return(update, context)
+    return SAVE_EVENT
 
 
 
@@ -254,7 +281,7 @@ async def old_event(update: Update, context: ContextTypes.DEFAULT_TYPE)->int:
     user_input = update.message.text.lower()
 
     #If user wants to edit the saved event
-    if user_input == "yes" or user_input == "kyllä":
+    if user_input in ("yes", "kyllä", "jatka luonnosta", "continue draft"):
         #Gets the event from the database
         event_to_edit = EventDatabase.get_event_to_edit(update.message.from_user.username)
         context.user_data["event"] = event_to_edit
@@ -273,10 +300,17 @@ async def old_event(update: Update, context: ContextTypes.DEFAULT_TYPE)->int:
             await update.message.reply_text(f"Current tags: {event_tags}", reply_markup=reply_markup)
 
 
-        return event_to_edit.stage
+            return event_to_edit.stage
 
-    elif user_input == "no" or user_input == "ei":
-        #if user wants to create a new event
+    elif user_input in ("luo uusi tapahtuma", "create new event", "no", "ei"):
+        # create new event without deleting the draft
+        await update.message.reply_text(f"{user_prompts[UserDatabase.get_user_lang_code(update)][NAME]}")
+        await create_event_object(update, context)
+        await run_before_every_return(update, context)
+        return NAME
+
+    elif user_input in ("poista luonnos", "delete draft"):
+        # create a new event and delete the old draft
         await update.message.reply_text(f"{user_prompts[UserDatabase.get_user_lang_code(update)][NAME]}")
         EventDatabase.event_backup_delete(EventDatabase.get_event_to_edit(update.message.from_user.username))
         await create_event_object(update, context)
@@ -747,13 +781,7 @@ async def tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
     if tag_chosen == "save":
-        all_tags_in_use = Tags.get_tag_list()
-        tag_list_to_save = []
-
-        for common_tag in all_tags_in_use:
-            for event_tag in event_tags:
-                if event_tag in common_tag:
-                    tag_list_to_save.append(common_tag)
+        tag_list_to_save = Tags.match_display_tags_to_canonical(event_tags)
 
         print(tag_list_to_save)
         event = context.user_data['event']

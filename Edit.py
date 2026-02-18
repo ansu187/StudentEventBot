@@ -58,7 +58,9 @@ async def edit_button(update: Update, context: ContextTypes.DEFAULT_TYPE):
     event_id = int(event_id)
 
     if event_id == 0:
-        context.user_data['event'] = EventDatabase.get_event_by_name_from_backup(event_name)
+        context.user_data['event'] = EventDatabase.get_event_by_name_from_backup(
+            event_name, query.from_user.username
+        )
     else:
         context.user_data['event'] = EventDatabase.get_event_by_id(event_id, Filepaths.events_file)
 
@@ -568,13 +570,7 @@ async def tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
     if tag_chosen == "save":
-        all_tags_in_use = Tags.get_tag_list()
-        tag_list_to_save = []
-
-        for common_tag in all_tags_in_use:
-            for event_tag in event_tags:
-                if event_tag in common_tag:
-                    tag_list_to_save.append(common_tag)
+        tag_list_to_save = Tags.match_display_tags_to_canonical(event_tags)
 
         print(tag_list_to_save)
         event = context.user_data['event']
@@ -642,11 +638,11 @@ async def tags_old(update: Update, context: ContextTypes.DEFAULT_TYPE):
     #adding tags
     if context.user_data['tag_adding']:
         if reply == "all":
-            event.tags = ["#all"]
+            event.tags = ["all"]
         elif reply not in event.tags:
             try:
-                if "#all" in event.tags:
-                    event.tags.remove("#all")
+                if "all" in event.tags:
+                    event.tags.remove("all")
                 event.tags.append(reply)
             except AttributeError:
                 event.tags = [f"{reply}"]
@@ -659,7 +655,7 @@ async def tags_old(update: Update, context: ContextTypes.DEFAULT_TYPE):
     #removing tags
     if not context.user_data['tag_adding']:
         if reply == "all":
-            event.tags = ["#all"]
+            event.tags = ["all"]
         try:
             event.tags.remove(reply)
         except AttributeError:

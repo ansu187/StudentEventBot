@@ -9,6 +9,36 @@ SAVE = 0
 EDIT = 99
 
 
+def split_tag(tag: str):
+    if "//" not in tag:
+        cleaned = tag.strip()
+        return cleaned, cleaned
+    if " // " in tag:
+        en_tag, fi_tag = tag.split(" // ", 1)
+    else:
+        en_tag, fi_tag = tag.split("//", 1)
+    return en_tag.strip(), fi_tag.strip()
+
+
+def normalize_tag_input(tag: str) -> str:
+    return tag.lstrip("#").strip()
+
+
+def match_display_tags_to_canonical(display_tags):
+    all_tags_in_use = get_tag_list()
+    if not all_tags_in_use:
+        return []
+
+    normalized_display = [normalize_tag_input(t) for t in display_tags]
+    matched = []
+    for common_tag in all_tags_in_use:
+        en_tag, fi_tag = split_tag(common_tag)
+        for user_tag in normalized_display:
+            if user_tag == en_tag or user_tag == fi_tag:
+                matched.append(common_tag)
+                break
+
+    return matched
 
 
 def get_tag_list(): #returns all tags currently in use.
@@ -30,13 +60,15 @@ def get_tag_list(): #returns all tags currently in use.
 
 def get_tag_list_language(lang_code):
     pre_tag_list = get_tag_list()
+    if not pre_tag_list:
+        return []
     fi_tag_list = []
     en_tag_list = []
 
     for tag in pre_tag_list:
-        en_tag, fi_tag = tag.split("//")
-        fi_tag_list.append(fi_tag.strip())
-        en_tag_list.append(en_tag.strip())
+        en_tag, fi_tag = split_tag(tag)
+        fi_tag_list.append(fi_tag)
+        en_tag_list.append(en_tag)
 
     if lang_code == 1:
         return en_tag_list
@@ -48,15 +80,15 @@ def get_user_tag_list(update: Update):
     current_user: User = UserDatabase.get_current_user(update)
     user_lang = UserDatabase.get_user_lang_code(update)
 
-    tag_list = current_user.tags
+    tag_list = current_user.tags or []
     fi_tag_list = []
     en_tag_list = []
 
     for tag in tag_list:
-        if tag == "#all":
+        if tag in ("#all", "all"):
             continue
 
-        en_tag, fi_tag = tag.split(" // ")
+        en_tag, fi_tag = split_tag(tag)
         fi_tag_list.append(fi_tag)
         en_tag_list.append(en_tag)
         
@@ -132,13 +164,7 @@ async def edit_tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
     if tag_chosen == "save":
-        all_tags_in_use = get_tag_list()
-        tag_list_to_save = []
-
-        for common_tag in all_tags_in_use:
-            for user_tag in user_tag_list:
-                if user_tag in common_tag:
-                    tag_list_to_save.append(common_tag)
+        tag_list_to_save = match_display_tags_to_canonical(user_tag_list)
 
         print(tag_list_to_save)
         UserDatabase.update_tags(tag_list_to_save, query.from_user.id)
@@ -164,5 +190,4 @@ async def edit_tags(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     
     return EDIT
-
 

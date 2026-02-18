@@ -113,7 +113,11 @@ async def event_delete(update: Update, context: ContextTypes.DEFAULT_TYPE):
     #aka if event is in the event backups
     if event_id == 0:
         if button == "yes":
-            EventDatabase.event_backup_delete(EventDatabase.get_event_by_name_from_backup(event_name))
+            event = EventDatabase.get_event_by_name_from_backup(
+                event_name, query.from_user.username
+            )
+            if event:
+                EventDatabase.event_backup_delete(event)
             await query.edit_message_text(f"Event deleted!")
             return ConversationHandler.END
         elif button == "no":
@@ -167,7 +171,6 @@ def shorten_string(input_string, max_byte_length):
             break
     
     return shortened_string
-
 
 
 

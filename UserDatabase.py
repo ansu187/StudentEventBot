@@ -7,6 +7,15 @@ from telegram import Update
 from typing import List
 
 
+def _normalize_user_tags(tags):
+    normalized = []
+    for tag in tags or []:
+        if tag == "#all":
+            normalized.append("all")
+        else:
+            normalized.append(tag)
+    return normalized
+
 def user_reader(): #Reads the user list from the JSON-file! #better name would be get_user_list
     user_list = []
 
@@ -16,8 +25,10 @@ def user_reader(): #Reads the user list from the JSON-file! #better name would b
                 data = json.load(f)
 
             for user_data in data:
+                tags = _normalize_user_tags(user_data.get('tags', []))
                 user_object = User.User(user_data['id'], user_data['nick'], user_data['tags'], user_data['user_type'],
                                         user_data['user_lang'])
+                user_object.tags = tags
                 user_list.append(user_object)
 
         except FileNotFoundError:
@@ -131,7 +142,8 @@ def is_user(update):
 
     for user in user_list:
         if user.id == user_id:
-            if user.nick == None:
+            #updates username, if not current
+            if user.nick != update.message.from_user.username:
                 user.nick = update.message.from_user.username
                 user_nick_not_found = True
             user_found = True
@@ -155,6 +167,7 @@ def update_username(update: Update):
                 user.nick = user_name
 
     user_writer(user_list)
+    update.message.reply_text(f"Username updated!")
     return
 
 def update_tags(tag_list, user_id):

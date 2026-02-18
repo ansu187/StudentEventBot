@@ -139,7 +139,7 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return TIME_MENU
 
     elif text == "Kaikki" or text == "All":
-        send_all_events(update, context)
+        await send_all_events(update, context)
         return ConversationHandler.END
 
 
@@ -401,7 +401,7 @@ async def new_event_job_creator(context: ContextTypes.DEFAULT_TYPE):
             reply_markup = InlineKeyboardMarkup(keyboard)
 
 
-            if user.tags == [] or user.tags == ["#all"]: #all is a legacy thing with old users
+            if user.tags == [] or "all" in user.tags or "#all" in user.tags: #all is a legacy thing with old users
                 send_message = True
 
 
@@ -409,7 +409,7 @@ async def new_event_job_creator(context: ContextTypes.DEFAULT_TYPE):
                 send_message = True
             
 
-            elif event_tags == []:
+            elif event_tags == [] or "all" in event_tags or "#all" in event_tags:
                 send_message = True
 
             if send_message:

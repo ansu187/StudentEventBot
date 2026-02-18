@@ -232,6 +232,9 @@ async def add_tag(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text
 
     try:
+        if "//" not in text:
+            await update.message.reply_text("Tag must be in format 'en // fi'.")
+            return ConversationHandler.END
         with open(Filepaths.tags_file, 'r') as file:
             data = json.load(file)
             tags_list = data.get('tags', [])
