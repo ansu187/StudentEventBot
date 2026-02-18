@@ -1,5 +1,8 @@
 Secrets.py
+*.json
 events_backup.json
 events.json
 tags.json
 users.json
+bot.log
+bot.log.*
