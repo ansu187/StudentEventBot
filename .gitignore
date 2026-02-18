@@ -6,3 +6,9 @@ tags.json
 users.json
 bot.log
 bot.log.*
+bot_*.log
+Known bugs :D
+.DS_Store
+*.tmp
+*.bak
+*.swp
